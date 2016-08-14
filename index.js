@@ -1,5 +1,8 @@
-var port = process.env.PORT || 8080;
-var ip = process.env.IP || process.env.HOST || process.env.HOSTNAME || '127.0.0.1';
+var config =  require('./config.js')('codeanywhere')
+console.log(config)
+
+var port = config.PORT;
+var ip = config.IP;
 var db = 'mongodb://root:root@ds031975.mlab.com:31975/amanv';
 
 var express  =require('express');
@@ -19,5 +22,5 @@ app.use(express.static(__dirname+'/public'));
 
 
 app.listen(port,function(){
-  console.log('Listening on Port'+ip+":"+port)
+  console.log('Listening on '+ip+" : "+port)
 });

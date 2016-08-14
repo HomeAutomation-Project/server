@@ -25,8 +25,8 @@ module.exports = function(type){
     }
   else if(type==='codeanywhere' || type==='nitrous')
     {
-      config.PORT = process.env.PORT;
-      config.IP =process.env.IP;
+      config.PORT = process.env.PORT||8080;
+      config.IP =process.env.IP||'127.0.0.1';
     }
   else
     {
