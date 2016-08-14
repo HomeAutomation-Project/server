@@ -1,4 +1,4 @@
-var config =  require('./config.js')('codeanywhere')
+var config =  require('./config/config.js')('codeanywhere')
 console.log(config)
 
 var port = config.PORT;
