@@ -1,5 +1,6 @@
 var express = require('express');
 var myRouter = express.Router();
+var User = require('./model/User.model.js');
 
 module.exports =  myRouter.get('/',function(req,res){
     res.send('We Will Give you info of your all Living Place');
