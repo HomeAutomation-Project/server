@@ -13,8 +13,13 @@ module.exports = function(type){
 
   mongoose.connect(db);
 
-
+  app.use(bodyParser.urlencoded({ extended: false }))
+  app.use(bodyParser.json())
+  
   app.use(morgan('dev'));
   app.use('/api',require('../routes/api'));
+  app.post('/',function(req,res){
+    console.log(req.body);
+  })
   return app;
 }
