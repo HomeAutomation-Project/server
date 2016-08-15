@@ -18,8 +18,6 @@ module.exports = function(type){
   
   app.use(morgan('dev'));
   app.use('/api',require('../routes/api'));
-  app.post('/',function(req,res){
-    console.log(req.body);
-  })
+  app.use('/',require('../routes/root'));
   return app;
 }
