@@ -18,7 +18,7 @@ var RoomSchema = new Schema({
       required:true
    },
    switches:[SwitchSchema],
-  belongsTo:ObjectId
+  belongsTo: String
 },{timestamps:true});
 
 module.exports = mongoose.model('Room',RoomSchema);

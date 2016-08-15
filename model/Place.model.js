@@ -6,8 +6,8 @@ var PlaceSchema = new Schema({
       type:String,
       required:true
    },
-   rooms:[ObjectId],
-  belongsTo: ObjectId
+   rooms:[String],
+  belongsTo:String
 },{timestamps:true});
 
 module.exports = mongoose.model('Place',PlaceSchema);
