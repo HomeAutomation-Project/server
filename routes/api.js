@@ -49,15 +49,20 @@ module.exports =  myRouter.get('/user/:username',function(req,res){
   if (err) throw err;
   
   
-      var temp ={};
+      var temp ={userdetails:null, placedetails:null};
       temp.userdetails=JSON.parse(JSON.stringify(users[0]));
-      Place.find({"belongsTo":temp.userdetails.username}, function(err, places) {
+      Place.find({belongsTo:temp.userdetails.username}, function(err, places) {
+        console.log("Places:", places[0]);
+        if(places[0])
+        temp.placedetails=JSON.parse(JSON.stringify(places[0]));
+        console.log("added to temp",temp)
       if (err) throw err;
-              temp.placedetails=JSON.parse(JSON.stringify(places));
+        
+        res.send(temp);
+        console.log(temp);      
       });
   // object of all the users
-  res.send(temp);
-  console.log(temp);
+  
 });
 });
 
@@ -79,7 +84,21 @@ module.exports =  myRouter.put('/user/:username',function(req,res){
   });    
 });
 
+module.exports =  myRouter.post('/user/add',function(req,res){
+  
+   var newPlace = Place({
+      name: req.body.name,
+      rooms: [req.body.name],
+      belongsTo: req.body.username
+    });
 
+    // save the user
+    newPlace.save(function(err) {
+      if (err) throw err;
+      res.send('Done!');
+      console.log('User created!');
+    }); 
+});
 /********************* /user/username/name/ ********************/
 
 module.exports =  myRouter.get('/user/:username/:name',function(req,res){
