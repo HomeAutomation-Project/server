@@ -102,13 +102,14 @@ module.exports =  myRouter.post('/user/add',function(req,res){
 /********************* /user/username/name/ ********************/
 
 module.exports =  myRouter.get('/user/:username/:name',function(req,res){
-    User.find({'username':req.params.username}, function(err, users) {
-  if (err) throw err;
-
-  // object of all the users
-  res.send(users);
-  console.log(users);
-});
+    Place.find({belongsTo:req.params.username}, function(err, places) {
+    console.log("Places:", places[0]);
+    var temp=JSON.parse(JSON.stringify(places[0]));
+      if (err) throw err;
+        
+        res.send(temp);
+        console.log(temp);      
+      });
 });
 
 
