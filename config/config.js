@@ -1,6 +1,6 @@
 var config ={};
 
-var myConfig = 'codeanywhere';
+var myConfig = 'C9';
 
 module.exports = function(){
   
@@ -40,7 +40,7 @@ module.exports = function(){
     {
       config.PORT = process.env.PORT||8080;
       config.IP =process.env.IP||'127.0.0.1';
-      config.DB_URL = 'mongodb://'+config.IP+'/';
+      config.DB_URL = 'mongodb://root:root@ds031975.mlab.com:31975/amanv';
       config.DB_USERNAME = '';
       config.DB_PASSWORD = '';
       config.DB_HOST = process.env.IP;

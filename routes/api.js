@@ -45,25 +45,27 @@ module.exports =  myRouter.post('/user',function(req,res){
 /********************* /user/username *********************/
 
 module.exports =  myRouter.get('/user/:username',function(req,res){
-    User.find({'username':req.params.username}, function(err, users) {
-  if (err) throw err;
+  var temp ={userdetails:null, placedetails:null};
+    User.findOne({'username':req.params.username}, function(err, users) {
+      if (err) throw err;
   
-  
-      var temp ={userdetails:null, placedetails:null};
-      temp.userdetails=JSON.parse(JSON.stringify(users[0]));
+      temp.userdetails=JSON.parse(JSON.stringify(users));
+      if(temp.userdetails){
+        
       Place.find({belongsTo:temp.userdetails.username}, function(err, places) {
-        console.log("Places:", places[0]);
-        if(places[0])
-        temp.placedetails=JSON.parse(JSON.stringify(places[0]));
+        console.log("Places:", places);
+        if(places)
+        temp.placedetails=JSON.parse(JSON.stringify(places));
         console.log("added to temp",temp)
       if (err) throw err;
         
-        res.send(temp);
         console.log(temp);      
       });
+      }
   // object of all the users
   
 });
+ res.send(temp);
 });
 
 module.exports =  myRouter.put('/user/:username',function(req,res){
