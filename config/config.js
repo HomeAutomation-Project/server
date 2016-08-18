@@ -39,17 +39,18 @@ module.exports = function(){
   else if(type==='codeanywhere' || type==='nitrous')
     {
       config.PORT = process.env.PORT||8080;
-      config.IP =process.env.IP||'127.0.0.1';
-      config.DB_URL = 'mongodb://root:root@ds031975.mlab.com:31975/amanv';
+      config.IP =process.env.HOST || process.env.HOSTNAME||'127.0.0.1';
+      config.DB_URL = process.env.MONGOHQ_URL;
       config.DB_USERNAME = '';
       config.DB_PASSWORD = '';
-      config.DB_HOST = process.env.IP;
+      config.DB_HOST = process.env.HOST || process.env.HOSTNAME;
       config.DB_PORT = '';
     }
   else
     {
       config.PORT = process.env.PORT||8080;
       config.IP =process.env.IP||'127.0.0.1';
+      config.DB_URL = 'mongodb://root:root@ds031975.mlab.com:31975/amanv';
     }
   return config;
 }
