@@ -1,7 +1,11 @@
 var config ={};
 
+var myConfig = 'codeanywhere';
 
-module.exports = function(type){
+module.exports = function(){
+  
+  var type =myConfig;
+  
   if(type==='heroku'||type==='C9')
     {
       config.PORT = process.env.PORT;
@@ -9,7 +13,7 @@ module.exports = function(type){
       config.DB_URL = '';
       config.DB_USERNAME = '';
       config.DB_PASSWORD = '';
-      config.DB_HOST = '';
+      config.DB_HOST = 'mongodb://'+process.env.IP+'/';
       config.DB_PORT = '';
     }
   else if(type==='openshift')
