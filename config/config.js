@@ -6,14 +6,23 @@ module.exports = function(){
   
   var type =myConfig;
   
-  if(type==='heroku'||type==='C9')
+  if(type==='C9')
     {
+      config.PORT = process.env.PORT;
+      config.IP =process.env.IP;
+      config.DB_URL = 'mongodb://'+process.env.IP+'/';
+      config.DB_USERNAME = '';
+      config.DB_PASSWORD = '';
+      config.DB_HOST = process.env.IP;
+      config.DB_PORT = '';
+    }
+    else if(type==='heroku'){
       config.PORT = process.env.PORT;
       config.IP =process.env.IP;
       config.DB_URL = '';
       config.DB_USERNAME = '';
       config.DB_PASSWORD = '';
-      config.DB_HOST = 'mongodb://'+process.env.IP+'/';
+      config.DB_HOST = process.env.IP;
       config.DB_PORT = '';
     }
   else if(type==='openshift')
@@ -31,6 +40,11 @@ module.exports = function(){
     {
       config.PORT = process.env.PORT||8080;
       config.IP =process.env.IP||'127.0.0.1';
+      config.DB_URL = 'mongodb://'+config.IP+'/';
+      config.DB_USERNAME = '';
+      config.DB_PASSWORD = '';
+      config.DB_HOST = process.env.IP;
+      config.DB_PORT = '';
     }
   else
     {
