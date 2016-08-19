@@ -1,6 +1,6 @@
 var config ={};
 
-var myConfig = 'C9';
+var myConfig = 'other';
 
 module.exports = function(){
   
