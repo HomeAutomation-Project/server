@@ -6,7 +6,10 @@ var PlaceSchema = new Schema({
       type:String,
       required:true
    },
-   roomsObjectId:[Schema.Types.ObjectId],
+   roomsObjectId:[{
+      type:Schema.Types.ObjectId,
+      ref: 'Room'
+   }],
   belongsTo:String
 },{timestamps:true});
 
