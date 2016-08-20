@@ -5,14 +5,14 @@ var SwitchSchema = new Schema({
   status : {
     type:String,
     required: true
+    },
+    SwitchName:{
+        type: String,
+        required : true
     }
 },{timestamps:true});
 
 var RoomSchema = new Schema({  
-   SchemaName:{  
-      type:String,
-      required:true
-   },
   name:{  
       type:String,
       required:true

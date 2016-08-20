@@ -6,13 +6,15 @@ var User = require('../model/User.model.js');
 var Room = require('../model/Room.model.js');
 var Place = require('../model/Place.model.js');
 
+
+myRouter.use('/user',require('./user/api.user.js'));
+
+
 /******************** / ****************************/
 
 module.exports =  myRouter.get('/',function(req,res){
    res.send('\\user - to fetch all users and \\user\\username to fetch specific yser details');
 });
-
-myRouter.use('/user',require('./user/api.user.js'));
 
 /********************* /login *************************/
 
