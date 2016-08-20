@@ -53,7 +53,7 @@ module.exports = function(type){
   app.use(passport.initialize());
   app.use(passport.session());
   app.use('/api',require('../routes/api'));
-  app.use('/',require('../routes/root'));
+  app.use('/',require('../routes/index'));
   
   return app;
 }
