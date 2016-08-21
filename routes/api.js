@@ -21,7 +21,7 @@ module.exports =  myRouter.get('/',function(req,res){
 module.exports = myRouter.post('/login', 
   passport.authenticate('local', { failureRedirect: '/login' }),
   function(req, res) {
-    res.redirect('/');
+    res.redirect('/user');
   });
   
 /********************* /logout *************************/  
