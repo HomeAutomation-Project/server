@@ -6,6 +6,23 @@ var User = require('../../model/User.model.js');
 var Room = require('../../model/Room.model.js');
 var Place = require('../../model/Place.model.js');
 
+module.exports =  myRouter.get('/changeUser',function(req,res){
+   User.findOneAndUpdate({ 'username': req.body.username },
+                        { 
+                        username: req.body.username,
+                        email: req.body.email,
+                        name:{
+                          first: req.body.first,
+                          last: req.body.last
+                        },
+                        password: req.body.password
+                        },
+                        function(err, user) {
+                        if (err) throw err;
+                        console.log(user); 
+});
+});
+
 
 /******************** / ************************/
 module.exports =  myRouter.get('/',function(req,res){
