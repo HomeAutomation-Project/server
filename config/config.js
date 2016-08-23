@@ -54,6 +54,6 @@ module.exports = function(){
     }
     
     
-  config.secret = 'TOP Secret';
+  config.secret = 'TopSecret';
   return config;
 }

@@ -12,8 +12,9 @@ module.exports = function(type){
   var Room = require('../model/Room.model.js');
   var Place = require('../model/Place.model.js');
 
-  app.port = config.PORT;
-  app.ip = config.IP;
+  app.set('port',config.PORT) ;
+  app.set('ip',config.IP);
+  app.set('secret',config.secret);
 
   mongoose.connect(db);
   
@@ -52,7 +53,7 @@ module.exports = function(type){
   app.use(require('express-session')({ secret: 'TOP SECRET', resave: false, saveUninitialized: false }));
   app.use(passport.initialize());
   app.use(passport.session());
-  app.use('/api',require('../routes/api'));
+  app.use('/api',require('../routes/api')(app));
   app.use('/',require('../routes/index'));
   
   return app;
