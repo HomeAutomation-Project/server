@@ -52,5 +52,8 @@ module.exports = function(){
       config.IP =process.env.IP||'127.0.0.1';
       config.DB_URL = 'mongodb://root:root@ds031975.mlab.com:31975/amanv';
     }
+    
+    
+  config.secret = 'TOP Secret';
   return config;
 }
