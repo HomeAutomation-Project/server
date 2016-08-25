@@ -35,7 +35,6 @@ module.exports = function(type){
   app.use(passport.initialize());
   app.use(passport.session());
   app.use('/api',require('../routes/api')(app));
-  app.use('/dummy',require("../routes/dummy.api.js")(app))
   app.use('/',require('../routes/index'));
   app.use(function(err, req, res, next) {
   res.status(err.status || 500);

@@ -81,7 +81,8 @@ myRouter.get('/logout', function(req, res) {
     function(req, res){
       res.send({ user: req.decoded });
     });
-    
+  
+  myRouter.use('/user',Verify.verifyOrdinaryUser);  
   myRouter.use('/user',require('./user/api.user.js'));
   
   return myRouter;
