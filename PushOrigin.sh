@@ -4,4 +4,4 @@ git add -A
 echo "******************* Enter Commit Msg *************************\n"
 read msg
 git commit -m "$msg"
-git push
+git push origin master
