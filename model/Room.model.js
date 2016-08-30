@@ -6,11 +6,16 @@ var SwitchSchema = new Schema({
     type:String,
     required: true
     },
-    SwitchName:{
+  SwitchName:{
         type: String,
         required : true
-    }
+    },
+  GPIO:{
+    type: Number
+  }
 },{timestamps:true});
+
+
 
 var RoomSchema = new Schema({  
   name:{  
@@ -18,7 +23,8 @@ var RoomSchema = new Schema({
       required:true
    },
    switches:[SwitchSchema],
-  belongsTo: String
+  belongsTo: String,
+  isOf:String
 },{timestamps:true});
 
 module.exports = mongoose.model('Room',RoomSchema);
