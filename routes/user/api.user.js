@@ -18,30 +18,45 @@ module.exports =  myRouter.get('/',function(req,res){
 });
 });
 
+/*************************************
+ *    Create a new user             **
+ *    Admin only                    **
+ *************************************
+**/
+
 module.exports =  myRouter.post('/',function(req,res){
   
-      var newUser = User({
-      username: req.body.username,
-      email: req.body.email,
-      name:{
-        first: req.body.first,
-        last: req.body.last
-      },
-      password: req.body.password
-    });
-
-    // save the user
-    newUser.save(function(err) {
-      if (err) throw err;
-      res.send('Done!');
-      console.log('User created!');
-    });
+     if(req.decoded._doc.admin)
+     {
+        var newUser = User({
+        username: req.body.username,
+        email: req.body.email,
+        name:{
+          first: req.body.first,
+          last: req.body.last
+        },
+        password: req.body.password,
+      });
+    
+      // save the user
+      newUser.save(function(err) {
+        if (err) throw err;
+        res.send('Done!');
+        console.log('User created!');
+      });
+     }
+else{
+  res.send({'message':'Not Admin'});
+}
     
 });
 
 /********************* /user/username *********************/
 
 module.exports =  myRouter.get('/:username',function(req,res){
+  
+  if(req.decoded._doc.admin)
+  {
   var temp ={userdetails:null, placedetails:null};
     User.findOne({'username':req.params.username}, function(err, users) {
       if (err) throw err;
@@ -60,18 +75,19 @@ module.exports =  myRouter.get('/:username',function(req,res){
         res.send(temp);
       });
       }
-  // object of all the users
-  
-});
+    });
+  }
+  else
+  {
+    res.send({'message':'Not Admin'});
+  }
  
 });
 
 module.exports =  myRouter.put('/:username',function(req,res){
   
-  User.findOneAndUpdate({ 'username': req.body.username },
+  User.findOneAndUpdate({ 'username': req.body.params.username },
                         { 
-                        username: req.body.username,
-                        email: req.body.email,
                         name:{
                           first: req.body.first,
                           last: req.body.last
