@@ -11,14 +11,14 @@ module.exports =  myRouter.get('/',function(req,res){
     Place.find({"belongsTo":req.decoded._doc.username}, function(err, places) {
   if (err) throw err;  
       res.send(places);
-      console.log(places);
+      //console.log(places);
 });
 });
 
 
 module.exports =  myRouter.post('/',function(req,res){
   
-    console.log(req.decoded._doc.username);
+    //console.log(req.decoded._doc.username);
       var newPlace = Place({
       name: req.body.name,
       belongsTo: req.decoded._doc.username
@@ -64,4 +64,42 @@ module.exports =  myRouter.delete('/:place',function(req,res){
             else success=false;
             res.send({"Success":success,oldPlace});}
     });
+});
+
+/********************* api/place/user/username/name/ ********************/
+/*************************************
+ *    Fetch User Places Details     **
+ *          Admin only              **
+ *************************************
+**/
+module.exports =  myRouter.get('/user/:username',function(req,res){
+    if(req.decoded._doc.admin)
+    {
+        Place.find({belongsTo:req.params.username}, function(err, places) {
+          if (err) throw err;
+            
+            res.send(places);
+          });
+    }
+    else
+    {
+        res.status = 403;
+        res.send('Not Admin');
+    }
+});
+
+module.exports =  myRouter.get('/user/:username/:name',function(req,res){
+    if(req.decoded._doc.admin)
+    {
+        Place.find({belongsTo:req.params.username, 'name':req.params.name}, function(err, places) {
+          if (err) throw err;
+            
+            res.send(places);
+          });
+    }
+    else
+    {
+        res.status = 403;
+        res.send('Not Admin');
+    }
 });

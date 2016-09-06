@@ -1,30 +1,21 @@
 var mongoose = require("mongoose");
 var Schema = mongoose.Schema;
-
-var SwitchSchema = new Schema({
-  status : {
-    type:String,
-    required: true
-    },
-  SwitchName:{
-        type: String,
-        required : true
-    },
-  GPIO:{
-    type: Number
-  }
-},{timestamps:true});
-
-
-
+var Switch = require("./Switch.model.js");
+var Place =  require("./Place.model.js");
 var RoomSchema = new Schema({  
   name:{  
       type:String,
       required:true
    },
-   switches:[SwitchSchema],
+   switches:[{
+     type : Schema.Types.ObjectId,
+     ref : 'Switch'
+   }],
   belongsTo: String,
-  isOf:String
+  isOf:{
+    type: Schema.Types.ObjectId,
+    ref:'Place'
+  }
 },{timestamps:true});
 
 module.exports = mongoose.model('Room',RoomSchema);

@@ -8,9 +8,9 @@ var Place = require('../../model/Place.model.js');
 
 
 
-/******************** / ************************/
+/******************** api/user/ ************************/
 module.exports =  myRouter.get('/',function(req,res){
-    User.find({}, function(err, users) {
+    User.findOne({'username':req.decoded._doc.username}, function(err, users) {
   if (err) throw err;  
       res.send(users);
       
@@ -19,8 +19,8 @@ module.exports =  myRouter.get('/',function(req,res){
 });
 
 /*************************************
- *    Create a new user             **
- *    Admin only                    **
+ *        Create a new user         **
+ *          Admin only              **
  *************************************
 **/
 
@@ -46,12 +46,18 @@ module.exports =  myRouter.post('/',function(req,res){
       });
      }
 else{
+  res.status = 403;
   res.send({'message':'Not Admin'});
 }
     
 });
 
-/********************* /user/username *********************/
+/********************* api/user/username *********************/
+/**************************************
+  *        Fetch User Details        **
+  *          Admin only              **
+  *************************************
+ **/
 
 module.exports =  myRouter.get('/:username',function(req,res){
   
@@ -79,14 +85,38 @@ module.exports =  myRouter.get('/:username',function(req,res){
   }
   else
   {
+    res.status = 403;
     res.send({'message':'Not Admin'});
   }
  
 });
 
 module.exports =  myRouter.put('/:username',function(req,res){
+  if(req.decoded._doc.admin)
+  {
+    User.findOneAndUpdate({ 'username': req.body.params.username },
+                        { 
+                        name:{
+                          first: req.body.first,
+                          last: req.body.last
+                        },
+                        password: req.body.password
+                        },
+                        function(err, user) {
+                        if (err) throw err;
+                        console.log(user);
+  });    
+  }
+  else
+  {
+    res.status = 403;
+    res.send({'message':'Not Admin'});
+  }
+});
+
+module.exports =  myRouter.put('/',function(req,res){
   
-  User.findOneAndUpdate({ 'username': req.body.params.username },
+    User.findOneAndUpdate({ 'username': req.decoded._doc.username },
                         { 
                         name:{
                           first: req.body.first,
@@ -115,18 +145,8 @@ module.exports =  myRouter.post('/add',function(req,res){
       console.log('User created!');
     }); 
 });
-/********************* /user/username/name/ ********************/
 
-module.exports =  myRouter.get('/:username/:name',function(req,res){
-    Place.find({belongsTo:req.params.username}, function(err, places) {
-    console.log("Places:", places[0]);
-    var temp=JSON.parse(JSON.stringify(places[0]));
-      if (err) throw err;
-        
-        res.send(temp);
-        console.log(temp);      
-      });
-});
+
 
 
 
