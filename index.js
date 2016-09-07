@@ -2,7 +2,7 @@ var app = require('./app/index.js')();
 var server = require('http').Server(app);
 var io = require('socket.io')(server);
 
-app.use(require('express').static(__dirname+'/login'));
+app.use(require('express').static(__dirname+'/public'));
 
 
 server.listen(app.get('port'),function(){
