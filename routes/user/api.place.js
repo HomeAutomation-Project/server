@@ -16,27 +16,41 @@ module.exports =  myRouter.get('/',function(req,res){
 });
 
 
-module.exports =  myRouter.post('/',function(req,res){
+module.exports =  myRouter.post('/',function(req,res,next){
   
-    //console.log(req.decoded._doc.username);
-      var newPlace = Place({
-      name: req.body.name,
-      belongsTo: req.decoded._doc.username
+     Place.findOne({"belongsTo":req.decoded._doc.username, name: req.body.name}, function(err, place) {
+     if (err) throw err;
+     
+     if(place)
+     {
+         var err={};
+         err.status = 500;
+         err.message='Duplicate Place Name';
+         next(err);
+     }
+     else{
+         var newPlace = Place({
+          name: req.body.name,
+          belongsTo: req.decoded._doc.username
+        });
+    
+        // save the user
+        newPlace.save(function(err,place) {
+          if (err) throw err;
+          else
+          res.send({'success':!err,place});
+          console.log('User created!');
+        });
+     }
+     
     });
 
-    // save the user
-    newPlace.save(function(err,place) {
-      if (err) throw err;
-      else
-      res.send({'success':!err,place});
-      console.log('User created!');
-    });
     
 });
 
 module.exports =  myRouter.get('/:place',function(req,res){
     Place.find({"belongsTo":req.decoded._doc.username, name:req.params.place}, function(err, places) {
-  if (err) throw err;  
+    if (err) throw err;  
       res.send(places);
       console.log(places);
 });
@@ -72,7 +86,7 @@ module.exports =  myRouter.delete('/:place',function(req,res){
  *          Admin only              **
  *************************************
 **/
-module.exports =  myRouter.get('/user/:username',function(req,res){
+module.exports =  myRouter.get('/user/:username',function(req,res,next){
     if(req.decoded._doc.admin)
     {
         Place.find({belongsTo:req.params.username}, function(err, places) {
@@ -83,12 +97,14 @@ module.exports =  myRouter.get('/user/:username',function(req,res){
     }
     else
     {
-        res.status = 403;
-        res.send('Not Admin');
+        var err= {};
+        err.status = 403;
+        err.message =  'Not Admin';
+        next(err);
     }
 });
 
-module.exports =  myRouter.get('/user/:username/:name',function(req,res){
+module.exports =  myRouter.get('/user/:username/:name',function(req,res,next){
     if(req.decoded._doc.admin)
     {
         Place.find({belongsTo:req.params.username, 'name':req.params.name}, function(err, places) {
@@ -99,7 +115,9 @@ module.exports =  myRouter.get('/user/:username/:name',function(req,res){
     }
     else
     {
-        res.status = 403;
-        res.send('Not Admin');
+        var err= {};
+        err.status = 403;
+        err.message =  'Not Admin';
+        next(err);
     }
 });

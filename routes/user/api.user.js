@@ -24,30 +24,29 @@ module.exports =  myRouter.get('/',function(req,res){
  *************************************
 **/
 
-module.exports =  myRouter.post('/',function(req,res){
+module.exports =  myRouter.post('/',function(req,res,next){
   
      if(req.decoded._doc.admin)
      {
-        var newUser = User({
-        username: req.body.username,
-        email: req.body.email,
-        name:{
-          first: req.body.first,
-          last: req.body.last
-        },
-        password: req.body.password,
-      });
-    
-      // save the user
-      newUser.save(function(err) {
-        if (err) throw err;
-        res.send('Done!');
-        console.log('User created!');
-      });
+        User.register(new User({ username : req.body.username,
+                                 "name":{first:req.body.first,last:req.body.last },
+                                 email:req.body.email
+            
+        }),
+          req.body.password, function(err, user) {
+            if (err) {
+                return res.status(500).json({err: err});
+            }
+            passport.authenticate('local')(req, res, function () {
+                return res.status(200).json({status: 'Registration Successful!'});
+            });
+        });
      }
 else{
-  res.status = 403;
-  res.send({'message':'Not Admin'});
+ var err= {};
+        err.status = 403;
+        err.message =  'Not Admin';
+        next(err);
 }
     
 });
@@ -59,7 +58,7 @@ else{
   *************************************
  **/
 
-module.exports =  myRouter.get('/:username',function(req,res){
+module.exports =  myRouter.get('/:username',function(req,res,next){
   
   if(req.decoded._doc.admin)
   {
@@ -85,13 +84,15 @@ module.exports =  myRouter.get('/:username',function(req,res){
   }
   else
   {
-    res.status = 403;
-    res.send({'message':'Not Admin'});
+    var err= {};
+        err.status = 403;
+        err.message =  'Not Admin';
+        next(err);
   }
  
 });
 
-module.exports =  myRouter.put('/:username',function(req,res){
+module.exports =  myRouter.put('/:username',function(req,res,next){
   if(req.decoded._doc.admin)
   {
     User.findOneAndUpdate({ 'username': req.body.params.username },
@@ -109,8 +110,10 @@ module.exports =  myRouter.put('/:username',function(req,res){
   }
   else
   {
-    res.status = 403;
-    res.send({'message':'Not Admin'});
+    var err= {};
+        err.status = 403;
+        err.message =  'Not Admin';
+        next(err);
   }
 });
 
