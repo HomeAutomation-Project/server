@@ -1,0 +1,70 @@
+<div zf-panel position="left" id="sub-nav" class="fast bounceInOut medium-3 medium-grid-content">
+	<a class="button expand">Add new Home</a>
+	<section class="block-list with-icons">
+	  <ul>
+	  	<li class="hide-for-medium">
+	  		<img src="http://placehold.it/1x1" alt="">
+	      <a zf-close="sub-nav">Close</a>
+	    </li>
+	    <li>
+	    	<img src="http://placehold.it/1x1" alt="">
+	      <a href="#">Home 1</a>
+	    </li>
+	    <!-- With an icon -->
+	    <li>
+	      <img src="http://placehold.it/1x1" alt="">
+	      <a href="#">Home 2</a>
+	    </li>
+	    <li>
+	    	<img src="http://placehold.it/1x1" alt="">
+	    	<a href="#">Home n<sup>th</sup></a>
+	    </li>
+	  </ul>
+	</section>
+</div>
+
+<div class="small-12 medium-3 messages grid-content">
+  <a class="button secondary expand hide-for-medium" zf-open="sub-nav">This</a>
+  <section class="block-list">
+  		<a class="button expand">Add new Room</a>
+		<li>
+	    <a zf-toggle="message">
+	    	<h5>Room Name</h5>
+	    	<p>A short description if you want?</p>
+	    </a>
+	  </li>
+		<li>
+	    <a zf-toggle="message">
+	    	<h1>Room Name</h1>
+	    </a>
+	  </li>
+		<li>
+	    <a style="color:white; padding:30px" class="button expand" zf-open="compose">Room Name</a>
+	  </li>
+	</section>
+</div>
+
+<div zf-panel id="message" position="right" class="fast bounceInOut small-12 medium-6 medium-grid-content">
+	Switch Details Will be added here
+</div>
+
+<!-- Start Compose Message -->
+<zf-modal overlay="true" id="compose">
+	<div class="grid-block vertical">
+		<div class="primary title-bar">
+			<div class="center title">Compose Message</div>
+			<span class="left"><a zf-close="compose" href="#">Cancel</a></span>
+			<span class="right"><a href="#">Send</a></span>
+		</div>
+		<div class="grid-content">
+			<label>Email
+        <input type="text" placeholder="email@zmail.com" />
+      </label>
+			<label>Message
+        <textarea placeholder="hello..."></textarea>
+      </label>
+		</div>
+		</div>
+	</div>
+</zf-modal>
+<!-- End Compose Message -->
