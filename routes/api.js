@@ -86,7 +86,7 @@ myRouter.get('/logout', function(req, res) {
   myRouter.use('/user',require('./user/api.user.js'));
   
   myRouter.use('/place',Verify.verifyOrdinaryUser);  
-  myRouter.use('/place',require('./place/api.place.js'));
+  myRouter.use('/place',require('./user/api.place.js'));
   
   return myRouter;
 

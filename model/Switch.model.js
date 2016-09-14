@@ -1,6 +1,6 @@
 var mongoose = require("mongoose");
 var Schema = mongoose.Schema;
-var Room = require("./Room.model");
+
 var SwitchSchema = new Schema({
   status : {
     type:String,
@@ -12,11 +12,6 @@ var SwitchSchema = new Schema({
     },
   GPIO:{
     type: Number
-  },
-  isOf:{
-    type: Schema.Types.ObjectId,
-    required : true,
-    ref : Room
   }
 },{timestamps:true});
 
