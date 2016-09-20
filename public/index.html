@@ -63,7 +63,7 @@
 
             <ul class="nav">
                 <li class="active">
-                    <a href="#/">
+                    <a href="#/dashboard">
                         <i class="pe-7s-graph"></i>
                         <p>Dashboard</p>
                     </a>
@@ -240,7 +240,12 @@
       var app = angular.module("myApp", ["ngRoute"]);
       app.config(function($routeProvider) {
           $routeProvider
-          .when("/users", {
+          .when("/dashboard", {
+							templateUrl : "dashboard.html",
+							controller: 'myController'
+					})
+					
+						.when("/users", {
               templateUrl : "user.html",
               controller: 'myController'
 
@@ -256,7 +261,7 @@
 
 
           .otherwise("/", {
-              templateUrl : "dashboard.html",
+              templateUrl : "login.html",
               controller: 'myController'
 
           });
