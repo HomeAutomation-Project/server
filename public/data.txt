@@ -1,0 +1,53 @@
+{
+    "_id": {
+        "$oid": "57b2ad565b882cb8046b7175"
+    },
+    "updatedAt": {
+        "$date": "2016-08-16T06:06:14.550Z"
+    },
+    "createdAt": {
+        "$date": "2016-08-16T06:06:14.550Z"
+    },
+    "name": "Living Place",
+    "belongsTo": "amanvishnani",
+    "rooms": [
+        "Living Place"
+    ],
+    "__v": 0
+}
+
+
+
+
+
+{
+    "_id": {
+        "$oid": "57def4e35c5c328b19021423"
+    },
+    "updatedAt": {
+        "$date": "2016-09-19T18:55:51.412Z"
+    },
+    "createdAt": {
+        "$date": "2016-09-18T20:11:15.668Z"
+    },
+    "name": "place1",
+    "belongsTo": "aman",
+    "roomsObjectId": [
+        {
+            "$oid": "57df0336d5f8015c6ee24354"
+        },
+        {
+            "$oid": "57df039ad5f8015c6ee24355"
+        },
+        {
+            "$oid": "57e034aacda9c768342f3b25"
+        },
+        {
+            "$oid": "57e034b1cda9c768342f3b26"
+        },
+        {
+            "$oid": "57e034b7cda9c768342f3b27"
+        }
+    ],
+    "__v": 0
+}
