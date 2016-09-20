@@ -161,6 +161,17 @@ module.exports =  myRouter.post('/:place/:room',function(req,res,next){
                                    
                                    newSwitch.save(function(err,sw) {
                                        if(err) throw err;
+                                       
+                                       Room.findById(sw.isOfRoom,function(err,rm){
+                                           if(err) throw err;
+                                           console.log(sw);
+                                           rm.switches.push(sw._id);
+                                           rm.save(function(err,data)
+                                           {
+                                               if(err) throw err;
+                                               console.log(data);
+                                           });
+                                       });
                                        res.send(sw);
                                    });
                                }
