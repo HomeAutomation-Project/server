@@ -87,7 +87,7 @@
                     </a>
                 </li>
                 <li>
-                    <a>
+                    <a href="#/notification">
                         <i class="pe-7s-bell"></i>
                         <p>Notifications</p>
                     </a>
@@ -253,6 +253,10 @@
 					})
 					.when("/schedule", {
 							templateUrl : "schedule.html",
+							controller: 'myController'
+					})
+					.when("/notification", {
+							templateUrl : "notifications.html",
 							controller: 'myController'
 					})
 
