@@ -15,6 +15,9 @@ var RoomSchema = new Schema({
   isOf:{
     type: Schema.Types.ObjectId,
     ref:'Place'
+  },
+  PIR:{
+    type:Number
   }
 },{timestamps:true});
 

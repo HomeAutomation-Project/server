@@ -1,8 +1,6 @@
-<div class="head">
-	<h1 background-color:purple; align=center> Welcome to Home Automation</h1></div>
-    <div class="logmod">
-  <div class="logmod__wrapper">
-    <span class="logmod__close">Close</span>
+<div class="container">
+  <div class="row">
+  <div class="col-lg-8 col-lg-offset-2">
     <div class="logmod__container">
       <ul class="logmod__tabs">
         <li data-tabtar="lgm-2" ng-click='setTab(false)' ng-class="reg ? '' : 'current' "><a href="#/">Login</a></li>
@@ -17,8 +15,8 @@
           <form accept-charset="utf-8" action="#" class="simform">
             <div class="sminputs">
               <div class="input full">
-                <label class="string optional" for="user-name">Email*</label>
-                <input class="string optional" maxlength="255" id="user-email" placeholder="Email" type="email" size="50" />
+                <label class="string optional" for="user-name">Username*</label>
+                <input class="string optional" maxlength="255" id="user-email" placeholder="Username" type="Username" size="50" />
               </div>
             </div>
             <div class="sminputs">
@@ -40,14 +38,14 @@
       </div>
       <div class="logmod__tab lgm-2 show" ng-hide="reg">
         <div class="logmod__heading">
-          <span class="logmod__heading-subtitle">Enter your email and password <strong>to sign in</strong></span>
+          <span class="logmod__heading-subtitle">Enter your Username and password <strong>to sign in</strong></span>
         </div> 
         <div class="logmod__form">
           <form accept-charset="utf-8" action="/api/authenticate" method='post'  class="simform">
             <div class="sminputs">
               <div class="input full">
-                <label class="string optional" for="user-name">Email*</label>
-                <input class="string optional" maxlength="255" id="user-email" placeholder="Email" name=username size="50" />
+                <label class="string optional" for="user-name">Username*</label>
+                <input class="string optional" maxlength="255" id="user-email" placeholder="Username" name=username size="50" />
               </div>
             </div>
             <div class="sminputs">
@@ -66,6 +64,6 @@
 
           </div>
       </div>
-    </div>
-  </div>
-</div>
+      </div>
+      </div>
+      </div>
