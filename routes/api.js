@@ -90,6 +90,9 @@ myRouter.get('/logout', function(req, res) {
   
   myRouter.use('/room',Verify.verifyOrdinaryUser);  
   myRouter.use('/room',require('./room/api.room.js'));
+  
+  myRouter.use('/switch',Verify.verifyOrdinaryUser);  
+  myRouter.use('/switch',require('./switch/api.switch.js'));
   return myRouter;
 
 }
