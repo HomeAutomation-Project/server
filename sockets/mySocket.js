@@ -8,7 +8,7 @@ module.exports = function(io){
   socket.on('Authenticate', function (data) {
     console.log(data);
     
-    Room.find({'_id':data})
+    Room.findById(data)
     .populate('switches isOf')
     .exec(function(err,room){
       if(err) throw err;
