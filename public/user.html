@@ -3,19 +3,19 @@
                             <div class="header">
                                 <h4 class="title">Edit Profile</h4>
                             </div>
-                            <div class="content">
+                            <div class="content" ng-controller="getUserDetails">
                                 <form>
                                     <div class="row">
                                         <div class="col-md-3">
                                             <div class="form-group">
                                                 <label>Username</label>
-                                                <input class="form-control" placeholder="Username" value="darshan123" type="text">
+                                                <input class="form-control" placeholder="Username" type="text" value={{uname}}>
                                             </div>
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label for="exampleInputEmail1">Email address</label>
-                                                <input class="form-control" placeholder="Email" type="email" name="email">
+                                                <input class="form-control" placeholder="Email" type="email" name="email" value={{getmail}}>
                                             </div>
                                         </div>
                                     </div>
@@ -24,13 +24,13 @@
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label>First Name</label>
-                                                <input class="form-control" placeholder="Company" value="Mike" type="text">
+                                                <input class="form-control" placeholder="Company" type="text" value={{getfirstname}}>
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label>Last Name</label>
-                                                <input class="form-control" placeholder="Last Name" value="Andrew" type="text">
+                                                <input class="form-control" placeholder="Last Name" type="text" value={{getlastname}}>
                                             </div>
                                         </div>
                                     </div>
@@ -42,3 +42,4 @@
                             </div>
                         </div>
                     </div>
+<script src="assets/js/controller.js"></script>

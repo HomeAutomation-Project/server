@@ -48,7 +48,13 @@ app.controller('myController', function($scope, $routeParams,$http,$location) {
         console.log(localStorage.getItem('admin'));
         console.log(localStorage.getItem('first'));
         console.log(localStorage.getItem('last'));
-        console.log(localStorage.getItem('token'))
+        console.log(localStorage.getItem('token'));
+        
+        $scope.uname=data.data.username;
+        $scope.getmail=data.data.email;
+        $scope.getfirstname=data.data.name.first;
+        $scope.getlastname=data.data.name.last;
+        
       },function(data,status,header){
         console.log(data+status+header);
       });
