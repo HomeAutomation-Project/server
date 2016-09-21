@@ -42,6 +42,7 @@ module.exports= function(app){
   /********************* /authenticate *************************/
   
   myRouter.post('/authenticate', function(req, res,next) {
+    console.log(req.body);
       passport.authenticate('local', function(err, user, info) {
     if (err) {
       return next(err);
@@ -59,7 +60,7 @@ module.exports= function(app){
       }
         
       var token = Verify.getToken(user);
-              res.status(200).json({
+        res.status(200).json({
         status: 'Login successful!',
         success: true,
         token: token

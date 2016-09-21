@@ -16,13 +16,13 @@
             <div class="sminputs">
               <div class="input full">
                 <label class="string optional" for="user-name">Username*</label>
-                <input class="string optional" maxlength="255" id="user-email" placeholder="Username" type="Username" size="50" />
+                <input class="string optional" maxlength="255" id="user-email" ng-model="username" placeholder="Username" type="Username" size="50" />
               </div>
             </div>
             <div class="sminputs">
               <div class="input string optional">
                 <label class="string optional" for="user-pw">Password *</label>
-                <input class="string optional" maxlength="255" id="user-pw" placeholder="Password" type="text" size="50" />
+                <input class="string optional" maxlength="255" id="user-pw" ng-model="password" placeholder="Password" type="text" size="50" />
               </div>
               <div class="input string optional">
                 <label class="string optional" for="user-pw-repeat">Repeat password *</label>
@@ -41,17 +41,17 @@
           <span class="logmod__heading-subtitle">Enter your Username and password <strong>to sign in</strong></span>
         </div> 
         <div class="logmod__form">
-          <form accept-charset="utf-8" action="/api/authenticate" method='post'  class="simform">
+          <form accept-charset="utf-8" ng-submit="SendData();"  class="simform">
             <div class="sminputs">
               <div class="input full">
                 <label class="string optional" for="user-name">Username*</label>
-                <input class="string optional" maxlength="255" id="user-email" placeholder="Username" name=username size="50" />
+                <input class="string optional" maxlength="255" id="user-email" placeholder="Username" ng-model="username" name=username size="50" />
               </div>
             </div>
             <div class="sminputs">
               <div class="input full">
                 <label class="string optional" for="user-pw">Password *</label>
-                <input name=password class="string optional" maxlength="255" id="user-pw" placeholder="Password" type="password" size="50" />
+                <input name=password class="string optional" maxlength="255" id="user-pw" ng-model="password" placeholder="Password" type="password" size="50" />
                 						<span class="hide-password">Show</span>
               </div>
             </div>
