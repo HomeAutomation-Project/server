@@ -17,13 +17,41 @@ app.controller('myController', function($scope, $routeParams,$http,$location) {
             console.log("Sucess Data"+JSON.stringify(data)+" Status"+JSON.stringify(status)+" header"+header);
             if(data.data.success)
             {
-                alert("Welcome"+$scope.username+" to the Portal")
-                $location.path() === '/dashboard'
+//                 alert("Welcome "+$scope.username+" to the Portal")
+                 if (typeof(Storage) !== "undefined") {
+                   localStorage.setItem("username", $scope.username);
+                   localStorage.setItem("token", data.data.token);
+                   $scope.getUserDetails();
+                   $location.path('/dashboard');
+                } else {
+                    alert("Your Browser is not Supported!");
+                }
             }
             
         },function(data,status,header){
                 alert("Login Failure!");
         })
         }
+    $scope.getUserDetails = function()
+    {
+      $http({
+            method:'GET',
+            url: '/api/user',
+            headers:{'Content-Type':'application/json','x-access-token':localStorage.getItem('token')}
+        }).then(function(data,status,header){
+        localStorage.setItem('email',data.data.email);
+        localStorage.setItem('admin',data.data.admin);
+        localStorage.setItem('first',data.data.name.first);
+        localStorage.setItem('last',data.data.name.last);
+        
+        console.log(localStorage.getItem('email'));
+        console.log(localStorage.getItem('admin'));
+        console.log(localStorage.getItem('first'));
+        console.log(localStorage.getItem('last'));
+        console.log(localStorage.getItem('token'))
+      },function(data,status,header){
+        console.log(data+status+header);
+      });
+    }
     
  });

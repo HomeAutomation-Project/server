@@ -15,8 +15,7 @@
                         <div class="font-icon-detail"><i class="pe-7s-home myicon"></i></div>
                         <div>
 
-                            <label>{{home.name}}</label>
-
+                           
                         </div>
                       </div>
 
@@ -31,12 +30,4 @@
           </div>
       </div>
 </div>
-<script>
-         function studentController($scope,$http) {
-            var url = "data.txt";
 
-            $http.get(url).success( function(response) {
-               $scope.homes = response;
-            });
-         }
-      </script>
