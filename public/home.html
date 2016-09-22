@@ -1,20 +1,20 @@
-<body ng-controller="studentController">
+<body>
 
 
-<div class="container-fluid">
+<div class="container-fluid" ng-controller="getPlaceDetails">
     <div class="row">
         <div class="col-md-12">
             <div class="card">
                 <div class="header">
-                    <h4 class="title">Your places...</h4>
-                    <br />
-                  </br>
-                    <div class="row" ng-repeate=home in homes>
+                  <h4 class="title">Your places...</h4>
+                  <br/>
+                  <br/>
+                      <div class="row">
                       <center>
-                      <div class="font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6">
+                      <div class="font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6" ng-repeat="place in places">
                         <div class="font-icon-detail"><i class="pe-7s-home myicon"></i></div>
                         <div>
-
+                            <label>{{place.name}}</label>
                            
                         </div>
                       </div>
@@ -31,3 +31,4 @@
       </div>
 </div>
 
+<script src="assets/js/controller.js"></script>

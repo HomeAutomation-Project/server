@@ -32,7 +32,7 @@ app.controller('myController', function($scope, $routeParams,$http,$location) {
                 alert("Login Failure!");
         })
         }
-    $scope.getUserDetails = function()
+    $scope.getUserDetails = function($scope,$http)
     {
       $http({
             method:'GET',
@@ -59,5 +59,17 @@ app.controller('myController', function($scope, $routeParams,$http,$location) {
         console.log(data+status+header);
       });
     }
+     $scope.getPlaceDetails = function()
+    {
+      $http({
+            method:'GET',
+            url: '/api/place',
+            headers:{'Content-Type':'application/json','x-access-token':localStorage.getItem('token')}
+            }).then(function(data,status,header){
+            $scope.places=data.data;
+            console.log($scope.places[0].name);
+        });
+    }
     
  });
+
