@@ -32,7 +32,7 @@ app.controller('myController', function($scope, $routeParams,$http,$location) {
                 alert("Login Failure!");
         })
         }
-    $scope.getUserDetails = function($scope,$http)
+    $scope.getUserDetails = function()
     {
       $http({
             method:'GET',
