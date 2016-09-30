@@ -94,6 +94,9 @@ myRouter.get('/logout', function(req, res) {
   
   myRouter.use('/switch',Verify.verifyOrdinaryUser);  
   myRouter.use('/switch',require('./switch/api.switch.js'));
+  
+  myRouter.use('/task',Verify.verifyOrdinaryUser);  
+  myRouter.use('/task',require('./task/api.task.js'));
   return myRouter;
 
 }
