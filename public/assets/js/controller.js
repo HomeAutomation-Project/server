@@ -68,14 +68,14 @@ app.controller('myController', function($scope, $routeParams,$http,$location) {
             }).then(function(data,status,header){
             $scope.places=data.data;
             console.log($scope.places[0].name);
-            plac=$scope.places[0];
+            plac=$scope.places[0].name;
         });
     }
      $scope.getRoomDetails = function()
     {
       $http({
             method:'GET',
-            url: '/api/place/'+plac,
+            url: '/api/room/'+pla,
             headers:{'Content-Type':'application/json','x-access-token':localStorage.getItem('token')}
             }).then(function(data,status,header){
             $scope.rooms=data.data;
@@ -87,7 +87,7 @@ app.controller('myController', function($scope, $routeParams,$http,$location) {
        $http({
              method:'PUT',
              url:'/api/user',
-             data:{'username':$scope.username,'email':$scope.email,'first':$scope.fname,'last':$scope.lname},
+             data:{'email':$scope.mail,'first':$scope.firstname,'last':$scope.lastname},
              headers:{'Content-Type':'application/json','x-access-token':localStorage.getItem('token')}
              }).then(function(data,status,header){
              $location.path=('/user');
