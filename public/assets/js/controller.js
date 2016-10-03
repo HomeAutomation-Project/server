@@ -1,5 +1,5 @@
 var app =angular.module("myApp");
-
+var plac
 app.controller('myController', function($scope, $routeParams,$http,$location) {
     $scope.reg = false;
     $scope.setTab=function(x)
@@ -7,7 +7,7 @@ app.controller('myController', function($scope, $routeParams,$http,$location) {
       $scope.reg=x;
     }
     $scope.SendData = function () {
-        
+
         $http({
             method:'POST',
             url: '/api/authenticate',
@@ -27,7 +27,7 @@ app.controller('myController', function($scope, $routeParams,$http,$location) {
                     alert("Your Browser is not Supported!");
                 }
             }
-            
+
         },function(data,status,header){
                 alert("Login Failure!");
         })
@@ -43,18 +43,18 @@ app.controller('myController', function($scope, $routeParams,$http,$location) {
         localStorage.setItem('admin',data.data.admin);
         localStorage.setItem('first',data.data.name.first);
         localStorage.setItem('last',data.data.name.last);
-        
+
         console.log(localStorage.getItem('email'));
         console.log(localStorage.getItem('admin'));
         console.log(localStorage.getItem('first'));
         console.log(localStorage.getItem('last'));
         console.log(localStorage.getItem('token'));
-        
+
         $scope.uname=data.data.username;
         $scope.mail=data.data.email;
         $scope.firstname=data.data.name.first;
         $scope.lastname=data.data.name.last;
-        
+
       },function(data,status,header){
         console.log(data+status+header);
       });
@@ -68,8 +68,32 @@ app.controller('myController', function($scope, $routeParams,$http,$location) {
             }).then(function(data,status,header){
             $scope.places=data.data;
             console.log($scope.places[0].name);
+            plac=$scope.places[0];
         });
     }
-    
+     $scope.getRoomDetails = function()
+    {
+      $http({
+            method:'GET',
+            url: '/api/place/'+plac,
+            headers:{'Content-Type':'application/json','x-access-token':localStorage.getItem('token')}
+            }).then(function(data,status,header){
+            $scope.rooms=data.data;
+            console.log($scope.rooms[0].name);
+        });
+    }
+     $scope.update = function()
+     {
+       $http({
+             method:'PUT',
+             url:'/api/user',
+             data:{'username':$scope.username,'email':$scope.email,'first':$scope.fname,'last':$scope.lname},
+             headers:{'Content-Type':'application/json','x-access-token':localStorage.getItem('token')}
+             }).then(function(data,status,header){
+             $location.path=('/user');
+
+         });
+     }
+
  });
 

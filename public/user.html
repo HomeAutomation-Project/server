@@ -4,12 +4,12 @@
                                 <h4 class="title">Edit Profile</h4>
                             </div>
                             <div class="content" ng-controller="getUserDetails">
-                                <form>
+                                <form ng-submit="update();">
                                     <div class="row">
                                         <div class="col-md-3">
                                             <div class="form-group">
                                                 <label>Username</label>
-                                                <input class="form-control" placeholder="Username" type="text" value={{uname}}>
+                                                <input class="form-control" placeholder="Username" type="text" name="username" value={{uname}}>
                                             </div>
                                         </div>
                                         <div class="col-md-4">
@@ -24,18 +24,18 @@
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label>First Name</label>
-                                                <input class="form-control" placeholder="Company" type="text" value={{firstname}}>
+                                                <input class="form-control" type="text" value={{firstname}} name="fname">
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label>Last Name</label>
-                                                <input class="form-control" placeholder="Last Name" type="text" value={{lastname}}>
+                                                <input class="form-control" placeholder="Last Name" type="text" name="lname" value={{lastname}}>
                                             </div>
                                         </div>
                                     </div>
 
-                                    
+
                                     <button type="submit" class="btn btn-info btn-fill pull-right">Update Profile</button>
                                     <div class="clearfix"></div>
                                 </form>
