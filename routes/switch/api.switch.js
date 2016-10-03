@@ -122,7 +122,9 @@ module.exports =  myRouter.post('/:place/:room',function(req,res,next){
                 err.message='Place Not Found'
                 next(err);
             }else{
-                Room.findOne({name:req.params.room,belongsTo:req.decoded._doc.username,isOf:places._id},
+                Room.findOne({name:req.params.room,belongsTo:req.decoded._doc.username,isOf:places._id})
+                    .populate('switches')
+                    .exec(
                 function(err,room)
                 {
                    if(err)  throw err;
@@ -150,7 +152,22 @@ module.exports =  myRouter.post('/:place/:room',function(req,res,next){
                                }
                                else
                                {
-                                   var newSwitch = Switch({
+                                   var sent = false;
+                                   console.log(room.GPIOs);
+                                   if(req.body.GPIO && room.GPIOs[req.body.GPIO]==false)
+                                   {
+                                       
+                                       err={};
+                                       err.status = 500;
+                                       err.message = 'Switch Busy ';
+                                       sent = true;
+                                       next(err);
+                                   
+                                   }
+                               
+                                   else
+                                   {
+                                       var newSwitch = Switch({
                                        status : req.body.status||'OFF',
                                        SwitchName: req.body.name||req.body.SwitchName,
                                        GPIO: req.body.GPIO,
@@ -158,7 +175,6 @@ module.exports =  myRouter.post('/:place/:room',function(req,res,next){
                                        isOfRoom: mongoose.Types.ObjectId(room._id),
                                        belongsTo:req.decoded._doc.username
                                    });
-                                   
                                    newSwitch.save(function(err,sw) {
                                        if(err) throw err;
                                        
@@ -166,6 +182,7 @@ module.exports =  myRouter.post('/:place/:room',function(req,res,next){
                                            if(err) throw err;
                                            console.log(sw);
                                            rm.switches.push(sw._id);
+                                           rm.GPIOs[req.body.GPIO] = false;
                                            rm.save(function(err,data)
                                            {
                                                if(err) throw err;
@@ -174,12 +191,14 @@ module.exports =  myRouter.post('/:place/:room',function(req,res,next){
                                        });
                                        res.send(sw);
                                    });
+                                   }
                                }
                            }
                        });
                    }
                    
-                });
+                }
+                        );
             }
     });
 });
@@ -196,8 +215,10 @@ module.exports =  myRouter.put('/:place/:room/:switch',function(req,res,next){
                 err.message='Place Not Found'
                 next(err);
             }else{
-                Room.findOne({name:req.params.room,belongsTo:req.decoded._doc.username,isOf:places._id},
-                function(err,room)
+                Room.findOne({name:req.params.room,belongsTo:req.decoded._doc.username,isOf:places._id})
+                .populate('switches')
+                .exec(
+                    function(err,room)
                 {
                    if(err)  throw err;
                    if(!room)
@@ -209,9 +230,30 @@ module.exports =  myRouter.put('/:place/:room/:switch',function(req,res,next){
                    }
                    else
                    {
+                       for(var i=0;i<room.switches.length;i++)
+                                if(room.switches[i].SwitchName === req.params.switch)
+                                    var x= room.switches[i].GPIO;
                        var r ={};
+                       if(req.body.GPIO) {
+                           if(req.body.GPIO && req.body.GPIO ==x)
+                           {}
+                           else if(room.GPIOs[req.body.GPIO])
+                           {
+                               r.GPIO=req.body.GPIO;
+                               room.GPIOs[req.body.GPIO]=false;
+                                console.log(room.GPIOs);
+                               room.GPIOs[x]=true;
+                               console.log(room.GPIOs);
+                           }
+                           else{
+                               err={};
+                               err.status = 500;
+                               err.message = 'GPIO Pin Busy';
+                               next(err);
+                               return ;
+                           }
+                       }
                        if(req.body.SwitchName || req.body.name) {r.SwitchName=req.body.SwitchName || req.body.name}
-                       if(req.body.GPIO) {r.GPIO=req.body.GPIO}
                        if(req.body.isOfRoom) {r.isOfRoom=req.body.isOfRoom}
                        if(req.body.isOfPlace) {r.GPIO=req.body.isOfPlace}
                        if(req.body.status) {r.status=req.body.status}
@@ -237,7 +279,55 @@ module.exports =  myRouter.put('/:place/:room/:switch',function(req,res,next){
                        });
                    }
                    
+                }
+                    );
+                
+            }
+    }
+    );
+});
+
+
+module.exports =  myRouter.delete('/:place/:room/:switch',
+function(req,res,next)
+{
+    Place.findOne({"belongsTo":req.decoded._doc.username, name:req.params.place},
+    function(err, places) {
+            if (err) throw err;  
+            if(!places)
+            {
+                err = {};
+                err.status=404;
+                err.message='Place Not Found'
+                next(err);
+            }else{
+                Room.findOne({name:req.params.room,belongsTo:req.decoded._doc.username,isOf:places._id})
+                .exec(
+                function(err,room)
+                {
+                   if(err)  throw err;
+                   if(!room)
+                   {
+                       var err = {};
+                       err.status = 404;
+                       err.message = 'Room Not Found';
+                       next(err);
+                   }
+                   else
+                   {
+                       Switch.findOneAndRemove({SwitchName:req.params.switch,isOfRoom:room._id,isOfPlace:places._id,belongsTo:req.decoded._doc.username}
+                       ,function(err,sw)
+                       {
+                           if(err) throw err;
+                           room.switches.splice(room.switches.indexOf(sw._id),1);
+                           room.GPIOs[sw.GPIO]=true;
+                           room.save();
+                           res.send({success:!err,sw});
+                       });
+                   }
                 });
             }
     });
-});
+}
+
+);

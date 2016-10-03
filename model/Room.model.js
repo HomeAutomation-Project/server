@@ -2,6 +2,7 @@ var mongoose = require("mongoose");
 var Schema = mongoose.Schema;
 var Switch = require("./Switch.model.js");
 var Place =  require("./Place.model.js");
+var GPIOSchema = require("./GPIOSchema.model.js");
 var RoomSchema = new Schema({  
   name:{  
       type:String,
@@ -18,7 +19,8 @@ var RoomSchema = new Schema({
   },
   PIR:{
     type:Number
-  }
+  },
+  GPIOs:GPIOSchema
 },{timestamps:true});
 
 module.exports = mongoose.model('Room',RoomSchema);

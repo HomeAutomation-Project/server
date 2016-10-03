@@ -6,7 +6,10 @@ var myRouter = express.Router(express.Router({mergeParams: true}));
 var User = require('../../model/User.model.js');
 var Room = require('../../model/Room.model.js');
 var Place = require('../../model/Place.model.js');
-
+var GPIOSchema = require("../../model/GPIOSchema.model.js");
+var usableGPIO = [2,3,4,7,8,9,10,11,14,15,17,18,22,23,24,25,27];
+var safe = [4,17,18,22,23,24,25,27];
+var unsafe = [2,3,7,8,9,10,11,14,15];
 
 /**
  * GET /api/room/:place
@@ -57,19 +60,26 @@ module.exports =  myRouter.post('/:place',function(req,res,next){
              }
              else
              {
+                
                 //create a room object
                  var newRoom = Room({
                   name: req.body.name,
                   belongsTo: req.decoded._doc.username,
-                  isOf:places._id
+                  isOf:places._id,
+                  PIR: null,
+                  GPIOs : GPIOSchema
                 });
+                 if(req.body.PIR && (usableGPIO.indexOf(Number(req.body.PIR)))!=-1)
+                 {
+                     newRoom.PIR=req.body.PIR;
+                     newRoom.GPIOs[req.body.PIR] = false;
+                 }
+                
                 // save room object
                 newRoom.save(function(err,room) {
                 if (err) throw err;
-                var r = places.roomsObjectId;
-                r.push(mongoose.Types.ObjectId(room._id));
-                Place.findOneAndUpdate({"belongsTo":req.decoded._doc.username, name: req.params.place},
-                {$set:{roomsObjectId:r}}, function(err,place1)
+                places.roomsObjectId.push(mongoose.Types.ObjectId(room._id));
+                places.save(function(err,place1)
                 {
                     if (err) throw err;
                     res.send({'success':!err,room});
@@ -97,17 +107,36 @@ module.exports =  myRouter.put('/:place/:room',function(req,res,next){
             next(err);
         }
         else{
-            var r = {};
-            if(req.body.name) {r.name=req.body.name}
-            if(req.body.switches) {r.switches=req.body.switches}
-            if(req.body.isOf) {r.isOf=req.body.isOf}
-            console.log(r);
-            Room.findOneAndUpdate({name:req.params.room,belongsTo:req.decoded._doc.username,isOf:places._id},
-            {$set:r},
+            Room.findOne({name:req.params.room,belongsTo:req.decoded._doc.username,isOf:places._id},
             function(err, room) {
-                 if (err) throw err;
-                 console.log("LOG:"+r);
-                 res.send(room);
+                if (err) throw err;
+                if(req.body.name) {room.name=req.body.name}
+                if(req.body.switches) {room.switches=req.body.switches}
+                if(req.body.isOf) {room.isOf=req.body.isOf}
+                if(req.body.PIR && (usableGPIO.indexOf(Number(req.body.PIR)))!=-1) 
+                {
+                    if(!room.PIR)
+                        room.PIR=req.body.PIR
+                    else if(room.GPIOs[req.body.PIR])
+                    {
+                        room.GPIOs[room.PIR] = true;
+                        room.GPIOs[req.body.PIR] = false;
+                        room.PIR=req.body.PIR
+                    }
+                    else
+                    {
+                        var err1={};
+                        err1.status = 500;
+                        err1.message = 'Pin Busy';
+                        next(err1);
+                        return;
+                    }
+                }
+                room.save(function(err,room)
+                {
+                    if(err) throw err;
+                    res.send(room);
+                })
             });
         }    
      });
