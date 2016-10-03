@@ -117,20 +117,36 @@ module.exports =  myRouter.put('/:username',function(req,res,next){
   }
 });
 
-module.exports =  myRouter.put('/',function(req,res){
+module.exports =  myRouter.put('/',function(req,res,next){
   
-    User.findOneAndUpdate({ 'username': req.decoded._doc.username },
-                        { 
-                        name:{
-                          first: req.body.first,
-                          last: req.body.last
-                        },
-                        password: req.body.password
-                        },
-                        function(err, user) {
-                        if (err) throw err;
-                        console.log(user);
-  });    
+    User.findOne({ 'username': req.decoded._doc.username })
+    .exec(
+      function(err,usr)
+      {
+        if(err) throw err;
+        if(!usr)
+        {
+          var err={}
+          err.status = 404;
+          err.message = '';
+          next(err);
+          return;
+        }
+        else
+        {
+          if(req.body.first) usr.name.first =req.body.first;
+          if(req.body.last) usr.name.last = req.body.last;
+          if(req.body.email) usr.email = req.body.email;
+          usr.save(
+            function(err,usr)
+            {
+              if(err) throw err;
+              else res.send({success: !err,usr});
+            }
+            );
+        }
+      }
+      );
 });
 
 module.exports =  myRouter.post('/add',function(req,res){
