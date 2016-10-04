@@ -75,7 +75,7 @@ app.controller('myController', function($scope, $routeParams,$http,$location) {
     {
       $http({
             method:'GET',
-            url: '/api/room/'+pla,
+            url: '/api/room/'+plac,
             headers:{'Content-Type':'application/json','x-access-token':localStorage.getItem('token')}
             }).then(function(data,status,header){
             $scope.rooms=data.data;
@@ -84,12 +84,16 @@ app.controller('myController', function($scope, $routeParams,$http,$location) {
     }
      $scope.update = function()
      {
+
        $http({
              method:'PUT',
              url:'/api/user',
-             data:{'email':$scope.mail,'first':$scope.firstname,'last':$scope.lastname},
+             data:{'username':$scope.username,'email':$scope.mail,'first':$scope.firstname,'last':$scope.lastname},
              headers:{'Content-Type':'application/json','x-access-token':localStorage.getItem('token')}
              }).then(function(data,status,header){
+                $scope.getUserDetails();
+
+
              $location.path=('/user');
 
          });
