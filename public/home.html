@@ -1,6 +1,3 @@
-<body>
-
-
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-12">
@@ -11,14 +8,15 @@
                   <br/>
                       <div class="row">
                       <center>
+                          <button ng-click="getPlaceDetails()">GET PLACES</button>
                       <a><div class="font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6" ng-repeat="place in places">
-                        <div class="font-icon-detail"><i class="pe-7s-home myicon"></i></div></a>
+                        <div class="font-icon-detail"><i class="pe-7s-home myicon"></i></div></div></a>
                         <div>
                             <label>{{place.name}}</label>
 
                         </div>
-                      </div>
                       </center>
+                      </div>
                        </div>
                     </div>
                 </div>
@@ -26,5 +24,3 @@
           </div>
       </div>
 </div>
-
-<script src="assets/js/controller.js"></script>

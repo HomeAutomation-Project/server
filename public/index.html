@@ -46,7 +46,7 @@
 <body ng-app="myApp">
 
 <div class="wrapper">
-    <div class="sidebar" data-color="purple" data-image="assets/img/sidebar-5.jpg">
+    <div ng-controller="myController"  class="sidebar" data-color="purple" data-image="assets/img/sidebar-5.jpg">
 
     <!--
 
@@ -75,8 +75,8 @@
                         <p>User Profile</p>
                     </a>
                 </li>
-                <li ng-click="getPlaceDetails();">
-                    <a href="#/homes">
+                <li>
+                    <a ng-click="alert('Hello World')" href="#/homes">
                         <i class="pe-7s-note2"></i>
                         <p>Places</p>
                     </a>
@@ -202,7 +202,7 @@
                     </ul>
                 </nav>
                 <p class="copyright pull-right">
-                    &copy; 2016 <a>Designed & Developed by team Home Automation
+                    &copy; 2016 <a>Designed & Developed by team Home Automation</a>
                 </p>
             </div>
         </footer>
