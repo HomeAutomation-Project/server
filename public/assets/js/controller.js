@@ -93,6 +93,25 @@ app.controller('myController', function($scope, $routeParams,$http,$location) {
                  console.log(data);
              });
      }
+     $scope.logout = function()
+     {
+       $http({
+             url:'/#',
+             }).then(function(){
+             localStorage.removeItem("token");
+             localStorage.removeItem("email");
+             localStorage.removeItem("admin");
+             localStorage.removeItem("first");
+             localStorage.removeItem("last");
+             console.log(localStorage.getItem('email'));
+             console.log(localStorage.getItem('admin'));
+             console.log(localStorage.getItem('first'));
+             console.log(localStorage.getItem('last'));
+             console.log(localStorage.getItem('token'));
+
+       })
+     }
+
 
  });
 
