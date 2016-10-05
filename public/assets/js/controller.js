@@ -1,6 +1,7 @@
 var app =angular.module("myApp");
 app.controller('myController', function($scope, $routeParams,$http,$location) {
     $scope.reg = false;
+    var flag=false;
     $scope.setTab=function(x)
     {
       $scope.reg=x;
@@ -22,6 +23,7 @@ app.controller('myController', function($scope, $routeParams,$http,$location) {
                    localStorage.setItem("token", data.data.token);
                    $scope.getUserDetails();
                    $location.path('/dashboard');
+                   flag=true;
                 } else {
                     alert("Your Browser is not Supported!");
                 }
@@ -33,6 +35,12 @@ app.controller('myController', function($scope, $routeParams,$http,$location) {
         }
     $scope.getUserDetails = function()
     {
+      if(flag==true)
+        {
+          $location.path('/');
+        }
+        else
+          {
       $http({
             method:'GET',
             url: '/api/user',
@@ -57,6 +65,7 @@ app.controller('myController', function($scope, $routeParams,$http,$location) {
       },function(data,status,header){
         console.log(data+status+header);
       });
+          }
     }
      $scope.getPlaceDetails = function()
     {
@@ -103,14 +112,27 @@ app.controller('myController', function($scope, $routeParams,$http,$location) {
              localStorage.removeItem("admin");
              localStorage.removeItem("first");
              localStorage.removeItem("last");
+             $scope=null;
              console.log(localStorage.getItem('email'));
              console.log(localStorage.getItem('admin'));
              console.log(localStorage.getItem('first'));
              console.log(localStorage.getItem('last'));
              console.log(localStorage.getItem('token'));
 
-       })
+       });
      }
+     $scope.addPlace = function()
+     {
+         $http({
+         method:'post',
+         url:'/api/place',
+         data:{'name':$scope.newplace},
+         headers:{'Content-Type':'application/json','x-access-token':localStorage.getItem('token')},
+         }).then(function(data,status,header){
+             alert("new place added");
+             console.log("added new");
+         });
+      }
 
 
  });
