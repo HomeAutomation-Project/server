@@ -7,15 +7,20 @@
                   <br/>
                   <br/>
                       <div class="row">
-                      <center>
-                          <button ng-click="getPlaceDetails()">GET PLACES</button>
-                      <a><div class="font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6" ng-repeat="place in places">
-                        <div class="font-icon-detail"><i class="pe-7s-home myicon"></i></div></div></a>
-                        <div>
-                            <label>{{place.name}}</label>
-
-                        </div>
-                      </center>
+                          <div style="text-align: center;">
+                              <button ng-click="getPlaceDetails()">GET PLACES</button>
+                              <a>
+                                  <div class="font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6"
+                                       ng-repeat="place in places">
+                                      <div class="font-icon-detail">
+                                          <i class="pe-7s-home myicon"></i>
+                                      </div>
+                                      <div>
+                                          <label>{{place.name}}</label>
+                                      </div>
+                                  </div>
+                              </a>
+                          </div>
                       </div>
                        </div>
                     </div>
