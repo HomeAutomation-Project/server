@@ -130,6 +130,15 @@ app.controller('myController', function($scope, $routeParams,$http,$location) {
          headers:{'Content-Type':'application/json','x-access-token':localStorage.getItem('token')},
          }).then(function(data,status,header){
              alert("new place added");
+              $http({
+            method:'GET',
+            url: '/api/place',
+            headers:{'Content-Type':'application/json','x-access-token':localStorage.getItem('token')}
+            }).then(function(data,status,header){
+            $scope.places=data.data;
+            console.log($scope.places[0].name);
+            plac=$scope.places[0].name;
+            });
              console.log("added new");
          });
       }
