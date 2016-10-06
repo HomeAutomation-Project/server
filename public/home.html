@@ -1,16 +1,31 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-12">
-            <div class="card">
+            <!--<form ng-submit="addPlace();">-->
+                <!--<input type="text" ng-model="newplace" placeholder="sweet home"></input>-->
+                <div class="row">
+                <div class="col-lg-2 col-md-3 col-sm-6 col-xs-6">
+                    <div class="form-group">
+                        <input type="text" ng-model="newplace" placeholder="Place Name" class="form-control">
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-3 col-sm-6 col-xs-6">
+                    <div class="form-group">
+                        <button type="button" class="btn btn-success btn-fill" ng-click="addPlace()">Add New Place</button>
+                    </div>
+                </div>
+                </div>
+
+            <!--</form>-->
+            <div class="card" style="padding-bottom: 20px">
                 <div class="header">
-                  <h4 class="title">Your places...</h4>
+                  <h4 class="title">Places</h4>
                   <br/>
                   <br/>
                       <div class="row">
                           <div style="text-align: center;">
                               <!--button ng-click="getPlaceDetails()">GET PLACES</button-->
-                              <a>
-                                  <div class="font-icon-list col-lg-2 col-md-3 col-sm-4 col-xs-6 col-xs-6"
+                                  <div class="font-icon-list col-lg-3 col-md-4 col-sm-6 col-xs-6"
                                        ng-repeat="place in places">
                                       <div class="font-icon-detail">
                                           <i class="pe-7s-home myicon"></i>
@@ -18,10 +33,14 @@
                                       <div>
                                           <label>{{place.name}}</label>
                                       </div>
+                                      <div class="row" style="margin-bottom: 25px">
+                                          <button type="button" class="btn btn-primary btn-fill">View</button>
+                                          <button type="button" class="btn btn-warning btn-fill">Edit</button>
+                                          <button type="button" class="btn btn-danger btn-fill">Delete</button>
+                                          <div class="clearfix"></div>
+                                      </div>
 
                                   </div>
-
-                              </a>
                           </div>
                       </div>
                        </div>
@@ -31,9 +50,5 @@
           </div>
       </div>
 <div>
-<form ng-submit="addPlace();">
-<input type="text" ng-model="newplace" placeholder="sweet home"></input>
-<input type="submit" value="Add New"></input>
-</form>
 </div>
 </div>
