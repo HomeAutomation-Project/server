@@ -79,11 +79,11 @@ app.controller('myController', function($scope, $routeParams,$http,$location) {
             plac=$scope.places[0].name;
         });
     }
-     $scope.getRoomDetails = function()
+    $scope.getRoomDetails = function (myplace)
     {
       $http({
             method:'GET',
-            url: '/api/room/',
+          url: '/api/room/' + myplace,
             headers:{'Content-Type':'application/json','x-access-token':localStorage.getItem('token')}
             }).then(function(data,status,header){
             $scope.rooms=data.data;
