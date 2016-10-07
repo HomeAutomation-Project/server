@@ -2,6 +2,7 @@ var express = require('express');
 var passport = require('passport');
 var Strategy = require('passport-local').Strategy;
 var myRouter = express.Router(express.Router({mergeParams: true}));
+var Switch = require('../../model/Switch.model');
 var User = require('../../model/User.model.js');
 var Room = require('../../model/Room.model.js');
 var Place = require('../../model/Place.model.js');
@@ -68,15 +69,35 @@ module.exports =  myRouter.put('/:place',function(req,res){
 });
 
 module.exports =  myRouter.delete('/:place',function(req,res){
-    Place.findOneAndRemove({"belongsTo":req.decoded._doc.username, name:req.params.place}
-    , function(err,oldPlace){
+    Place.findOne({"belongsTo": req.decoded._doc.username, name: req.params.place}
+        , function (err, myPlace) {
         if (err) throw err;
         else
         {
-            var success = false; 
-            if(oldPlace) success=true;
-            else success=false;
-            res.send({"Success":success,oldPlace});}
+            var success = false;
+            if (myPlace) {
+                for (var pl_i = 0; pl_i < myPlace.roomsObjectId.length; pl_i++) {
+                    Room.findById(myPlace.roomsObjectId[pl_i], function (err, room) {
+                        if (err) throw err;
+                        if (room) {
+                            for (var sw_i = 0; sw_i < room.switches.length; sw_i++) {
+                                Switch.findByIdAndRemove(room.switches[sw_i], function (err, sw) {
+                                    if (err) throw err;
+                                    if (sw) {
+                                        console.log("Switch " + sw.SwitchName + " was removed.")
+                                    }
+                                });
+                            }
+                            room.remove();
+                            console.log("Room " + room.name + " was removed.")
+                        }
+                    });
+                }
+                myPlace.remove();
+                console.log("Place " + myPlace.name + " was Removed");
+            }
+            res.send({"Success": !err, myPlace});
+        }
     });
 });
 

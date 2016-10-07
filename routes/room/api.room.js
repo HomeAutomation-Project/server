@@ -6,6 +6,7 @@ var myRouter = express.Router(express.Router({mergeParams: true}));
 var User = require('../../model/User.model.js');
 var Room = require('../../model/Room.model.js');
 var Place = require('../../model/Place.model.js');
+var Switch = require('../../model/Switch.model');
 var GPIOSchema = require("../../model/GPIOSchema.model.js");
 var usableGPIO = [2,3,4,7,8,9,10,11,14,15,17,18,22,23,24,25,27];
 var safe = [4,17,18,22,23,24,25,27];
@@ -155,9 +156,17 @@ module.exports =  myRouter.delete('/:place/:room',function(req,res,next){
             next(err);
         }
         else{
-            Room.findOneAndRemove({name:req.params.room,belongsTo:req.decoded._doc.username,isOf:places._id},
+            Room.findOne({name: req.params.room, belongsTo: req.decoded._doc.username, isOf: places._id},
             function(err,room)
             {
+                for (var sw_i = 0; sw_i < room.switches.length; sw_i++) {
+                    Switch.findByIdAndRemove(room.switches[sw_i], function (err, sw) {
+                        if (err) throw err;
+                        if (sw) {
+                            console.log(sw.SwitchName + " was removed.")
+                        }
+                    });
+                }
                 if(err) throw err;
                 res.send(room);
             });
