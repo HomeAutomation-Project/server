@@ -142,7 +142,7 @@ app.controller('myController', function($scope, $routeParams,$http,$location) {
 
 
 })
-    .controller('RoomCtrl', ['$routeParams', '$http', function RoomCtrl($routeParams, $http) {
+    .controller('RoomCtrl', ['$scope', '$routeParams', '$http', function RoomCtrl($scope, $routeParams, $http) {
         this.name = 'BookCtrl';
         this.params = $routeParams;
         this.getRoomDetails = function (myplace) {
