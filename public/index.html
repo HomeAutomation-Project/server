@@ -260,9 +260,9 @@
 							templateUrl : "notifications.html",
 							controller: 'myController'
 					})
-                    .when("/room", {
+                  .when("/room/:placeName", {
                       templateUrl : "rooms.html",
-                      controller: 'myController'
+                      controller: 'RoomCtrl'
                     })
 
 

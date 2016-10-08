@@ -34,9 +34,10 @@
                                           <label>{{place.name}}</label>
                                       </div>
                                       <div class="row" style="margin-bottom: 25px">
-                                          <button type="button" class="btn btn-primary btn-fill"
-                                                  ng-click="getRoomDetails(place.name);">View
-                                          </button>
+                                          <a ng-href="#/room/{{place.name}}">
+                                              <button type="button" class="btn btn-primary btn-fill">View
+                                              </button>
+                                          </a>
                                           <button type="button" class="btn btn-warning btn-fill">Edit</button>
                                           <button type="button" class="btn btn-danger btn-fill" ng-click="deletePlace(place.name)">Delete</button>
                                           <div class="clearfix"></div>
