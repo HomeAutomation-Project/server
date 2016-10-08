@@ -128,14 +128,30 @@ app.controller('myController', function($scope, $routeParams,$http,$location) {
          method:'post',
          url:'/api/place',
          data:{'name':$scope.newplace},
-         headers:{'Content-Type':'application/json','x-access-token':localStorage.getItem('token')},
+         headers:{'Content-Type':'application/json','x-access-token':localStorage.getItem('token')}
          }).then(function(data,status,header){
              alert($scope.newplace+" added");
+             $scope.getPlaceDetails();
              $scope.newplace ="";
          },function (data, status, header) {
              alert(data.status+" Error: "+data.data.message);
          });
       }
+      $scope.deletePlace = function (myplace) {
+
+          $http({
+              method: 'DELETE',
+              url: '/api/place/'+myplace ,
+              data:{'name':myplace},
+              headers:{'Content-Type':'application/json','x-access-token':localStorage.getItem('token')}
+              }).then(function (data,status,header) {
+              alert(myplace+" deleted");
+              $scope.getPlaceDetails();
+          },function (data, status, header) {
+              alert(data.status+" Error: "+data.data.message);
+          })
+      }
+
 
 
  });
