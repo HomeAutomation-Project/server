@@ -1,0 +1,54 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <!--<form ng-submit="addPlace();">-->
+            <!--<input type="text" ng-model="newplace" placeholder="sweet home"></input>-->
+            <div class="row">
+                <div class="col-lg-2 col-md-3 col-sm-6 col-xs-6">
+                    <div class="form-group">
+                        <input type="text" ng-model="newroom" placeholder="Room Name" class="form-control">
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-3 col-sm-6 col-xs-6">
+                    <div class="form-group">
+                        <button type="button" class="btn btn-success btn-fill" ng-click="addRoom()">Add New Room</button>
+                    </div>
+                </div>
+            </div>
+
+            <!--</form>-->
+            <div class="card" style="padding-bottom: 20px">
+                <div class="header">
+                    <h4 class="title">Rooms</h4>
+                    <br/>
+                    <br/>
+                    <div class="row">
+                        <div style="text-align: center;">
+                            <!--button ng-click="getPlaceDetails()">GET PLACES</button-->
+                            <div class="font-icon-list col-lg-3 col-md-4 col-sm-6 col-xs-6"
+                                 ng-repeat="room in rooms">
+                                <div class="font-icon-detail">
+                                    <i class="pe-7s-home myicon"></i>
+                                </div>
+                                <div>
+                                    <label>{{room.name}}</label>
+                                </div>
+                                <div class="row" style="margin-bottom: 25px">
+                                    <button type="button" class="btn btn-primary btn-fill"
+                                            ng-click="">View
+                                    </button>
+                                    <button type="button" class="btn btn-warning btn-fill">Edit</button>
+                                    <button type="button" class="btn btn-danger btn-fill">Delete</button>
+                                    <div class="clearfix"></div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

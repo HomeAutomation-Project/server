@@ -81,6 +81,7 @@ app.controller('myController', function($scope, $routeParams,$http,$location) {
     }
     $scope.getRoomDetails = function (myplace)
     {
+        $location.path('/room');
       $http({
             method:'GET',
           url: '/api/room/' + myplace,
@@ -88,7 +89,7 @@ app.controller('myController', function($scope, $routeParams,$http,$location) {
             }).then(function(data,status,header){
             $scope.rooms=data.data;
             console.log($scope.rooms[0].name);
-        });
+          });
     }
      $scope.update = function()
      {
