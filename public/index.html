@@ -75,7 +75,7 @@
                         <p>User Profile</p>
                     </a>
                 </li>
-                <li ng-click="getPlaceDetails();">
+                <li>
                     <a href="#/homes">
                         <i class="pe-7s-note2"></i>
                         <p>Places</p>
@@ -250,7 +250,7 @@
                      })
 					.when("/homes", {
 							templateUrl : "home.html",
-							controller: 'myController'
+                        controller: 'PlaceCtrl'
 					})
 					.when("/schedule", {
 							templateUrl : "schedule.html",

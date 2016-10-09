@@ -30,21 +30,42 @@
                                     <div class="row">
                                         <div class="font-icon-list col-lg-12 col-md-12 col-sm-12 col-xs-12"
                                              ng-repeat="room in rooms">
-                                            <div class="font-icon-detail">
-                                                <i class="pe-7s-home myicon"></i>
-                                            </div>
-                                            <div>
-                                                <label>{{room.name}}</label>
-                                            </div>
-                                            <div class="row" style="margin-bottom: 25px">
-                                                <button type="button" class="btn btn-primary btn-fill"
-                                                        ng-click="">View
-                                                </button>
-                                                <button type="button" class="btn btn-warning btn-fill">Edit</button>
-                                                <button type="button" class="btn btn-danger btn-fill">Delete</button>
-                                                <div class="clearfix"></div>
-                                            </div>
+                                            <!--Room Element Start-->
+                                            <div class="row">
+                                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                                    <i class="pe-7s-home myicon"></i>
+                                                    <div>
+                                                        <label>{{room.name}}</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8"
+                                                     style="margin-bottom: 25px">
+                                                    <div class="row">
+                                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                            <button type="button"
+                                                                    class="btn btn-primary btn-fill btn-block"
+                                                                    ng-click="">View
+                                                            </button>
+                                                        </div>
+                                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                            <button type="button"
+                                                                    class="btn btn-warning btn-fill btn-block">
+                                                                Edit
+                                                            </button>
+                                                        </div>
+                                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                            <button type="button"
+                                                                    class="btn btn-danger btn-fill btn-block">
+                                                                Delete
+                                                            </button>
+                                                        </div>
 
+
+                                                        <div class="clearfix"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!--Room Element End-->
                                         </div>
                                     </div>
                                 </div>

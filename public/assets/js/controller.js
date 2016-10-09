@@ -67,18 +67,6 @@ app.controller('myController', function($scope, $routeParams,$http,$location) {
       });
           }
     }
-     $scope.getPlaceDetails = function()
-    {
-      $http({
-            method:'GET',
-            url: '/api/place',
-            headers:{'Content-Type':'application/json','x-access-token':localStorage.getItem('token')}
-            }).then(function(data,status,header){
-            $scope.places=data.data;
-            console.log($scope.places[0].name);
-            plac=$scope.places[0].name;
-        });
-    };
      $scope.update = function()
      {
 
@@ -143,7 +131,7 @@ app.controller('myController', function($scope, $routeParams,$http,$location) {
 
 })
     .controller('RoomCtrl', ['$scope', '$routeParams', '$http', function RoomCtrl($scope, $routeParams, $http) {
-        this.name = 'BookCtrl';
+        this.name = 'RoomCtrl';
         this.params = $routeParams;
         this.getRoomDetails = function (myplace) {
             $http({
@@ -158,4 +146,20 @@ app.controller('myController', function($scope, $routeParams,$http,$location) {
         console.log(this.params);
         this.getRoomDetails(this.params.placeName);
     }])
+
+    .controller('PlaceCtrl', ['$scope', '$routeParams', '$http', function RoomCtrl($scope, $routeParams, $http) {
+        this.name = 'PlaceCtrl';
+        this.params = $routeParams;
+        this.getPlaceDetails = function () {
+            $http({
+                method: 'GET',
+                url: '/api/place',
+                headers: {'Content-Type': 'application/json', 'x-access-token': localStorage.getItem('token')}
+            }).then(function (data, status, header) {
+                $scope.places = data.data;
+            });
+        };
+        this.getPlaceDetails();
+    }])
+
 ;
