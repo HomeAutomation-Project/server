@@ -25,24 +25,49 @@
                     <div class="row">
                         <div style="text-align: center;">
                             <!--button ng-click="getPlaceDetails()">GET PLACES</button-->
-                            <div class="font-icon-list col-lg-3 col-md-4 col-sm-6 col-xs-6"
-                                 ng-repeat="room in rooms">
-                                <div class="font-icon-detail">
-                                    <i class="pe-7s-home myicon"></i>
-                                </div>
-                                <div>
-                                    <label>{{room.name}}</label>
-                                </div>
-                                <div class="row" style="margin-bottom: 25px">
-                                    <button type="button" class="btn btn-primary btn-fill"
-                                            ng-click="">View
-                                    </button>
-                                    <button type="button" class="btn btn-warning btn-fill">Edit</button>
-                                    <button type="button" class="btn btn-danger btn-fill">Delete</button>
-                                    <div class="clearfix"></div>
-                                </div>
+                            <div class="row">
+                                <div class="container-fluid col-lg-4 col-md-6 col-sm-6 col-xs-6">
+                                    <div class="row">
+                                        <div class="font-icon-list col-lg-12 col-md-12 col-sm-12 col-xs-12"
+                                             ng-repeat="room in rooms">
+                                            <div class="font-icon-detail">
+                                                <i class="pe-7s-home myicon"></i>
+                                            </div>
+                                            <div>
+                                                <label>{{room.name}}</label>
+                                            </div>
+                                            <div class="row" style="margin-bottom: 25px">
+                                                <button type="button" class="btn btn-primary btn-fill"
+                                                        ng-click="">View
+                                                </button>
+                                                <button type="button" class="btn btn-warning btn-fill">Edit</button>
+                                                <button type="button" class="btn btn-danger btn-fill">Delete</button>
+                                                <div class="clearfix"></div>
+                                            </div>
 
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-md-4 col-sm-4 col-xs-6"></div>
                             </div>
+                            <!--<div class="font-icon-list col-lg-12 col-md-12 col-sm-12 col-xs-12"-->
+                            <!--ng-repeat="room in rooms">-->
+                            <!--<div class="font-icon-detail">-->
+                            <!--<i class="pe-7s-home myicon"></i>-->
+                            <!--</div>-->
+                            <!--<div>-->
+                            <!--<label>{{room.name}}</label>-->
+                            <!--</div>-->
+                            <!--<div class="row" style="margin-bottom: 25px">-->
+                            <!--<button type="button" class="btn btn-primary btn-fill"-->
+                            <!--ng-click="">View-->
+                            <!--</button>-->
+                            <!--<button type="button" class="btn btn-warning btn-fill">Edit</button>-->
+                            <!--<button type="button" class="btn btn-danger btn-fill">Delete</button>-->
+                            <!--<div class="clearfix"></div>-->
+                            <!--</div>-->
+
+                            <!--</div>-->
                         </div>
                     </div>
                 </div>
