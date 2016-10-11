@@ -40,7 +40,7 @@ module.exports =  myRouter.post('/',function(req,res,next){
           if (err) throw err;
           else
           res.send({'success':!err,place});
-          console.log('User created!');
+            console.log('Place created!');
         });
      }
      
