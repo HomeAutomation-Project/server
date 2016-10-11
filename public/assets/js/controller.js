@@ -1,4 +1,5 @@
 var app =angular.module("myApp");
+var cplace;
 app.controller('myController', function($scope, $routeParams,$http,$location) {
     $scope.reg = false;
     var flag=false;
@@ -100,20 +101,34 @@ app.controller('myController', function($scope, $routeParams,$http,$location) {
      }
 })
     .controller('RoomCtrl', ['$scope', '$routeParams', '$http', function RoomCtrl($scope, $routeParams, $http) {
-        this.name = 'RoomCtrl';
-        this.params = $routeParams;
-        this.getRoomDetails = function (myplace) {
+        var rm =  this;
+        rm.name = 'RoomCtrl';
+        rm.params = $routeParams;
+        rm.getRoomDetails = function (myplace) {
             $http({
                 method: 'GET',
                 url: '/api/room/' + myplace,
                 headers: {'Content-Type': 'application/json', 'x-access-token': localStorage.getItem('token')}
             }).then(function (data, status, header) {
                 $scope.rooms = data.data;
+                cplace = myplace;
                 console.log($scope.rooms);
             });
         }
+        rm.deleteRoom = function (myroom) {
+            $http({
+                method: 'DELETE',
+                url: '/api/room/'+cplace+'/'+myroom,
+                headers: {'Content-Type': 'application/json', 'x-access-token': localStorage.getItem('token')}
+            }).then(function (data, status, header) {
+                alert(myroom + " deleted");
+            }, function (data, status, header) {
+                alert(data.status + " Error: " + data.data.message);
+            });
+        }
+
         console.log(this.params);
-        this.getRoomDetails(this.params.placeName);
+        rm.getRoomDetails(this.params.placeName);
     }])
 
     .controller('PlaceCtrl', ['$scope', '$routeParams', '$http', function RoomCtrl($scope, $routeParams, $http) {
@@ -142,7 +157,7 @@ app.controller('myController', function($scope, $routeParams,$http,$location) {
                 pc.getPlaceDetails();
             }, function (data, status, header) {
                 alert(data.status + " Error: " + data.data.message);
-            })
+            });
         }
 
         pc.addPlace = function (myplace) {
