@@ -6,19 +6,21 @@
                 <div class="row">
                 <div class="col-lg-2 col-md-3 col-sm-6 col-xs-6">
                     <div class="form-group">
-                        <input type="text" ng-model="newplace" placeholder="Place Name" class="form-control">
+                        <input type="text" ng-model="pc.newplace" placeholder="Place Name" class="form-control">
                     </div>
                 </div>
                 <div class="col-lg-2 col-md-3 col-sm-6 col-xs-6">
                     <div class="form-group">
-                        <button type="button" class="btn btn-success btn-fill" ng-click="addPlace()">Add New Place</button>
+                        <button type="button" class="btn btn-success btn-fill" ng-click="pc.addPlace(pc.newplace)">Add
+                            New Place
+                        </button>
                     </div>
                 </div>
                 </div>
 
             <!--</form>-->
             <div class="card" style="padding-bottom: 20px">
-                {{getPlaceDetails()}}
+                {{pc.getPlaceDetails()}}
                 <div class="header">
                   <h4 class="title">Places</h4>
                   <br/>
@@ -40,7 +42,9 @@
                                               </button>
                                           </a>
                                           <button type="button" class="btn btn-warning btn-fill">Edit</button>
-                                          <button type="button" class="btn btn-danger btn-fill" ng-click="deletePlace(place.name)">Delete</button>
+                                          <button type="button" class="btn btn-danger btn-fill"
+                                                  ng-click="pc.deletePlace(place.name)">Delete
+                                          </button>
                                           <div class="clearfix"></div>
                                       </div>
 
