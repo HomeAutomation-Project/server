@@ -247,10 +247,15 @@
 							templateUrl : "notifications.html",
 							controller: 'myController'
 					})
-                  .when("/room/:placeName", {
+                    .when("/room/:placeName", {
                       templateUrl : "rooms.html",
                       controller: 'RoomCtrl',
                       controllerAs: 'rm'
+                    })
+                    .when("/room/:placeName/:roomName", {
+                      templateUrl : "rooms.html",
+                      controller: 'SwitchCtrl',
+                      controllerAs: 'sw'
                     })
 
 

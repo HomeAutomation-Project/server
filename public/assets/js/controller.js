@@ -126,7 +126,20 @@ app.controller('myController', function($scope, $routeParams,$http,$location) {
                 alert(data.status + " Error: " + data.data.message);
             });
         }
-
+        rm.addRoom = function (myroom) {
+            $http({
+                method: 'post',
+                url: '/api/room/'+cplace,
+                data: {'name': myroom},
+                headers: {'Content-Type': 'application/json', 'x-access-token': localStorage.getItem('token')}
+            }).then(function (data, status, header) {
+                alert(myroom + " added");
+                rm.getRoomDetails(cplace);
+                rm.newplace = "";
+            }, function (data, status, header) {
+                alert(data.status + " Error: " + data.data.message);
+            });
+        }
         console.log(this.params);
         rm.getRoomDetails(this.params.placeName);
     }])
