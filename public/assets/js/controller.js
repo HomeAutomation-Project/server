@@ -1,5 +1,4 @@
 var app =angular.module("myApp");
-var cuplace;
 app.controller('myController', function($scope, $routeParams,$http,$location) {
     $scope.reg = false;
     var flag=false;
@@ -123,6 +122,7 @@ app.controller('myController', function($scope, $routeParams,$http,$location) {
               headers:{'Content-Type':'application/json','x-access-token':localStorage.getItem('token')}
               }).then(function (data,status,header) {
               alert(myplace+" deleted");
+              $scope.getPlaceDetails();
           },function (data, status, header) {
               alert(data.status+" Error: "+data.data.message);
           })
@@ -140,24 +140,11 @@ app.controller('myController', function($scope, $routeParams,$http,$location) {
                 headers: {'Content-Type': 'application/json', 'x-access-token': localStorage.getItem('token')}
             }).then(function (data, status, header) {
                 $scope.rooms = data.data;
-                cuplace = myplace;
                 console.log($scope.rooms);
             });
         }
         console.log(this.params);
         this.getRoomDetails(this.params.placeName);
-        $scope.deleteRoom = function (myplace) {
-            $http({
-                method: 'DELETE',
-                url: '/api/room/'+cuplace+'/'+myplace,
-                headers: {'Content-Type': 'application/json', 'x-access-token': localStorage.getItem('token')}
-            }).then(function (data,status,header) {
-                alert(myplace+"is deleted");
-            },function (data, status, header) {
-                alert(data.status+" Error: "+data.data.message);
-            })
-        }
-
     }])
 
     .controller('PlaceCtrl', ['$scope', '$routeParams', '$http', function RoomCtrl($scope, $routeParams, $http) {
