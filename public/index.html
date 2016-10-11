@@ -184,6 +184,21 @@
                                 Home
                             </a>
                         </li>
+                        <li>
+                            <a href="#">
+                                Company
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                Portfolio
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                               Blog
+                            </a>
+                        </li>
                     </ul>
                 </nav>
                 <p class="copyright pull-right">
@@ -219,9 +234,8 @@
 	<!--<script src='js/jquery.min.js'></script>-->
     <script type="text/javascript" src="assets/js/angular.min.js"></script>
     <script type="text/javascript" src="assets/js/angular-route.min.js"></script>
-<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.1.4/angular-mobile.min.js"></script>
     <script type="text/javascript">
-        var app = angular.module("myApp", ["ngRoute", "ngMobile"]);
+      var app = angular.module("myApp", ["ngRoute"]);
       app.config(function($routeProvider) {
           $routeProvider
                     .when("/dashboard", {
