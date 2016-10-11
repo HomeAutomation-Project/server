@@ -159,6 +159,7 @@ module.exports =  myRouter.delete('/:place/:room',function(req,res,next){
             Room.findOne({name: req.params.room, belongsTo: req.decoded._doc.username, isOf: places._id},
             function(err,room)
             {
+                if(err) throw err;
                 for (var sw_i = 0; sw_i < room.switches.length; sw_i++) {
                     Switch.findByIdAndRemove(room.switches[sw_i], function (err, sw) {
                         if (err) throw err;
@@ -167,8 +168,8 @@ module.exports =  myRouter.delete('/:place/:room',function(req,res,next){
                         }
                     });
                 }
-                if(err) throw err;
                 res.send(room);
+                room.remove();
             });
         }
      }
