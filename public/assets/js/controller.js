@@ -98,37 +98,6 @@ app.controller('myController', function($scope, $routeParams,$http,$location) {
 
        });
      }
-     $scope.addPlace = function()
-     {
-         $http({
-         method:'post',
-         url:'/api/place',
-         data:{'name':$scope.newplace},
-         headers:{'Content-Type':'application/json','x-access-token':localStorage.getItem('token')}
-         }).then(function(data,status,header){
-             alert($scope.newplace+" added");
-             $scope.getPlaceDetails();
-             $scope.newplace ="";
-         },function (data, status, header) {
-             alert(data.status+" Error: "+data.data.message);
-         });
-      }
-      $scope.deletePlace = function (myplace) {
-
-          $http({
-              method: 'DELETE',
-              url: '/api/place/'+myplace ,
-              data:{'name':myplace},
-              headers:{'Content-Type':'application/json','x-access-token':localStorage.getItem('token')}
-              }).then(function (data,status,header) {
-              alert(myplace+" deleted");
-              $scope.getPlaceDetails();
-          },function (data, status, header) {
-              alert(data.status+" Error: "+data.data.message);
-          })
-      }
-
-
 })
     .controller('RoomCtrl', ['$scope', '$routeParams', '$http', function RoomCtrl($scope, $routeParams, $http) {
         this.name = 'RoomCtrl';
@@ -148,9 +117,10 @@ app.controller('myController', function($scope, $routeParams,$http,$location) {
     }])
 
     .controller('PlaceCtrl', ['$scope', '$routeParams', '$http', function RoomCtrl($scope, $routeParams, $http) {
-        this.name = 'PlaceCtrl';
-        this.params = $routeParams;
-        this.getPlaceDetails = function () {
+        var pc = this;
+        pc.name = 'PlaceCtrl';
+        pc.params = $routeParams;
+        pc.getPlaceDetails = function () {
             $http({
                 method: 'GET',
                 url: '/api/place',
@@ -159,7 +129,36 @@ app.controller('myController', function($scope, $routeParams,$http,$location) {
                 $scope.places = data.data;
             });
         };
-        this.getPlaceDetails();
+        pc.getPlaceDetails();
+        pc.deletePlace = function (myplace) {
+
+            $http({
+                method: 'DELETE',
+                url: '/api/place/' + myplace,
+                data: {'name': myplace},
+                headers: {'Content-Type': 'application/json', 'x-access-token': localStorage.getItem('token')}
+            }).then(function (data, status, header) {
+                alert(myplace + " deleted");
+                pc.getPlaceDetails();
+            }, function (data, status, header) {
+                alert(data.status + " Error: " + data.data.message);
+            })
+        }
+
+        pc.addPlace = function (myplace) {
+            $http({
+                method: 'post',
+                url: '/api/place',
+                data: {'name': myplace},
+                headers: {'Content-Type': 'application/json', 'x-access-token': localStorage.getItem('token')}
+            }).then(function (data, status, header) {
+                alert(myplace + " added");
+                pc.getPlaceDetails();
+                pc.newplace = "";
+            }, function (data, status, header) {
+                alert(data.status + " Error: " + data.data.message);
+            });
+        }
     }])
 
 ;
