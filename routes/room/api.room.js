@@ -177,32 +177,34 @@ module.exports =  myRouter.delete('/:place/:room',function(req,res,next){
 });
 
 module.exports =  myRouter.get('/:place/:room',function(req,res,next){
-    Place.findOne({"belongsTo":req.decoded._doc.username, name: req.params.place},
-     function(err, places) {
-        if (err) throw err;
-        if(!places)
-        {
-            var err={};
-            err.status = 403;
-            err.message='Place Not Found';
-            next(err);
-        }
-        else{
-            Room.findOne({name:req.params.room,belongsTo:req.decoded._doc.username,isOf:places._id},
-            function(err,room)
-            {
-                if(err) throw err;
-                if(room)
-                {res.send(room);}
-                else
+    Place.findOne({"belongsTo": req.decoded._doc.username, name: req.params.place})
+        .populate('isOf')
+        .exec(
+            function (err, places) {
+                if (err) throw err;
+                if (!places)
                 {
                     var err = {};
-                    err.status=404;
-                    err.message="ROOM NOT FOUND";
+                    err.status = 403;
+                    err.message = 'Place Not Found';
                     next(err);
                 }
-            });
-        }
-     }
-     );
+                else {
+                    Room.findOne({name: req.params.room, belongsTo: req.decoded._doc.username, isOf: places._id},
+                        function (err, room) {
+                            if (err) throw err;
+                            if (room) {
+                                res.send(room);
+                            }
+                            else {
+                                var err = {};
+                                err.status = 404;
+                                err.message = "ROOM NOT FOUND";
+                                next(err);
+                            }
+                        });
+                }
+            }
+        );
+
 });
