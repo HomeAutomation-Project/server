@@ -1,5 +1,6 @@
 var app =angular.module("myApp");
 var cplace;
+var croom;
 app.controller('myController', function($scope, $routeParams,$http,$location) {
     $scope.reg = false;
     var flag=false;
@@ -122,6 +123,7 @@ app.controller('myController', function($scope, $routeParams,$http,$location) {
                 headers: {'Content-Type': 'application/json', 'x-access-token': localStorage.getItem('token')}
             }).then(function (data, status, header) {
                 alert(myroom + " deleted");
+                rm.getRoomDetails(cplace);
             }, function (data, status, header) {
                 alert(data.status + " Error: " + data.data.message);
             });
@@ -143,6 +145,54 @@ app.controller('myController', function($scope, $routeParams,$http,$location) {
         console.log(this.params);
         rm.getRoomDetails(this.params.placeName);
     }])
+
+
+
+    .controller('SwitchCtrl', ['$scope', '$routeParams', '$http', function SwitchCtrl($scope, $routeParams, $http) {
+        var sw =  this;
+        sw.name = 'SwitchCtrl';
+        sw.params = $routeParams;
+        sw.getSwitchDetails = function (myroom) {
+            $http({
+                method: 'GET',
+                url: '/api/room/' + cplace +'/'+myroom,
+                headers: {'Content-Type': 'application/json', 'x-access-token': localStorage.getItem('token')}
+            }).then(function (data, status, header) {
+                $scope.switches = data.data;
+                croom = myroom;
+                console.log($scope.switches);
+            });
+        }
+        sw.deleteSwitch = function (myswitch) {
+            $http({
+                method: 'DELETE',
+                url: '/api/room/'+cplace+'/'+croom+'/'+myswitch,
+                headers: {'Content-Type': 'application/json', 'x-access-token': localStorage.getItem('token')}
+            }).then(function (data, status, header) {
+                alert(myswitch + " deleted");
+                sw.getSwitchDetails(croom);
+            }, function (data, status, header) {
+                alert(data.status + " Error: " + data.data.message);
+            });
+        }
+        sw.addSwitch = function (myswitch) {
+            $http({
+                method: 'post',
+                url: '/api/room/'+cplace+'/'+croom,
+                data: {'name': myswitch},
+                headers: {'Content-Type': 'application/json', 'x-access-token': localStorage.getItem('token')}
+            }).then(function (data, status, header) {
+                alert(myswitch + " added");
+                sw.getSwitchDetails(croom);
+                sw.newplace = "";
+            }, function (data, status, header) {
+                alert(data.status + " Error: " + data.data.message);
+            });
+        }
+        console.log(this.params);
+        sw.getRoomDetails(this.params.roomName);
+    }])
+
 
     .controller('PlaceCtrl', ['$scope', '$routeParams', '$http', function RoomCtrl($scope, $routeParams, $http) {
         var pc = this;
