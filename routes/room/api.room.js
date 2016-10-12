@@ -67,6 +67,7 @@ module.exports =  myRouter.post('/:place',function(req,res,next){
                   name: req.body.name,
                   belongsTo: req.decoded._doc.username,
                   isOf:places._id,
+                     PlaceName: places.name,
                   PIR: null,
                   GPIOs : GPIOSchema
                 });
