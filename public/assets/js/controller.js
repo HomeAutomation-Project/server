@@ -155,18 +155,18 @@ app.controller('myController', function($scope, $routeParams,$http,$location) {
         sw.getSwitchDetails = function (myroom) {
             $http({
                 method: 'GET',
-                url: '/api/room/' + cplace +'/'+myroom,
+                url: '/api/switch/' + cplace +'/'+myroom,
                 headers: {'Content-Type': 'application/json', 'x-access-token': localStorage.getItem('token')}
             }).then(function (data, status, header) {
-                $scope.switches = data.data;
+                $scope.switch = data.data;
                 croom = myroom;
-                console.log($scope.switches);
+                console.log($scope.switch);
             });
         }
         sw.deleteSwitch = function (myswitch) {
             $http({
                 method: 'DELETE',
-                url: '/api/room/'+cplace+'/'+croom+'/'+myswitch,
+                url: '/api/switch/'+cplace+'/'+croom+'/'+myswitch,
                 headers: {'Content-Type': 'application/json', 'x-access-token': localStorage.getItem('token')}
             }).then(function (data, status, header) {
                 alert(myswitch + " deleted");
@@ -175,14 +175,14 @@ app.controller('myController', function($scope, $routeParams,$http,$location) {
                 alert(data.status + " Error: " + data.data.message);
             });
         }
-        sw.addSwitch = function (myswitch) {
+        sw.addSwitch = function () {
             $http({
                 method: 'post',
-                url: '/api/room/'+cplace+'/'+croom,
-                data: {'name': myswitch},
+                url: '/api/switch/'+cplace+'/'+croom,
+                data: {'name': $scope.switchname,'PIR': $scope.pir,'status':$scope.status,'GPIO': $scope.gpio},
                 headers: {'Content-Type': 'application/json', 'x-access-token': localStorage.getItem('token')}
             }).then(function (data, status, header) {
-                alert(myswitch + " added");
+                alert($scope.switchname + " added");
                 sw.getSwitchDetails(croom);
                 sw.newplace = "";
             }, function (data, status, header) {
@@ -190,7 +190,7 @@ app.controller('myController', function($scope, $routeParams,$http,$location) {
             });
         }
         console.log(this.params);
-        sw.getRoomDetails(this.params.roomName);
+        sw.getSwitchDetails(this.params.roomName);
     }])
 
 
