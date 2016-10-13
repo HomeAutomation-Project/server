@@ -8,7 +8,7 @@ var Room = require('../../model/Room.model.js');
 var Place = require('../../model/Place.model.js');
 
 /******************** / ************************/
-module.exports =  myRouter.get('/',function(req,res){
+module.exports = myRouter.get('/', function (req, res, next) {
     Place.find({"belongsTo":req.decoded._doc.username}, function(err, places) {
   if (err) throw err;  
       res.send(places);
@@ -49,40 +49,40 @@ module.exports =  myRouter.post('/',function(req,res,next){
     
 });
 
-module.exports =  myRouter.get('/:place',function(req,res){
+module.exports = myRouter.get('/:place', function (req, res, next) {
     Place.find({"belongsTo":req.decoded._doc.username, name:req.params.place}, function(err, places) {
-    if (err) throw err;  
+        if (err) next(err);
       res.send(places);
       console.log(places);
 });
 });
 
-module.exports =  myRouter.put('/:place',function(req,res){
+module.exports = myRouter.put('/:place', function (req, res, next) {
     Place.findOneAndUpdate({"belongsTo":req.decoded._doc.username, name:req.params.place}
     ,{name:req.body.name}
     ,{new:true}
     , function(err,newPlace){
-        if (err) throw err;
+            if (err) next(err);
         else
         res.send({"Success":true,newPlace});
     });
 });
 
-module.exports =  myRouter.delete('/:place',function(req,res){
+module.exports = myRouter.delete('/:place', function (req, res, next) {
     Place.findOne({"belongsTo": req.decoded._doc.username, name: req.params.place}
         , function (err, myPlace) {
-        if (err) throw err;
+            if (err) next(err);
         else
         {
             var success = false;
             if (myPlace) {
                 for (var pl_i = 0; pl_i < myPlace.roomsObjectId.length; pl_i++) {
                     Room.findById(myPlace.roomsObjectId[pl_i], function (err, room) {
-                        if (err) throw err;
+                        if (err) next(err);
                         if (room) {
                             for (var sw_i = 0; sw_i < room.switches.length; sw_i++) {
                                 Switch.findByIdAndRemove(room.switches[sw_i], function (err, sw) {
-                                    if (err) throw err;
+                                    if (err) next(err);
                                     if (sw) {
                                         console.log("Switch " + sw.SwitchName + " was removed.")
                                     }
@@ -111,7 +111,7 @@ module.exports =  myRouter.get('/user/:username',function(req,res,next){
     if(req.decoded._doc.admin)
     {
         Place.find({belongsTo:req.params.username}, function(err, places) {
-          if (err) throw err;
+            if (err) next(err);
             
             res.send(places);
           });
@@ -129,7 +129,7 @@ module.exports =  myRouter.get('/user/:username/:name',function(req,res,next){
     if(req.decoded._doc.admin)
     {
         Place.find({belongsTo:req.params.username, 'name':req.params.name}, function(err, places) {
-          if (err) throw err;
+            if (err) next(err);
             
             res.send(places);
           });

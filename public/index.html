@@ -62,32 +62,41 @@
                 </a>
             </div>
 
-            <ul class="nav">
+            <ul ng-hide="isAuthed()" class="nav">
                 <li class="active">
+                    <a href="#/">
+                        <i class="pe-7s-graph"></i>
+                        <p>Log In</p>
+                    </a>
+                </li>
+            </ul>
+
+            <ul ng-show="isAuthed();" class="nav">
+                <li ng-click="changeActive(1);" ng-class="{active:isActive(1)}">
                     <a href="#/dashboard">
                         <i class="pe-7s-graph"></i>
                         <p>Dashboard</p>
                     </a>
                 </li>
-                <li ng-click="getUserDetails();">
+                <li ng-click="changeActive(2); getUserDetails();" ng-class="{active:isActive(2)}">
                     <a href="#/users">
                         <i class="pe-7s-user"></i>
                         <p>User Profile</p>
                     </a>
                 </li>
-                <li>
+                <li ng-click="changeActive(3); " ng-class="{active:isActive(3)}">
                     <a href="#/homes">
                         <i class="pe-7s-note2"></i>
                         <p>Places</p>
                     </a>
                 </li>
-                <li>
+                <li ng-click="changeActive(4); " ng-class="{active:isActive(4)}">
                     <a href="#/schedule">
                         <i class="pe-7s-news-paper"></i>
                         <p>Schedule</p>
                     </a>
                 </li>
-                <li>
+                <li ng-click="changeActive(5); " ng-class="{active:isActive(5)}">
                     <a href="#/notification">
                         <i class="pe-7s-bell"></i>
                         <p>Notifications</p>
@@ -227,51 +236,7 @@
     <script type="text/javascript" src="assets/js/angular-route.min.js"></script>
 <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.1.4/angular-mobile.min.js"></script>
     <script type="text/javascript">
-        var app = angular.module("myApp", ["ngRoute", "ngMobile"]);
-      app.config(function($routeProvider) {
-          $routeProvider
-                    .when("/dashboard", {
-							templateUrl : "dashboard.html",
-							controller: 'myController'
-					})
 
-                    .when("/users", {
-                            templateUrl : "user.html",
-                            controller: 'myController'
-
-                     })
-					.when("/homes", {
-							templateUrl : "home.html",
-                        controller: 'PlaceCtrl',
-                        controllerAs: 'pc'
-					})
-					.when("/schedule", {
-							templateUrl : "schedule.html",
-							controller: 'myController'
-					})
-					.when("/notification", {
-							templateUrl : "notifications.html",
-							controller: 'myController'
-					})
-                    .when("/room/:placeName", {
-                      templateUrl : "rooms.html",
-                      controller: 'RoomCtrl',
-                      controllerAs: 'rm'
-                    })
-                    .when("/room/:placeName/:roomName", {
-                      templateUrl : "switches.html",
-                      controller: 'SwitchCtrl',
-                      controllerAs: 'sw'
-                    })
-
-
-
-                  .otherwise({
-              templateUrl : "login.html",
-              controller: 'myController'
-
-          });
-      });
     </script>
     <script type="text/javascript" src="assets/js/controller.js"></script>
 

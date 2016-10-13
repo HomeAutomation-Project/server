@@ -1,9 +1,92 @@
+var app = angular.module("myApp", ["ngRoute", "ngMobile"]);
+app.config(function ($routeProvider) {
+    $routeProvider
+        .when("/dashboard", {
+            templateUrl: "dashboard.html",
+            controller: 'myController'
+        })
+
+        .when("/users", {
+            templateUrl: "user.html",
+            controller: 'myController'
+
+        })
+        .when("/homes", {
+            templateUrl: "home.html",
+            controller: 'PlaceCtrl',
+            controllerAs: 'pc'
+        })
+        .when("/schedule", {
+            templateUrl: "schedule.html",
+            controller: 'myController'
+        })
+        .when("/notification", {
+            templateUrl: "notifications.html",
+            controller: 'myController'
+        })
+        .when("/room/:placeName", {
+            templateUrl: "rooms.html",
+            controller: 'RoomCtrl',
+            controllerAs: 'rm'
+        })
+        .when("/room/:placeName/:roomName", {
+            templateUrl: "switches.html",
+            controller: 'SwitchCtrl',
+            controllerAs: 'sw'
+        })
+
+
+        .otherwise({
+            templateUrl: "login.html",
+            controller: 'myController'
+
+        });
+});
+app.run(
+    function ($rootScope, $location) {
+        isAuthed = function () {
+            var token = localStorage['token'];
+            if (token) {
+                var base64Url = token.split('.')[1];
+                var base64 = base64Url.replace('-', '+').replace('_', '/');
+                var params = JSON.parse(atob(base64));
+                return Math.round(new Date().getTime() / 1000) <= params.exp;
+            } else {
+                return false;
+            }
+        }
+        $rootScope.$on("$routeChangeStart", function (event, next, current) {
+            if (isAuthed() && ($location.url() == "" || $location.url() == "/")) {
+                $location.path("/dashboard");
+            }
+            else if (isAuthed()) {
+                //do nothing
+            }
+            else {
+                $location.path("/");
+            }
+        });
+
+    }
+);
 var app =angular.module("myApp");
 var cplace;
 var croom;
 app.controller('myController', function($scope, $routeParams,$http,$location) {
     $scope.reg = false;
+    $scope.active = 1;
     var flag=false;
+    $scope.isActive = function (x) {
+        if (x == $scope.active) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    };
+    $scope.changeActive = function (x) {
+        $scope.active = x;
+    }
     $scope.setTab=function(x)
     {
       $scope.reg=x;
@@ -97,9 +180,9 @@ app.controller('myController', function($scope, $routeParams,$http,$location) {
              console.log(localStorage.getItem('first'));
              console.log(localStorage.getItem('last'));
              console.log(localStorage.getItem('token'));
-
+           $location.path("/")
        });
-     }
+     };
     $scope.isAuthed = function () {
         var token = localStorage['token'];
         if (token) {
