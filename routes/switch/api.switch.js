@@ -109,7 +109,162 @@ module.exports =  myRouter.get('/:place/:room/:switch',function(req,res,next){
     });
 });
 
+module.exports = myRouter.get('/:place/:room/:switch/ON', function (req, res, next) {
+    Place.findOne({"belongsTo": req.decoded._doc.username, name: req.params.place},
+        function (err, places) {
+            if (err) throw err;
+            if (!places) {
+                err = {};
+                err.status = 404;
+                err.message = 'Place Not Found'
+                next(err);
+            }
+            else {
+                Room.findOne({name: req.params.room, belongsTo: req.decoded._doc.username, isOf: places._id})
+                    .exec(
+                        function (err, room) {
+                            if (err)  throw err;
+                            if (!room) {
+                                var err = {};
+                                err.status = 404;
+                                err.message = 'Room Not Found';
+                                next(err);
+                                return;
+                            }
+                            Switch.findOneAndUpdate({
+                                    SwitchName: req.params.switch,
+                                    isOfPlace: places._id,
+                                    isOfRoom: room._id,
+                                    belongsTo: req.decoded._doc.username
+                                },
+                                {$set: {status: 'ON'}},
+                                function (err, sw) {
+                                    if (err) {
+                                        throw err;
+                                    }
+                                    else {
+                                        if (sw) {
+                                            res.send(sw);
+                                        }
+                                        else {
+                                            var err = {};
+                                            err.status = 404;
+                                            err.message = 'Switch Not Found!';
+                                            next(err);
+                                        }
+                                    }
+                                });
+                        }
+                    );
 
+            }
+        }
+    );
+});
+module.exports = myRouter.get('/:place/:room/:switch/OFF', function (req, res, next) {
+    Place.findOne({"belongsTo": req.decoded._doc.username, name: req.params.place},
+        function (err, places) {
+            if (err) throw err;
+            if (!places) {
+                err = {};
+                err.status = 404;
+                err.message = 'Place Not Found'
+                next(err);
+            }
+            else {
+                Room.findOne({name: req.params.room, belongsTo: req.decoded._doc.username, isOf: places._id})
+                    .exec(
+                        function (err, room) {
+                            if (err)  throw err;
+                            if (!room) {
+                                var err = {};
+                                err.status = 404;
+                                err.message = 'Room Not Found';
+                                next(err);
+                                return;
+                            }
+                            Switch.findOneAndUpdate({
+                                    SwitchName: req.params.switch,
+                                    isOfPlace: places._id,
+                                    isOfRoom: room._id,
+                                    belongsTo: req.decoded._doc.username
+                                },
+                                {$set: {status: 'OFF'}},
+                                function (err, sw) {
+                                    if (err) {
+                                        throw err;
+                                    }
+                                    else {
+                                        if (sw) {
+                                            res.send(sw);
+                                        }
+                                        else {
+                                            var err = {};
+                                            err.status = 404;
+                                            err.message = 'Switch Not Found!';
+                                            next(err);
+                                        }
+                                    }
+                                });
+                        }
+                    );
+
+            }
+        }
+    );
+});
+module.exports = myRouter.get('/:place/:room/:switch/PIR', function (req, res, next) {
+    Place.findOne({"belongsTo": req.decoded._doc.username, name: req.params.place},
+        function (err, places) {
+            if (err) throw err;
+            if (!places) {
+                err = {};
+                err.status = 404;
+                err.message = 'Place Not Found'
+                next(err);
+            }
+            else {
+                Room.findOne({name: req.params.room, belongsTo: req.decoded._doc.username, isOf: places._id})
+                    .exec(
+                        function (err, room) {
+                            if (err)  throw err;
+                            if (!room) {
+                                var err = {};
+                                err.status = 404;
+                                err.message = 'Room Not Found';
+                                next(err);
+                                return;
+                            }
+                            Switch.findOneAndUpdate({
+                                    SwitchName: req.params.switch,
+                                    isOfPlace: places._id,
+                                    isOfRoom: room._id,
+                                    belongsTo: req.decoded._doc.username
+                                },
+                                {$set: {status: 'PIR'}},
+                                function (err, sw) {
+                                    if (err) {
+                                        throw err;
+                                    }
+                                    else {
+                                        if (sw) {
+                                            res.send(sw);
+                                        }
+                                        else {
+                                            var err = {};
+                                            err.status = 404;
+                                            err.message = 'Switch Not Found!';
+                                            next(err);
+                                        }
+                                    }
+                                });
+                        }
+                    );
+
+            }
+        }
+    );
+});
 
 module.exports =  myRouter.post('/:place/:room',function(req,res,next){
     Place.findOne({"belongsTo":req.decoded._doc.username, name:req.params.place},
