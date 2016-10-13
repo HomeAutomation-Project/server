@@ -100,6 +100,17 @@ app.controller('myController', function($scope, $routeParams,$http,$location) {
 
        });
      }
+    $scope.isAuthed = function () {
+        var token = localStorage['token'];
+        if (token) {
+            var base64Url = token.split('.')[1];
+            var base64 = base64Url.replace('-', '+').replace('_', '/');
+            var params = JSON.parse(atob(base64));
+            return Math.round(new Date().getTime() / 1000) <= params.exp;
+        } else {
+            return false;
+        }
+    }
 })
     .controller('RoomCtrl', ['$scope', '$routeParams', '$http', function RoomCtrl($scope, $routeParams, $http) {
         var rm =  this;

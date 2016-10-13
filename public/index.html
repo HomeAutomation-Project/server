@@ -108,16 +108,17 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="#/dashboard">Dashboard</a>
+                    <a class="navbar-brand" ng-show="isAuthed()" href="#/dashboard">Dashboard</a>
+                    <a class="navbar-brand" ng-hide="isAuthed()" href="#">Home</a>
                 </div>
                 <div class="collapse navbar-collapse">
                     <ul class="nav navbar-nav navbar-left">
-                        <li>
+                        <!--<li>
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                 <i class="fa fa-dashboard"></i>
                             </a>
-                        </li>
-                        <li class="dropdown">
+                        </li>-->
+                        <!--<li class="dropdown">
                               <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                     <i class="fa fa-globe"></i>
                                     <b class="caret"></b>
@@ -130,21 +131,26 @@
                                 <li><a href="#">Notification 4</a></li>
                                 <li><a href="#">Another notification</a></li>
                               </ul>
-                        </li>
-                        <li>
+                        </li>-->
+                        <!--<li>
                            <a href="">
                                 <i class="fa fa-search"></i>
                             </a>
-                        </li>
+                        </li>-->
                     </ul>
 
                     <ul class="nav navbar-nav navbar-right">
-                        <li>
+                        <li ng-click="getUserDetails();" ng-show="isAuthed()">
                            <a href="#/users">
                                Account
                             </a>
                         </li>
-                        <li class="dropdown">
+                        <li ng-hide="isAuthed()">
+                            <a href="#">
+                                Log In
+                            </a>
+                        </li>
+                        <!--<li class="dropdown">
                               <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                     Dropdown
                                     <b class="caret"></b>
@@ -158,9 +164,9 @@
                                 <li class="divider"></li>
                                 <li><a href="#">Separated link</a></li>
                               </ul>
-                        </li>
+                        </li>-->
                         <li>
-                            <a href="#" ng-click="logout();">
+                            <a href="#" ng-show="isAuthed()" ng-click="logout();">
                                 Log out
                             </a>
                         </li>
