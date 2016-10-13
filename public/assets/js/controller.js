@@ -108,6 +108,7 @@ app.controller('myController', function($scope, $routeParams,$http,$location) {
                    localStorage.setItem("token", data.data.token);
                    $scope.getUserDetails();
                    $location.path('/dashboard');
+                     window.location.reload();
                    flag=true;
                 } else {
                     alert("Your Browser is not Supported!");
