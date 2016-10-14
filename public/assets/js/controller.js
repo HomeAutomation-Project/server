@@ -250,7 +250,7 @@ app.controller('myController', function($scope, $routeParams,$http,$location) {
         sw.getSwitchDetails = function (myroom) {
             $http({
                 method: 'GET',
-                url: '/api/switch/' + cplace +'/'+myroom,
+                url: '/api/switch/' + this.params.placeName + '/' + (myroom || sw.params.roomName),
                 headers: {'Content-Type': 'application/json', 'x-access-token': localStorage.getItem('token')}
             }).then(function (data, status, header) {
                 $scope.switch = data.data;
@@ -273,17 +273,17 @@ app.controller('myController', function($scope, $routeParams,$http,$location) {
         sw.addSwitch = function () {
             $http({
                 method: 'post',
-                url: '/api/switch/'+cplace+'/'+croom,
+                url: '/api/switch/' + this.params.placeName + '/' + this.params.roomName,
                 data: {'name': $scope.switchname,'PIR': $scope.pir,'status':$scope.status,'GPIO': $scope.gpio},
                 headers: {'Content-Type': 'application/json', 'x-access-token': localStorage.getItem('token')}
             }).then(function (data, status, header) {
                 alert($scope.switchname + " added");
-                sw.getSwitchDetails(croom);
+                sw.getSwitchDetails(sw.params.roomName);
                 sw.newplace = "";
             }, function (data, status, header) {
                 alert(data.status + " Error: " + data.data.message);
             });
-        }
+        };
         console.log(this.params);
         sw.getSwitchDetails(this.params.roomName);
     }])
