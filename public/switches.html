@@ -49,8 +49,8 @@
                                             <div class="row">
                                                 <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
                                                     <!-- Rounded switch -->
-                                                    <label class="switch">
-                                                        <input type="checkbox">
+                                                    <label class="switch" ng-init="toggleStatus = false">
+                                                        <input type="checkbox" ng-click="togglestatus = !togglestatus && sw.operateSwitch(s.SwitchName , togglestatus)">
                                                         <div class="slider round"></div>
                                                     </label>
                                                     </br>
