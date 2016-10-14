@@ -247,6 +247,14 @@ app.controller('myController', function($scope, $routeParams,$http,$location) {
         var sw =  this;
         sw.name = 'SwitchCtrl';
         sw.params = $routeParams;
+        sw.isPIR = function (status) {
+            if (status === 'PIR') {
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
         sw.getSwitchDetails = function (myroom) {
             $http({
                 method: 'GET',
