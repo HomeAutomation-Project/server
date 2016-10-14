@@ -214,7 +214,7 @@ app.controller('myController', function($scope, $routeParams,$http,$location) {
         rm.deleteRoom = function (myroom) {
             $http({
                 method: 'DELETE',
-                url: '/api/room/'+cplace+'/'+myroom,
+                url: '/api/room/'+this.params.placeName+'/'+myroom,
                 headers: {'Content-Type': 'application/json', 'x-access-token': localStorage.getItem('token')}
             }).then(function (data, status, header) {
                 alert(myroom + " deleted");
@@ -226,7 +226,7 @@ app.controller('myController', function($scope, $routeParams,$http,$location) {
         rm.addRoom = function (myroom) {
             $http({
                 method: 'post',
-                url: '/api/room/'+cplace,
+                url: '/api/room/'+this.params.placeName,
                 data: {'name': myroom},
                 headers: {'Content-Type': 'application/json', 'x-access-token': localStorage.getItem('token')}
             }).then(function (data, status, header) {
