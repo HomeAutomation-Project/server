@@ -305,6 +305,14 @@ app.controller('myController', function($scope, $routeParams,$http,$location) {
                 })
             }
         }
+        sw.getStatus = function (mystatus) {
+            if(mystatus == 'OFF')
+            {
+                return false;
+            }
+            else
+                return true;
+        }
         console.log(this.params);
         sw.getSwitchDetails(this.params.roomName);
     }])
