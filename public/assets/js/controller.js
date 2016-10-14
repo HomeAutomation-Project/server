@@ -261,11 +261,11 @@ app.controller('myController', function($scope, $routeParams,$http,$location) {
         sw.deleteSwitch = function (myswitch) {
             $http({
                 method: 'DELETE',
-                url: '/api/switch/'+cplace+'/'+croom+'/'+myswitch,
+                url: '/api/switch/' + sw.params.placeName + '/' + sw.params.roomName + '/' + myswitch,
                 headers: {'Content-Type': 'application/json', 'x-access-token': localStorage.getItem('token')}
             }).then(function (data, status, header) {
                 alert(myswitch + " deleted");
-                sw.getSwitchDetails(croom);
+                sw.getSwitchDetails(sw.params.roomName);
             }, function (data, status, header) {
                 alert(data.status + " Error: " + data.data.message);
             });
