@@ -9,9 +9,9 @@ var Place = require('../../model/Place.model.js');
 
 
 /******************** api/user/ ************************/
-module.exports =  myRouter.get('/',function(req,res){
+module.exports = myRouter.get('/', function (req, res, next) {
     User.findOne({'username':req.decoded._doc.username}, function(err, users) {
-  if (err) throw err;  
+        if (err) next(err);
       res.send(users);
       
       console.log(users);
@@ -64,7 +64,7 @@ module.exports =  myRouter.get('/:username',function(req,res,next){
   {
   var temp ={userdetails:null, placedetails:null};
     User.findOne({'username':req.params.username}, function(err, users) {
-      if (err) throw err;
+        if (err) next(err);
   
       temp.userdetails=JSON.parse(JSON.stringify(users));
       if(temp.userdetails){
@@ -74,7 +74,7 @@ module.exports =  myRouter.get('/:username',function(req,res,next){
         if(places)
         temp.placedetails=JSON.parse(JSON.stringify(places));
         console.log("added to temp",temp)
-      if (err) throw err;
+          if (err) next(err);
         
         console.log(temp);  
         res.send(temp);
@@ -104,7 +104,7 @@ module.exports =  myRouter.put('/:username',function(req,res,next){
                         password: req.body.password
                         },
                         function(err, user) {
-                        if (err) throw err;
+                            if (err) next(err);
                         console.log(user);
   });    
   }
@@ -123,7 +123,7 @@ module.exports =  myRouter.put('/',function(req,res,next){
     .exec(
       function(err,usr)
       {
-        if(err) throw err;
+          if (err) next(err);
         if(!usr)
         {
           var err={}
@@ -140,7 +140,7 @@ module.exports =  myRouter.put('/',function(req,res,next){
           usr.save(
             function(err,usr)
             {
-              if(err) throw err;
+                if (err) next(err);
               else res.send({success: !err,usr});
             }
             );
@@ -149,7 +149,7 @@ module.exports =  myRouter.put('/',function(req,res,next){
       );
 });
 
-module.exports =  myRouter.post('/add',function(req,res){
+module.exports = myRouter.post('/add', function (req, res, next) {
   
    var newPlace = Place({
       name: req.body.name,
@@ -159,7 +159,7 @@ module.exports =  myRouter.post('/add',function(req,res){
 
     // save the user
     newPlace.save(function(err) {
-      if (err) throw err;
+        if (err) next(err);
       res.send('Done!');
       console.log('User created!');
     }); 

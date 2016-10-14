@@ -8,7 +8,7 @@ myRouter.get('/',function(req,res,next){
     Task.find({'belongsTo':req.decoded._doc.username},
     function(err,tasks)
     {
-        if(err) throw err;
+        if (err) next(err);
         if(!tasks)
         {
             err = {};
@@ -24,7 +24,7 @@ myRouter.get('/',function(req,res,next){
 myRouter.post('/',function(req,res,next){
     Task.findOne({'belongsTo':req.decoded._doc.username, 'name':req.body.name},
     function(err,existingTask){
-        if(err) throw err;
+        if (err) next(err);
         if(existingTask)
         {
             err = {};
@@ -36,7 +36,7 @@ myRouter.post('/',function(req,res,next){
         {
             Switch.findById(req.body.switch,
             function(err,mySwitch){
-                if(err) throw err;
+                if (err) next(err);
                 if(!mySwitch)
                 {
                     var err1 = {};
@@ -58,7 +58,7 @@ myRouter.post('/',function(req,res,next){
                         
                         newTask.save(function(err,tsk)
                         {
-                            if(err) throw err;
+                            if (err) next(err);
                             res.send(tsk);
                         });
                     }
@@ -77,7 +77,7 @@ myRouter.post('/',function(req,res,next){
 myRouter.put('/:name',function(req,res,next){
     Task.findOne({'name':req.params.name, 'belongsTo':req.decoded._doc.username},
     function(err,tsk){
-        if(err) throw err;
+        if (err) next(err);
         if(tsk)
         {
             if(req.body.name) tsk.name = req.body.name;
@@ -85,7 +85,7 @@ myRouter.put('/:name',function(req,res,next){
             if(req.body.taskTimeDate) tsk.taskTimeDate = req.body.taskTimeDate;
             tsk.save(function(err,updatedTask)
             {
-                if(err) throw err;
+                if (err) next(err);
                 res.send(updatedTask);
             });
         }
@@ -101,7 +101,7 @@ myRouter.put('/:name',function(req,res,next){
 myRouter.delete('/:name',function(req,res,next){
     Task.findOneAndRemove({name:req.params.name,belongsTo:req.decoded._doc.username}
     ,function(err,delTsk){
-        if(err) throw err;
+            if (err) next(err);
         else
         {
             if(!delTsk)

@@ -17,6 +17,10 @@ var RoomSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref:'Place'
   },
+    PlaceName: {
+        type: String,
+        required: true
+    },
   PIR:{
     type:Number
   },

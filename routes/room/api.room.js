@@ -37,7 +37,7 @@ module.exports =  myRouter.post('/:place',function(req,res,next){
   
      Place.findOne({"belongsTo":req.decoded._doc.username, name: req.params.place},
      function(err, places) {
-            if (err) throw err;
+         if (err) next(err);
          
     if(!places)
     {
@@ -51,7 +51,7 @@ module.exports =  myRouter.post('/:place',function(req,res,next){
          Room.findOne({name:req.body.name,belongsTo:req.decoded._doc.username,isOf:places._id},
          function(err,room)
          {
-             if(err) throw err;
+             if (err) next(err);
              if(room)
              {
                  err={};
@@ -67,6 +67,7 @@ module.exports =  myRouter.post('/:place',function(req,res,next){
                   name: req.body.name,
                   belongsTo: req.decoded._doc.username,
                   isOf:places._id,
+                     PlaceName: places.name,
                   PIR: null,
                   GPIOs : GPIOSchema
                 });
@@ -78,11 +79,11 @@ module.exports =  myRouter.post('/:place',function(req,res,next){
                 
                 // save room object
                 newRoom.save(function(err,room) {
-                if (err) throw err;
+                    if (err) next(err);
                 places.roomsObjectId.push(mongoose.Types.ObjectId(room._id));
                 places.save(function(err,place1)
                 {
-                    if (err) throw err;
+                    if (err) next(err);
                     res.send({'success':!err,room});
                     console.log('Room created!');
                 });
@@ -99,7 +100,7 @@ module.exports =  myRouter.post('/:place',function(req,res,next){
 module.exports =  myRouter.put('/:place/:room',function(req,res,next){
     Place.findOne({"belongsTo":req.decoded._doc.username, name: req.params.place},
      function(err, places) {
-        if (err) throw err;
+         if (err) next(err);
         if(!places)
         {
             var err={};
@@ -110,7 +111,7 @@ module.exports =  myRouter.put('/:place/:room',function(req,res,next){
         else{
             Room.findOne({name:req.params.room,belongsTo:req.decoded._doc.username,isOf:places._id},
             function(err, room) {
-                if (err) throw err;
+                if (err) next(err);
                 if(req.body.name) {room.name=req.body.name}
                 if(req.body.switches) {room.switches=req.body.switches}
                 if(req.body.isOf) {room.isOf=req.body.isOf}
@@ -135,7 +136,7 @@ module.exports =  myRouter.put('/:place/:room',function(req,res,next){
                 }
                 room.save(function(err,room)
                 {
-                    if(err) throw err;
+                    if (err) next(err);
                     res.send(room);
                 })
             });
@@ -147,7 +148,7 @@ module.exports =  myRouter.put('/:place/:room',function(req,res,next){
 module.exports =  myRouter.delete('/:place/:room',function(req,res,next){
     Place.findOne({"belongsTo":req.decoded._doc.username, name: req.params.place},
      function(err, places) {
-        if (err) throw err;
+         if (err) next(err);
         if(!places)
         {
             var err={};
@@ -159,16 +160,17 @@ module.exports =  myRouter.delete('/:place/:room',function(req,res,next){
             Room.findOne({name: req.params.room, belongsTo: req.decoded._doc.username, isOf: places._id},
             function(err,room)
             {
+                if (err) next(err);
                 for (var sw_i = 0; sw_i < room.switches.length; sw_i++) {
                     Switch.findByIdAndRemove(room.switches[sw_i], function (err, sw) {
-                        if (err) throw err;
+                        if (err) next(err);
                         if (sw) {
                             console.log(sw.SwitchName + " was removed.")
                         }
                     });
                 }
-                if(err) throw err;
                 res.send(room);
+                room.remove();
             });
         }
      }
@@ -176,32 +178,34 @@ module.exports =  myRouter.delete('/:place/:room',function(req,res,next){
 });
 
 module.exports =  myRouter.get('/:place/:room',function(req,res,next){
-    Place.findOne({"belongsTo":req.decoded._doc.username, name: req.params.place},
-     function(err, places) {
-        if (err) throw err;
-        if(!places)
-        {
-            var err={};
-            err.status = 403;
-            err.message='Place Not Found';
-            next(err);
-        }
-        else{
-            Room.findOne({name:req.params.room,belongsTo:req.decoded._doc.username,isOf:places._id},
-            function(err,room)
-            {
-                if(err) throw err;
-                if(room)
-                {res.send(room);}
-                else
+    Place.findOne({"belongsTo": req.decoded._doc.username, name: req.params.place})
+        .populate('isOf')
+        .exec(
+            function (err, places) {
+                if (err) next(err);
+                if (!places)
                 {
                     var err = {};
-                    err.status=404;
-                    err.message="ROOM NOT FOUND";
+                    err.status = 403;
+                    err.message = 'Place Not Found';
                     next(err);
                 }
-            });
-        }
-     }
-     );
+                else {
+                    Room.findOne({name: req.params.room, belongsTo: req.decoded._doc.username, isOf: places._id},
+                        function (err, room) {
+                            if (err) next(err);
+                            if (room) {
+                                res.send(room);
+                            }
+                            else {
+                                var err = {};
+                                err.status = 404;
+                                err.message = "ROOM NOT FOUND";
+                                next(err);
+                            }
+                        });
+                }
+            }
+        );
+
 });
