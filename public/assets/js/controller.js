@@ -1,8 +1,92 @@
+var app = angular.module("myApp", ["ngRoute", "ngMobile"]);
+app.config(function ($routeProvider) {
+    $routeProvider
+        .when("/dashboard", {
+            templateUrl: "dashboard.html",
+            controller: 'myController'
+        })
+
+        .when("/users", {
+            templateUrl: "user.html",
+            controller: 'myController'
+
+        })
+        .when("/homes", {
+            templateUrl: "home.html",
+            controller: 'PlaceCtrl',
+            controllerAs: 'pc'
+        })
+        .when("/schedule", {
+            templateUrl: "schedule.html",
+            controller: 'myController'
+        })
+        .when("/notification", {
+            templateUrl: "notifications.html",
+            controller: 'myController'
+        })
+        .when("/room/:placeName", {
+            templateUrl: "rooms.html",
+            controller: 'RoomCtrl',
+            controllerAs: 'rm'
+        })
+        .when("/room/:placeName/:roomName", {
+            templateUrl: "switches.html",
+            controller: 'SwitchCtrl',
+            controllerAs: 'sw'
+        })
+
+
+        .otherwise({
+            templateUrl: "login.html",
+            controller: 'myController'
+
+        });
+});
+app.run(
+    function ($rootScope, $location) {
+        isAuthed = function () {
+            var token = localStorage['token'];
+            if (token) {
+                var base64Url = token.split('.')[1];
+                var base64 = base64Url.replace('-', '+').replace('_', '/');
+                var params = JSON.parse(atob(base64));
+                return Math.round(new Date().getTime() / 1000) <= params.exp;
+            } else {
+                return false;
+            }
+        }
+        $rootScope.$on("$routeChangeStart", function (event, next, current) {
+            if (isAuthed() && ($location.url() == "" || $location.url() == "/")) {
+                $location.path("/dashboard");
+            }
+            else if (isAuthed()) {
+                //do nothing
+            }
+            else {
+                $location.path("/");
+            }
+        });
+
+    }
+);
 var app =angular.module("myApp");
 var cplace;
+var croom;
 app.controller('myController', function($scope, $routeParams,$http,$location) {
     $scope.reg = false;
+    $scope.active = 1;
     var flag=false;
+    $scope.isActive = function (x) {
+        if (x == $scope.active) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    };
+    $scope.changeActive = function (x) {
+        $scope.active = x;
+    }
     $scope.setTab=function(x)
     {
       $scope.reg=x;
@@ -24,6 +108,7 @@ app.controller('myController', function($scope, $routeParams,$http,$location) {
                    localStorage.setItem("token", data.data.token);
                    $scope.getUserDetails();
                    $location.path('/dashboard');
+                     window.location.reload();
                    flag=true;
                 } else {
                     alert("Your Browser is not Supported!");
@@ -96,9 +181,20 @@ app.controller('myController', function($scope, $routeParams,$http,$location) {
              console.log(localStorage.getItem('first'));
              console.log(localStorage.getItem('last'));
              console.log(localStorage.getItem('token'));
-
+           $location.path("/")
        });
-     }
+     };
+    $scope.isAuthed = function () {
+        var token = localStorage['token'];
+        if (token) {
+            var base64Url = token.split('.')[1];
+            var base64 = base64Url.replace('-', '+').replace('_', '/');
+            var params = JSON.parse(atob(base64));
+            return Math.round(new Date().getTime() / 1000) <= params.exp;
+        } else {
+            return false;
+        }
+    }
 })
     .controller('RoomCtrl', ['$scope', '$routeParams', '$http', function RoomCtrl($scope, $routeParams, $http) {
         var rm =  this;
@@ -118,10 +214,11 @@ app.controller('myController', function($scope, $routeParams,$http,$location) {
         rm.deleteRoom = function (myroom) {
             $http({
                 method: 'DELETE',
-                url: '/api/room/'+cplace+'/'+myroom,
+                url: '/api/room/'+this.params.placeName+'/'+myroom,
                 headers: {'Content-Type': 'application/json', 'x-access-token': localStorage.getItem('token')}
             }).then(function (data, status, header) {
                 alert(myroom + " deleted");
+                rm.getRoomDetails(cplace);
             }, function (data, status, header) {
                 alert(data.status + " Error: " + data.data.message);
             });
@@ -129,7 +226,7 @@ app.controller('myController', function($scope, $routeParams,$http,$location) {
         rm.addRoom = function (myroom) {
             $http({
                 method: 'post',
-                url: '/api/room/'+cplace,
+                url: '/api/room/'+this.params.placeName,
                 data: {'name': myroom},
                 headers: {'Content-Type': 'application/json', 'x-access-token': localStorage.getItem('token')}
             }).then(function (data, status, header) {
@@ -143,6 +240,54 @@ app.controller('myController', function($scope, $routeParams,$http,$location) {
         console.log(this.params);
         rm.getRoomDetails(this.params.placeName);
     }])
+
+
+
+    .controller('SwitchCtrl', ['$scope', '$routeParams', '$http', function SwitchCtrl($scope, $routeParams, $http) {
+        var sw =  this;
+        sw.name = 'SwitchCtrl';
+        sw.params = $routeParams;
+        sw.getSwitchDetails = function (myroom) {
+            $http({
+                method: 'GET',
+                url: '/api/switch/' + this.params.placeName + '/' + (myroom || sw.params.roomName),
+                headers: {'Content-Type': 'application/json', 'x-access-token': localStorage.getItem('token')}
+            }).then(function (data, status, header) {
+                $scope.switch = data.data;
+                croom = myroom;
+                console.log($scope.switch);
+            });
+        }
+        sw.deleteSwitch = function (myswitch) {
+            $http({
+                method: 'DELETE',
+                url: '/api/switch/' + sw.params.placeName + '/' + sw.params.roomName + '/' + myswitch,
+                headers: {'Content-Type': 'application/json', 'x-access-token': localStorage.getItem('token')}
+            }).then(function (data, status, header) {
+                alert(myswitch + " deleted");
+                sw.getSwitchDetails(sw.params.roomName);
+            }, function (data, status, header) {
+                alert(data.status + " Error: " + data.data.message);
+            });
+        }
+        sw.addSwitch = function () {
+            $http({
+                method: 'post',
+                url: '/api/switch/' + this.params.placeName + '/' + this.params.roomName,
+                data: {'name': $scope.switchname,'PIR': $scope.pir,'status':$scope.status,'GPIO': $scope.gpio},
+                headers: {'Content-Type': 'application/json', 'x-access-token': localStorage.getItem('token')}
+            }).then(function (data, status, header) {
+                alert($scope.switchname + " added");
+                sw.getSwitchDetails(sw.params.roomName);
+                sw.newplace = "";
+            }, function (data, status, header) {
+                alert(data.status + " Error: " + data.data.message);
+            });
+        };
+        console.log(this.params);
+        sw.getSwitchDetails(this.params.roomName);
+    }])
+
 
     .controller('PlaceCtrl', ['$scope', '$routeParams', '$http', function RoomCtrl($scope, $routeParams, $http) {
         var pc = this;

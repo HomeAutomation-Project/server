@@ -62,32 +62,41 @@
                 </a>
             </div>
 
-            <ul class="nav">
+            <ul ng-hide="isAuthed()" class="nav">
                 <li class="active">
+                    <a href="#/">
+                        <i class="pe-7s-graph"></i>
+                        <p>Log In</p>
+                    </a>
+                </li>
+            </ul>
+
+            <ul ng-show="isAuthed();" class="nav">
+                <li ng-click="changeActive(1);" ng-class="{active:isActive(1)}">
                     <a href="#/dashboard">
                         <i class="pe-7s-graph"></i>
                         <p>Dashboard</p>
                     </a>
                 </li>
-                <li ng-click="getUserDetails();">
+                <li ng-click="changeActive(2); getUserDetails();" ng-class="{active:isActive(2)}">
                     <a href="#/users">
                         <i class="pe-7s-user"></i>
                         <p>User Profile</p>
                     </a>
                 </li>
-                <li>
+                <li ng-click="changeActive(3); " ng-class="{active:isActive(3)}">
                     <a href="#/homes">
                         <i class="pe-7s-note2"></i>
                         <p>Places</p>
                     </a>
                 </li>
-                <li>
+                <li ng-click="changeActive(4); " ng-class="{active:isActive(4)}">
                     <a href="#/schedule">
                         <i class="pe-7s-news-paper"></i>
                         <p>Schedule</p>
                     </a>
                 </li>
-                <li>
+                <li ng-click="changeActive(5); " ng-class="{active:isActive(5)}">
                     <a href="#/notification">
                         <i class="pe-7s-bell"></i>
                         <p>Notifications</p>
@@ -108,16 +117,17 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="#/dashboard">Dashboard</a>
+                    <a class="navbar-brand" ng-show="isAuthed()" href="#/dashboard">Dashboard</a>
+                    <a class="navbar-brand" ng-hide="isAuthed()" href="#">Home</a>
                 </div>
                 <div class="collapse navbar-collapse">
                     <ul class="nav navbar-nav navbar-left">
-                        <li>
+                        <!--<li>
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                 <i class="fa fa-dashboard"></i>
                             </a>
-                        </li>
-                        <li class="dropdown">
+                        </li>-->
+                        <!--<li class="dropdown">
                               <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                     <i class="fa fa-globe"></i>
                                     <b class="caret"></b>
@@ -130,21 +140,26 @@
                                 <li><a href="#">Notification 4</a></li>
                                 <li><a href="#">Another notification</a></li>
                               </ul>
-                        </li>
-                        <li>
+                        </li>-->
+                        <!--<li>
                            <a href="">
                                 <i class="fa fa-search"></i>
                             </a>
-                        </li>
+                        </li>-->
                     </ul>
 
                     <ul class="nav navbar-nav navbar-right">
-                        <li>
+                        <li ng-click="getUserDetails();" ng-show="isAuthed()">
                            <a href="#/users">
                                Account
                             </a>
                         </li>
-                        <li class="dropdown">
+                        <li ng-hide="isAuthed()">
+                            <a href="#">
+                                Log In
+                            </a>
+                        </li>
+                        <!--<li class="dropdown">
                               <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                     Dropdown
                                     <b class="caret"></b>
@@ -158,9 +173,9 @@
                                 <li class="divider"></li>
                                 <li><a href="#">Separated link</a></li>
                               </ul>
-                        </li>
+                        </li>-->
                         <li>
-                            <a href="#" ng-click="logout();">
+                            <a href="#" ng-show="isAuthed()" ng-click="logout();">
                                 Log out
                             </a>
                         </li>
@@ -221,51 +236,7 @@
     <script type="text/javascript" src="assets/js/angular-route.min.js"></script>
 <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.1.4/angular-mobile.min.js"></script>
     <script type="text/javascript">
-        var app = angular.module("myApp", ["ngRoute", "ngMobile"]);
-      app.config(function($routeProvider) {
-          $routeProvider
-                    .when("/dashboard", {
-							templateUrl : "dashboard.html",
-							controller: 'myController'
-					})
 
-                    .when("/users", {
-                            templateUrl : "user.html",
-                            controller: 'myController'
-
-                     })
-					.when("/homes", {
-							templateUrl : "home.html",
-                        controller: 'PlaceCtrl',
-                        controllerAs: 'pc'
-					})
-					.when("/schedule", {
-							templateUrl : "schedule.html",
-							controller: 'myController'
-					})
-					.when("/notification", {
-							templateUrl : "notifications.html",
-							controller: 'myController'
-					})
-                    .when("/room/:placeName", {
-                      templateUrl : "rooms.html",
-                      controller: 'RoomCtrl',
-                      controllerAs: 'rm'
-                    })
-                    .when("/room/:placeName/:roomName", {
-                      templateUrl : "rooms.html",
-                      controller: 'SwitchCtrl',
-                      controllerAs: 'sw'
-                    })
-
-
-
-                  .otherwise({
-              templateUrl : "login.html",
-              controller: 'myController'
-
-          });
-      });
     </script>
     <script type="text/javascript" src="assets/js/controller.js"></script>
 
