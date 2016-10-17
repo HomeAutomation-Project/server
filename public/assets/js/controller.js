@@ -247,6 +247,14 @@ app.controller('myController', function($scope, $routeParams,$http,$location) {
         var sw =  this;
         sw.name = 'SwitchCtrl';
         sw.params = $routeParams;
+        sw.isPIR = function (status) {
+            if (status === 'PIR') {
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
         sw.getSwitchDetails = function (myroom) {
             $http({
                 method: 'GET',
@@ -254,7 +262,6 @@ app.controller('myController', function($scope, $routeParams,$http,$location) {
                 headers: {'Content-Type': 'application/json', 'x-access-token': localStorage.getItem('token')}
             }).then(function (data, status, header) {
                 $scope.switch = data.data;
-                croom = myroom;
                 console.log($scope.switch);
             });
         }
@@ -284,6 +291,36 @@ app.controller('myController', function($scope, $routeParams,$http,$location) {
                 alert(data.status + " Error: " + data.data.message);
             });
         };
+        sw.operateSwitch = function (myswitch , togglestatus) {
+            if(togglestatus == true)
+            {
+                $http({
+                    method: 'GET',
+                    url: '/api/switch/'+this.params.placeName+'/'+this.params.roomName+'/'+myswitch+'/ON',
+                    headers: {'Content-Type': 'application/json', 'x-access-token': localStorage.getItem('token')}
+                }).then(function (data,status,header) {
+
+                })
+            }
+            else
+            {
+                $http({
+                    method: 'GET',
+                    url: '/api/switch/'+this.params.placeName+'/'+this.params.roomName+'/'+myswitch+'/OFF',
+                    headers: {'Content-Type': 'application/json', 'x-access-token': localStorage.getItem('token')}
+                }).then(function (data,status,header) {
+
+                })
+            }
+        }
+        sw.getStatus = function (mystatus) {
+            if(mystatus == 'OFF')
+            {
+                return false;
+            }
+            else
+                return true;
+        }
         console.log(this.params);
         sw.getSwitchDetails(this.params.roomName);
     }])
