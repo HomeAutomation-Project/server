@@ -369,6 +369,9 @@ app.controller('myController', function($scope, $routeParams,$http,$location) {
                 alert(data.status + " Error: " + data.data.message);
             });
         }
+        pc.editPlace = function (place) {
+            $scope.placeToBeEdited = place;
+        }
     }])
 
 ;

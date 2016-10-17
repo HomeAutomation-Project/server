@@ -40,13 +40,36 @@
                                               <button type="button" class="btn btn-primary btn-fill">View
                                               </button>
                                           </a>
-                                          <button type="button" class="btn btn-warning btn-fill">Edit</button>
+                                          <button type="button" data-toggle="modal" ng-click="pc.editPlace(place.name)"
+                                                  data-target="#myModal" class="btn btn-warning btn-fill">Edit
+                                          </button>
                                           <button type="button" class="btn btn-danger btn-fill"
                                                   ng-click="pc.deletePlace(place.name)">Delete
                                           </button>
                                           <div class="clearfix"></div>
                                       </div>
+                                      <div class="modal fade" id="myModal" role="dialog">
+                                          <div class="modal-dialog">
 
+                                              <!-- Modal content-->
+                                              <div class="modal-content">
+                                                  <div class="modal-header">
+                                                      <button type="button" class="close"
+                                                              data-dismiss="modal">&times;</button>
+                                                      <h4 class="modal-title">{{placeToBeEdited}}</h4>
+                                                  </div>
+                                                  <div class="modal-body">
+                                                      <p>Some text in the modal.</p>
+                                                  </div>
+                                                  <div class="modal-footer">
+                                                      <button type="button" class="btn btn-default"
+                                                              data-dismiss="modal">Close
+                                                      </button>
+                                                  </div>
+                                              </div>
+
+                                          </div>
+                                      </div>
                                   </div>
                           </div>
                       </div>
