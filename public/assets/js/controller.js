@@ -237,6 +237,21 @@ app.controller('myController', function($scope, $routeParams,$http,$location) {
                 alert(data.status + " Error: " + data.data.message);
             });
         }
+        rm.getRoom = function (room) {
+            $scope.roomToBeEdited = room;
+        }
+        rm.editRoom = function (newroom) {
+            $http({
+                method: 'PUT',
+                url: '/api/room/'+this.params.placeName+'/'+$scope.roomToBeEdited,
+                data: {'name': newroom},
+                headers: {'Content-Type': 'application/json', 'x-access-token': localStorage.getItem('token')}
+            }).then(function (data, status, header) {
+                alert(newroom + "is updated");
+            }, function (data, status, header) {
+                alert(data.status + " Error: " + data.data.message);
+            });
+        }
         console.log(this.params);
         rm.getRoomDetails(this.params.placeName);
     }])
@@ -321,6 +336,7 @@ app.controller('myController', function($scope, $routeParams,$http,$location) {
             else
                 return true;
         }
+
         console.log(this.params);
         sw.getSwitchDetails(this.params.roomName);
     }])
@@ -369,9 +385,20 @@ app.controller('myController', function($scope, $routeParams,$http,$location) {
                 alert(data.status + " Error: " + data.data.message);
             });
         }
-        pc.editPlace = function (place) {
+        pc.getPlace = function (place) {
             $scope.placeToBeEdited = place;
         }
-    }])
-
-;
+        pc.editPlace = function (neplace) {
+            $http({
+                method: 'PUT',
+                url: '/api/place/' + $scope.placeToBeEdited,
+                data: {'name': neplace},
+                headers: {'Content-Type': 'application/json', 'x-access-token': localStorage.getItem('token')}
+            }).then(function (data, status, header) {
+                alert(neplace + "is updated");
+                pc.getPlaceDetails();
+            }, function (data, status, header) {
+                alert(data.status + " Error: " + data.data.message);
+            });
+        }
+    }]);

@@ -50,9 +50,9 @@
                                                             </a>
                                                         </div>
                                                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                                            <button type="button"
-                                                                    class="btn btn-warning btn-fill btn-block">
-                                                                Edit
+                                                            </a>
+                                                            <button type="button" data-toggle="modal" ng-click="rm.getRoom(room.name)"
+                                                                    data-target="#myModal" class="btn btn-warning btn-fill">Edit
                                                             </button>
                                                         </div>
                                                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -62,7 +62,29 @@
                                                                 Delete
                                                             </button>
                                                         </div>
+                                                        <div class="modal fade" id="myModal" role="dialog">
+                                                            <div class="modal-dialog">
 
+                                                                <!-- Modal content-->
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header">
+                                                                        <button type="button" class="close"
+                                                                                data-dismiss="modal">&times;</button>
+                                                                        <h4 class="modal-title">{{roomToBeEdited}}</h4>
+                                                                    </div>
+                                                                    <div class="modal-body">
+                                                                        <input type="text" ng-model="rm.newname"></input>
+                                                                        <button class="btn btn-primary btn-fill" type="submit" value="Update" ng-click="rm.editRoom(rm.newname)"></button>
+                                                                    </div>
+                                                                    <div class="modal-footer">
+                                                                        <button type="button" class="btn btn-default"
+                                                                                data-dismiss="modal">Close
+                                                                        </button>
+                                                                    </div>
+                                                                </div>
+
+                                                            </div>
+                                                        </div>
 
                                                         <div class="clearfix"></div>
                                                     </div>

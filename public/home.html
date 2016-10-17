@@ -1,4 +1,4 @@
-<div class="container-fluid">
+<div class="container-fluid" xmlns="http://www.w3.org/1999/html">
     <div class="row">
         <div class="col-md-12">
             <!--<form ng-submit="addPlace();">-->
@@ -40,7 +40,7 @@
                                               <button type="button" class="btn btn-primary btn-fill">View
                                               </button>
                                           </a>
-                                          <button type="button" data-toggle="modal" ng-click="pc.editPlace(place.name)"
+                                          <button type="button" data-toggle="modal" ng-click="pc.getPlace(place.name)"
                                                   data-target="#myModal" class="btn btn-warning btn-fill">Edit
                                           </button>
                                           <button type="button" class="btn btn-danger btn-fill"
@@ -59,7 +59,8 @@
                                                       <h4 class="modal-title">{{placeToBeEdited}}</h4>
                                                   </div>
                                                   <div class="modal-body">
-                                                      <p>Some text in the modal.</p>
+                                                      <input type="text" ng-model="pc.newname"></input>
+                                                      <button class="btn btn-primary btn-fill" type="submit" value="Update" ng-click="pc.editPlace(pc.newname)"></button>
                                                   </div>
                                                   <div class="modal-footer">
                                                       <button type="button" class="btn btn-default"
