@@ -50,10 +50,13 @@
                                                             </a>
                                                         </div>
                                                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                            <a>
+                                                                <button type="button" data-toggle="modal"
+                                                                        ng-click="rm.getRoom(room.name)"
+                                                                        data-target="#myModal"
+                                                                        class="btn btn-warning btn-fill btn-block">Edit
+                                                                </button>
                                                             </a>
-                                                            <button type="button" data-toggle="modal" ng-click="rm.getRoom(room.name)"
-                                                                    data-target="#myModal" class="btn btn-warning btn-fill">Edit
-                                                            </button>
                                                         </div>
                                                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 
@@ -73,8 +76,12 @@
                                                                         <h4 class="modal-title">{{roomToBeEdited}}</h4>
                                                                     </div>
                                                                     <div class="modal-body">
-                                                                        <input type="text" ng-model="rm.newname"></input>
-                                                                        <button class="btn btn-primary btn-fill" type="submit" value="Update" ng-click="rm.editRoom(rm.newname)"></button>
+                                                                        <input type="text" ng-model="rm.newname">
+                                                                        <button class="btn btn-primary btn-fill"
+                                                                                type="submit" value="Update"
+                                                                                ng-click="rm.editRoom(rm.newname)">
+                                                                            Update
+                                                                        </button>
                                                                     </div>
                                                                     <div class="modal-footer">
                                                                         <button type="button" class="btn btn-default"

@@ -59,8 +59,16 @@
                                                       <h4 class="modal-title">{{placeToBeEdited}}</h4>
                                                   </div>
                                                   <div class="modal-body">
-                                                      <input type="text" ng-model="pc.newname"></input>
-                                                      <button class="btn btn-primary btn-fill" type="submit" value="Update" ng-click="pc.editPlace(pc.newname)"></button>
+                                                      <div class="form-group row">
+                                                          <div class="col-lg-6 col-md-8">
+                                                              <input class="form-control" placeholder="New Name"
+                                                                     type="text" ng-model="pc.newname">
+                                                          </div>
+                                                          <button class="btn btn-primary btn-fill" type="submit"
+                                                                  value="Update" ng-click="pc.editPlace(pc.newname)">
+                                                              Update
+                                                          </button>
+                                                      </div>
                                                   </div>
                                                   <div class="modal-footer">
                                                       <button type="button" class="btn btn-default"
