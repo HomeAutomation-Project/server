@@ -336,6 +336,21 @@ app.controller('myController', function($scope, $routeParams,$http,$location) {
             else
                 return true;
         }
+        sw.getSwitch = function (swit) {
+            $scope.switchToBeEdited =swit;
+        }
+        sw.editSwitch = function (newswitch) {
+            $http({
+                method: 'PUT',
+                url: '/api/switch/'+this.params.placeName+'/'+this.params.roomName+'/'+$scope.switchToBeEdited,
+                data: {'name': newswitch},
+                headers: {'Content-Type': 'application/json', 'x-access-token': localStorage.getItem('token')}
+            }).then(function (data, status, header) {
+                alert(newswitch + "is updated");
+            }, function (data, status, header) {
+                alert(data.status + " Error: " + data.data.message);
+            });
+        }
 
         console.log(this.params);
         sw.getSwitchDetails(this.params.roomName);
