@@ -60,16 +60,37 @@ module.exports = myRouter.get('/:place', function (req, res, next) {
 module.exports = myRouter.put('/:place', function (req, res, next) {
     var px = {};
     if (req.body.name) {
-        px.name = req.body.name;
+        Place.findOne({"belongsTo": req.decoded._doc.username, name: req.body.name}
+            , function (err, myPlace) {
+                if (err) next(err);
+                if (myPlace) {
+                    var err = {};
+                    err.status = 409;
+                    err.message = 'Duplcate Place';
+                    next(err);
+                    return;
+                }
+                else {
+                    Place.findOneAndUpdate({"belongsTo": req.decoded._doc.username, name: req.params.place},
+                        {name: req.body.name},
+                        function (err, place) {
+                            if (err) next(err);
+                            for (var x = 0; x < place.roomsObjectId.length; x++) {
+                                Room.findByIdAndUpdate(place.roomsObjectId[x],
+                                    {$set: {PlaceName: req.body.name}},
+                                    function (err, r) {
+                                        if (err)
+                                            next(err);
+                                        console.log(r.PlaceName);
+                                    }
+                                );
+                            }
+                            res.send(place);
+                        });
+                }
     }
-    Place.findOneAndUpdate({"belongsTo":req.decoded._doc.username, name:req.params.place}
-        , {$set: px}
-    ,{new:true}
-    , function(err,newPlace){
-            if (err) next(err);
-        else
-        res.send({"Success":true,newPlace});
-    });
+        );
+    }
 });
 
 module.exports = myRouter.delete('/:place', function (req, res, next) {
