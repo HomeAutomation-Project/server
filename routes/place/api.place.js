@@ -58,8 +58,12 @@ module.exports = myRouter.get('/:place', function (req, res, next) {
 });
 
 module.exports = myRouter.put('/:place', function (req, res, next) {
+    var px = {};
+    if (req.body.name) {
+        px.name = req.body.name;
+    }
     Place.findOneAndUpdate({"belongsTo":req.decoded._doc.username, name:req.params.place}
-    ,{name:req.body.name}
+        , {$set: px}
     ,{new:true}
     , function(err,newPlace){
             if (err) next(err);
