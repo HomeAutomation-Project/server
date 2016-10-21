@@ -1,20 +1,27 @@
-<div class="container-fluid">
+<div class="container-fluid" xmlns="http://www.w3.org/1999/html">
     <div class="row">
         <div class="col-md-12">
             <!--<form ng-submit="addPlace();">-->
             <!--<input type="text" ng-model="newplace" placeholder="sweet home"></input>-->
             <div class="row">
+                <form ng-submit="rm.addRoom()">
                 <div class="col-lg-2 col-md-3 col-sm-6 col-xs-6">
                     <div class="form-group">
-                        <input type="text" ng-model="rm.newroom" placeholder="Room Name" class="form-control">
+                        <input type="text" ng-model="newroom" placeholder="Room Name" class="form-control">
                     </div>
                 </div>
                 <div class="col-lg-2 col-md-3 col-sm-6 col-xs-6">
                     <div class="form-group">
-                        <button type="button" class="btn btn-success btn-fill" ng-click="rm.addRoom(rm.newroom)">Add New Room</button>
+                        <input type="text" ng-model="pir" placeholder="PIR" class="form-control">
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-3 col-sm-6 col-xs-6">
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-success btn-fill">Add New Room</button>
                     </div>
                 </div>
             </div>
+            </form>
 
             <!--</form>-->
             <div class="card" style="padding-bottom: 20px">

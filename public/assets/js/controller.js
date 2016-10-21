@@ -223,14 +223,14 @@ app.controller('myController', function($scope, $routeParams,$http,$location) {
                 alert(data.status + " Error: " + data.data.message);
             });
         }
-        rm.addRoom = function (myroom) {
+        rm.addRoom = function () {
             $http({
                 method: 'post',
                 url: '/api/room/'+this.params.placeName,
-                data: {'name': myroom},
+                data: {'name': $scope.newroom,'PIR':$scope.pir},
                 headers: {'Content-Type': 'application/json', 'x-access-token': localStorage.getItem('token')}
             }).then(function (data, status, header) {
-                alert(myroom + " added");
+                alert($scope.newroom + " added");
                 rm.getRoomDetails(cplace);
                 rm.newplace = "";
             }, function (data, status, header) {
@@ -296,7 +296,7 @@ app.controller('myController', function($scope, $routeParams,$http,$location) {
             $http({
                 method: 'post',
                 url: '/api/switch/' + this.params.placeName + '/' + this.params.roomName,
-                data: {'name': $scope.switchname,'PIR': $scope.pir,'status':$scope.status,'GPIO': $scope.gpio},
+                data: {'name': $scope.switchname,'status':$scope.status,'GPIO': $scope.gpio},
                 headers: {'Content-Type': 'application/json', 'x-access-token': localStorage.getItem('token')}
             }).then(function (data, status, header) {
                 alert($scope.switchname + " added");
