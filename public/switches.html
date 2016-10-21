@@ -1,3 +1,13 @@
+<div class="card">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a onclick="localStorage.setItem('active',1);" href="#">Dashboard</a></li>
+        <li class="breadcrumb-item"><a onclick="localStorage.setItem('active',3);" href="#/homes">Places</a></li>
+        <li class="breadcrumb-item active"><a onclick="localStorage.setItem('active',3);"
+                                              ng-href="#/room/{{sw.params.placeName}}">{{sw.params.placeName}}</a></li>
+        <li class="breadcrumb-item active">{{sw.params.roomName}}</li>
+    </ol>
+</div>
+
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-12">
@@ -25,9 +35,7 @@
                         <button type="submit" class="btn btn-success btn-fill">Add New Switch</button>
                     </div>
                 </div>
-            </div>
             </form>
-            <!--</form>-->
             <div class="card" style="padding-bottom: 20px">
                 <div class="header">
                     <h4 class="title">Switches</h4>

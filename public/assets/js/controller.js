@@ -37,7 +37,7 @@ app.config(function ($routeProvider) {
 
 
         .otherwise({
-            templateUrl: "dashboard.html",
+            templateUrl: "login.html",
             controller: 'myController'
 
         });
