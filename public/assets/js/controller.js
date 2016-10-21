@@ -195,6 +195,7 @@ app.controller('myController', function($scope, $routeParams,$http,$location) {
             return false;
         }
     }
+    $scope.getUserDetails();
 })
     .controller('RoomCtrl', ['$scope', '$routeParams', '$http', function RoomCtrl($scope, $routeParams, $http) {
         var rm =  this;
