@@ -282,16 +282,18 @@ app.controller('myController', function($scope, $routeParams,$http,$location) {
             });
         }
         sw.deleteSwitch = function (myswitch) {
-            $http({
-                method: 'DELETE',
-                url: '/api/switch/' + sw.params.placeName + '/' + sw.params.roomName + '/' + myswitch,
-                headers: {'Content-Type': 'application/json', 'x-access-token': localStorage.getItem('token')}
-            }).then(function (data, status, header) {
-                alert(myswitch + " deleted");
-                sw.getSwitchDetails(sw.params.roomName);
-            }, function (data, status, header) {
-                alert(data.status + " Error: " + data.data.message);
-            });
+            if (confirm("Are you sure you want to delete " + myswitch)) {
+                $http({
+                    method: 'DELETE',
+                    url: '/api/switch/' + sw.params.placeName + '/' + sw.params.roomName + '/' + myswitch,
+                    headers: {'Content-Type': 'application/json', 'x-access-token': localStorage.getItem('token')}
+                }).then(function (data, status, header) {
+                    alert(myswitch + " deleted");
+                    sw.getSwitchDetails(sw.params.roomName);
+                }, function (data, status, header) {
+                    alert(data.status + " Error: " + data.data.message);
+                });
+            }
         }
         sw.addSwitch = function () {
             $http({
