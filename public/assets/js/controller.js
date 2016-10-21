@@ -37,7 +37,7 @@ app.config(function ($routeProvider) {
 
 
         .otherwise({
-            templateUrl: "login.html",
+            templateUrl: "dashboard.html",
             controller: 'myController'
 
         });
@@ -77,7 +77,7 @@ app.controller('myController', function($scope, $routeParams,$http,$location) {
     $scope.active = 1;
     var flag=false;
     $scope.isActive = function (x) {
-        if (x == $scope.active) {
+        if (x == localStorage.getItem("active")) {
             return true;
         }
         else {
@@ -85,7 +85,7 @@ app.controller('myController', function($scope, $routeParams,$http,$location) {
         }
     };
     $scope.changeActive = function (x) {
-        $scope.active = x;
+        localStorage.setItem("active", x);
     }
     $scope.setTab=function(x)
     {
