@@ -13,7 +13,7 @@
         <div class="col-md-12 col-lg-12 col-xs-12 col-sm-12">
             <!--Form Start-->
             <div class="row">
-                <form ng-submit="sw.addSwitch();">
+                <form>
                 <div class="col-lg-2 col-md-3 col-sm-6 col-xs-6">
                     <div class="form-group">
                         <input type="text" ng-model="switchname" placeholder="switch Name" class="form-control">
@@ -25,13 +25,26 @@
                     </div>
                 </div>
                 <div class="col-lg-2 col-md-3 col-sm-6 col-xs-6">
-                    <div class="form-group">
-                        <input type="text" ng-model="gpio" placeholder="GPIO" class="form-control">
+                    <div class="form-group"
+                         ng-init="totalPins=[2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27]">
+                        <li class="dropdown">
+                            <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                <input type="text" ng-model="gpio" placeholder="GPIO" class="form-control">
+                            </a>
+                            <ul class="dropdown-menu">
+                                <button type="button" ng-class-even="'btn-info'" ng-class-odd="'btn-primary'"
+                                        class="btn btn-fill" ng-disabled="sw.isNotFree(pin)"
+                                        ng-repeat="pin in totalPins" ng-click="sw.setGpio(pin);">{{pin}}
+                                </button>
+                            </ul>
+                        </li>
                     </div>
                 </div>
                 <div class="col-lg-2 col-md-3 col-sm-6 col-xs-6">
                     <div class="form-group">
-                        <button type="submit" class="btn btn-success btn-fill">Add New Switch</button>
+                        <button type="submit" class="btn btn-success btn-fill" ng-click="sw.addSwitch();">Add New
+                            Switch
+                        </button>
                     </div>
                 </div>
                 </form>

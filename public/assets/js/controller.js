@@ -267,6 +267,20 @@ app.controller('myController', function($scope, $routeParams,$http,$location) {
         var sw =  this;
         sw.name = 'SwitchCtrl';
         sw.params = $routeParams;
+        sw.isNotFree = function (x) {
+            if (sw.room) {
+                if (sw.room[x]) {
+                    return false;
+                }
+                return true;
+            }
+            else {
+                //do nothing!
+            }
+        }
+        sw.setGpio = function (x) {
+            $scope.gpio = x;
+        }
         sw.isPIR = function (status) {
             if (status === 'PIR') {
                 return true;
@@ -294,6 +308,7 @@ app.controller('myController', function($scope, $routeParams,$http,$location) {
                 }).then(function (data, status, header) {
                     alert(myswitch + " deleted");
                     sw.getSwitchDetails(sw.params.roomName);
+                    sw.getRoomDetails(this.params.roomName);
                 }, function (data, status, header) {
                     alert(data.status + " Error: " + data.data.message);
                 });
@@ -309,6 +324,7 @@ app.controller('myController', function($scope, $routeParams,$http,$location) {
                 alert($scope.switchname + " added");
                 sw.getSwitchDetails(sw.params.roomName);
                 sw.newplace = "";
+                sw.getRoomDetails(sw.params.roomName);
             }, function (data, status, header) {
                 alert(data.status + " Error: " + data.data.message);
             });
@@ -354,12 +370,23 @@ app.controller('myController', function($scope, $routeParams,$http,$location) {
                 headers: {'Content-Type': 'application/json', 'x-access-token': localStorage.getItem('token')}
             }).then(function (data, status, header) {
                 alert(newswitch + "is updated");
+                sw.getRoomDetails(this.params.roomName);
             }, function (data, status, header) {
                 alert(data.status + " Error: " + data.data.message);
             });
         }
-
+        sw.getRoomDetails = function (myplace) {
+            $http({
+                method: 'GET',
+                url: '/api/room/' + this.params.placeName + '/' + myplace,
+                headers: {'Content-Type': 'application/json', 'x-access-token': localStorage.getItem('token')}
+            }).then(function (data, status, header) {
+                sw.room = data.data.GPIOs;
+                console.log($scope.room);
+            });
+        };
         console.log(this.params);
+        sw.getRoomDetails(this.params.roomName);
         sw.getSwitchDetails(this.params.roomName);
     }])
 
