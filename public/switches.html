@@ -8,11 +8,10 @@
     </ol>
 </div>
 
-<div class="content">
+<div class="container-fluid">
     <div class="row">
         <div class="col-md-12 col-lg-12 col-xs-12 col-sm-12">
-            <!--<form ng-submit="addPlace();">-->
-            <!--<input type="text" ng-model="newplace" placeholder="sweet home"></input>-->
+            <!--Form Start-->
             <div class="row">
                 <form ng-submit="sw.addSwitch();">
                 <div class="col-lg-2 col-md-3 col-sm-6 col-xs-6">
@@ -37,18 +36,19 @@
                 </div>
                 </form>
             </div>
+            <!--Form End-->
             <div class="card" style="padding-bottom: 20px">
                 <div class="header">
                     <h4 class="title">Switches</h4>
                     <br/>
                     <br/>
                     <div style="text-align: center">
-                    <div class="row">
-                        <div class="font-icon-list col-lg-12 col-md-12 col-sm-12 col-xs-12"
-                             ng-repeat="s in switch">
-                            <!--Room Element Start-->
+                        <div class="row">
+                            <!--Switch Start-->
+                            <div class="font-icon-list col-lg-4 col-md-6 col-sm-12 col-xs-12" ng-repeat="s in switch">
+                                <div class="card content">
                             <div class="row">
-                                <div class="col-lg-2 col-md-2 col-sm-4 col-xs-4">
+                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
                                     <!-- Rounded switch -->
                                     <label class="switch" ng-init="togglestatus = sw.getStatus(s.status)">
                                         <input type="checkbox" ng-disabled="sw.isPIR(s.status)"
@@ -60,7 +60,7 @@
                                         <label>{{s.SwitchName}}</label>
                                     </div>
                                 </div>
-                                <div class="col-lg-4 col-md-4 col-sm-8 col-xs-8"
+                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6"
                                      style="margin-bottom: 25px">
                                     <div class="row">
                                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -111,30 +111,13 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-lg-6 col-md-4 col-sm-4 col-xs-6"></div>
                             </div>
-                            <!--<div class="font-icon-list col-lg-12 col-md-12 col-sm-12 col-xs-12"-->
-                            <!--ng-repeat="room in rooms">-->
-                            <!--<div class="font-icon-detail">-->
-                            <!--<i class="pe-7s-home myicon"></i>-->
-                            <!--</div>-->
-                            <!--<div>-->
-                            <!--<label>{{room.name}}</label>-->
-                            <!--</div>-->
-                            <!--<div class="row" style="margin-bottom: 25px">-->
-                            <!--<button type="button" class="btn btn-primary btn-fill"-->
-                            <!--ng-click="">View-->
-                            <!--</button>-->
-                            <!--<button type="button" class="btn btn-warning btn-fill">Edit</button>-->
-                            <!--<button type="button" class="btn btn-danger btn-fill">Delete</button>-->
-                            <!--<div class="clearfix"></div>-->
-                            <!--</div>-->
-
-                            <!--</div>-->
+                                </div>
+                        </div>
+                            <!--Switch End-->
                         </div>
                     </div>
-                    </div>
-            </div>
+                </div>
         </div>
     </div>
 </div>

@@ -8,8 +8,7 @@
 <div class="container-fluid" xmlns="http://www.w3.org/1999/html">
     <div class="row">
         <div class="col-md-12">
-            <!--<form ng-submit="addPlace();">-->
-            <!--<input type="text" ng-model="newplace" placeholder="sweet home"></input>-->
+            <!--Form Start-->
             <div class="row">
                 <form ng-submit="rm.addRoom()">
                 <div class="col-lg-2 col-md-3 col-sm-6 col-xs-6">
@@ -35,114 +34,89 @@
                         <button type="submit" class="btn btn-success btn-fill">Add New Room</button>
                     </div>
                 </div>
+                </form>
             </div>
-            </form>
-
-            <!--</form>-->
+            <!--Form End-->
             <div class="card" style="padding-bottom: 20px">
                 <div class="header">
                     <h4 class="title">Rooms</h4>
                     <br/>
                     <br/>
-                    <div class="row">
-                        <div style="text-align: center;">
-                            <!--button ng-click="getPlaceDetails()">GET PLACES</button-->
-                            <div class="row">
-                                <div class="container-fluid col-lg-4 col-md-6 col-sm-6 col-xs-6">
+                    <div style="text-align: center;">
+                        <div class="row">
+                            <div class="font-icon-list col-lg-4 col-md-6 col-sm-12 col-xs-12" ng-repeat="room in rooms">
+                                <div class="card content">
+                                    <!--Room Element Start-->
                                     <div class="row">
-                                        <div class="font-icon-list col-lg-12 col-md-12 col-sm-12 col-xs-12"
-                                             ng-repeat="room in rooms">
-                                            <!--Room Element Start-->
+                                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                            <i class="pe-7s-home myicon"></i>
+                                            <div>
+                                                <label>{{room.name}}</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8"
+                                             style="margin-bottom: 25px">
                                             <div class="row">
-                                                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-                                                    <i class="pe-7s-home myicon"></i>
-                                                    <div>
-                                                        <label>{{room.name}}</label>
-                                                    </div>
+                                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                    <a ng-href="#/room/{{room.PlaceName}}/{{room.name}}">
+                                                        <button type="button"
+                                                                class="btn btn-primary btn-fill btn-block"
+                                                                ng-click="">View
+                                                        </button>
+                                                    </a>
                                                 </div>
-                                                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8"
-                                                     style="margin-bottom: 25px">
-                                                    <div class="row">
-                                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                                            <a ng-href="#/room/{{room.PlaceName}}/{{room.name}}">
-                                                            <button type="button"
-                                                                    class="btn btn-primary btn-fill btn-block"
-                                                                    ng-click="">View
-                                                            </button>
-                                                            </a>
-                                                        </div>
-                                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                                            <a>
-                                                                <button type="button" data-toggle="modal"
-                                                                        ng-click="rm.getRoom(room.name)"
-                                                                        data-target="#myModal"
-                                                                        class="btn btn-warning btn-fill btn-block">Edit
-                                                                </button>
-                                                            </a>
-                                                        </div>
-                                                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                    <a>
+                                                        <button type="button" data-toggle="modal"
+                                                                ng-click="rm.getRoom(room.name)"
+                                                                data-target="#myModal"
+                                                                class="btn btn-warning btn-fill btn-block">Edit
+                                                        </button>
+                                                    </a>
+                                                </div>
+                                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 
-                                                            <button type="button"
-                                                                    class="btn btn-danger btn-fill btn-block" ng-click="rm.deleteRoom(room.name);">
-                                                                Delete
-                                                            </button>
-                                                        </div>
-                                                        <div class="modal fade" id="myModal" role="dialog">
-                                                            <div class="modal-dialog">
+                                                    <button type="button"
+                                                            class="btn btn-danger btn-fill btn-block"
+                                                            ng-click="rm.deleteRoom(room.name);">
+                                                        Delete
+                                                    </button>
+                                                </div>
+                                                <div class="modal fade" id="myModal" role="dialog">
+                                                    <div class="modal-dialog">
 
-                                                                <!-- Modal content-->
-                                                                <div class="modal-content">
-                                                                    <div class="modal-header">
-                                                                        <button type="button" class="close"
-                                                                                data-dismiss="modal">&times;</button>
-                                                                        <h4 class="modal-title">{{roomToBeEdited}}</h4>
-                                                                    </div>
-                                                                    <div class="modal-body">
-                                                                        <input type="text" ng-model="rm.newname">
-                                                                        <button class="btn btn-primary btn-fill"
-                                                                                type="submit" value="Update"
-                                                                                ng-click="rm.editRoom(rm.newname)">
-                                                                            Update
-                                                                        </button>
-                                                                    </div>
-                                                                    <div class="modal-footer">
-                                                                        <button type="button" class="btn btn-default"
-                                                                                data-dismiss="modal">Close
-                                                                        </button>
-                                                                    </div>
-                                                                </div>
-
+                                                        <!-- Modal content-->
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <button type="button" class="close"
+                                                                        data-dismiss="modal">&times;</button>
+                                                                <h4 class="modal-title">{{roomToBeEdited}}</h4>
                                                             </div>
+                                                            <div class="modal-body">
+                                                                <input type="text" ng-model="rm.newname">
+                                                                <button class="btn btn-primary btn-fill"
+                                                                        type="submit" value="Update"
+                                                                        ng-click="rm.editRoom(rm.newname)">
+                                                                    Update
+                                                            </button>
                                                         </div>
-
-                                                        <div class="clearfix"></div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-default"
+                                                                        data-dismiss="modal">Close
+                                                            </button>
+                                                        </div>
                                                     </div>
+
                                                 </div>
                                             </div>
-                                            <!--Room Element End-->
+
+                                                <div class="clearfix"></div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-lg-6 col-md-4 col-sm-4 col-xs-6"></div>
+                                    <!--Room Element End-->
+                                </div>
                             </div>
-                            <!--<div class="font-icon-list col-lg-12 col-md-12 col-sm-12 col-xs-12"-->
-                            <!--ng-repeat="room in rooms">-->
-                            <!--<div class="font-icon-detail">-->
-                            <!--<i class="pe-7s-home myicon"></i>-->
-                            <!--</div>-->
-                            <!--<div>-->
-                            <!--<label>{{room.name}}</label>-->
-                            <!--</div>-->
-                            <!--<div class="row" style="margin-bottom: 25px">-->
-                            <!--<button type="button" class="btn btn-primary btn-fill"-->
-                            <!--ng-click="">View-->
-                            <!--</button>-->
-                            <!--<button type="button" class="btn btn-warning btn-fill">Edit</button>-->
-                            <!--<button type="button" class="btn btn-danger btn-fill">Delete</button>-->
-                            <!--<div class="clearfix"></div>-->
-                            <!--</div>-->
-
-                            <!--</div>-->
                         </div>
                     </div>
                 </div>
