@@ -8,7 +8,7 @@ var Room = require('../../model/Room.model.js');
 var Place = require('../../model/Place.model.js');
 var Switch = require('../../model/Switch.model');
 var GPIOSchema = require("../../model/GPIOSchema.model.js");
-var usableGPIO = [2,3,4,7,8,9,10,11,14,15,17,18,22,23,24,25,27];
+var usableGPIO = [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27];
 var safe = [4,17,18,22,23,24,25,27];
 var unsafe = [2,3,7,8,9,10,11,14,15];
 
