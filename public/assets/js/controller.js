@@ -201,6 +201,9 @@ app.controller('myController', function($scope, $routeParams,$http,$location) {
         var rm =  this;
         rm.name = 'RoomCtrl';
         rm.params = $routeParams;
+        rm.setPir = function (x) {
+            $scope.pir = x;
+        }
         rm.getRoomDetails = function (myplace) {
             $http({
                 method: 'GET',
@@ -225,6 +228,7 @@ app.controller('myController', function($scope, $routeParams,$http,$location) {
             });
         }
         rm.addRoom = function () {
+            console.log($scope.pir);
             $http({
                 method: 'post',
                 url: '/api/room/'+this.params.placeName,

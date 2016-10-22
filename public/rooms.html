@@ -18,8 +18,16 @@
                     </div>
                 </div>
                 <div class="col-lg-2 col-md-3 col-sm-6 col-xs-6">
-                    <div class="form-group">
-                        <input type="text" ng-model="pir" placeholder="PIR" class="form-control">
+                    <div class="form-group"
+                         ng-init="totalPins=[2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27]">
+                        <li class="dropdown">
+                            <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                <input type="text" ng-model="pir" placeholder="PIR" class="form-control">
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li ng-repeat="pin in totalPins" ng-click="rm.setPir(pin);"><a>{{pin}}</a></li>
+                            </ul>
+                        </li>
                     </div>
                 </div>
                 <div class="col-lg-2 col-md-3 col-sm-6 col-xs-6">
