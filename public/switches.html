@@ -31,7 +31,7 @@
                             <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
                                 <input type="text" ng-model="gpio" placeholder="GPIO" class="form-control">
                             </a>
-                            <ul class="dropdown-menu">
+                            <ul class="dropdown-menu pre-scrollable">
                                 <button type="button" ng-class-even="'btn-info'" ng-class-odd="'btn-primary'"
                                         class="btn btn-fill" ng-disabled="sw.isNotFree(pin)"
                                         ng-repeat="pin in totalPins" ng-click="sw.setGpio(pin);">{{pin}}
