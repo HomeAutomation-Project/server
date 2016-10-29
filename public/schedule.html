@@ -4,6 +4,7 @@
         <li class="breadcrumb-item active">Schedules</li>
     </ol>
 </div>
+<div class="container">
 <div class="row">
     <form ng-submit="">
         <div class="col-lg-2 col-md-3 col-sm-6 col-xs-6">
@@ -47,17 +48,24 @@
                 </li>
             </div>
         </div>
-        <div class="col-lg-2 col-md-3 col-sm-6 col-xs-6">
+        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
             <div class="form-group">
                 <input type="datetime-local" ng-model="timedate" placeholder="Time and Date" class="form-control">
             </div>
         </div>
         <div class="col-lg-2 col-md-3 col-sm-6 col-xs-6">
             <div class="form-group">
-                <select ng-model="status" placeholder="Status">
-                    <option value="ON">ON</option>
-                    <option value="OFF">OFF</option>
-                </select>
+
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                        <input type="text" ng-model="status" placeholder="ON/OFF/PIR" class="form-control">
+                    </a>
+                    <ul class="dropdown-menu pre-scrollable">
+                        <li><a>ON</a></li>
+                        <li><a>OFF</a></li>
+                        <li><a>PIR</a></li>
+                    </ul>
+                </li>
             </div>
         </div>
         <br />
@@ -67,6 +75,7 @@
             </div>
         </div>
     </form>
+</div>
 </div>
 <div class="container">
     <div class="row">
