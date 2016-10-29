@@ -34,8 +34,11 @@ app.config(function ($routeProvider) {
             controller: 'SwitchCtrl',
             controllerAs: 'sw'
         })
-
-
+        .when("/schedule", {
+            templateUrl: "schedule.html",
+            controller: 'ScheduleCtrl',
+            controllerAs: 'sch'
+        })
         .otherwise({
             templateUrl: "login.html",
             controller: 'myController'
@@ -449,5 +452,64 @@ app.controller('myController', function($scope, $routeParams,$http,$location) {
             }, function (data, status, header) {
                 alert(data.status + " Error: " + data.data.message);
             });
+        }
+    }])
+    .controller('ScheduleCtrl', ['$scope', '$routeParams', '$http', function RoomCtrl($scope, $routeParams, $http) {
+    var sch = this;
+    var cplace;
+    sch.name = 'ScheduleCtrl';
+    sch.params = $routeParams;
+    sch.getPlaceList = function () {
+        $http({
+            method: 'GET',
+            url: '/api/place',
+            headers: {'Content-Type': 'application/json', 'x-access-token': localStorage.getItem('token')}
+        }).then(function (data, status, header) {
+            $scope.places = data.data;
+        });
+    }
+    sch.getRoomList = function (myplace) {
+        $http({
+            method: 'GET',
+            url: '/api/room/' + myplace,
+            headers: {'Content-Type': 'application/json', 'x-access-token': localStorage.getItem('token')}
+        }).then(function (data, status, header) {
+            $scope.rooms = data.data;
+            cplace=myplace;
+            console.log($scope.rooms);
+        });
+    }
+    sch.getSwitchList = function (myroom) {
+        $http({
+            method: 'GET',
+            url: '/api/switch/' + cplace + '/' + (myroom || sw.params.roomName),
+            headers: {'Content-Type': 'application/json', 'x-access-token': localStorage.getItem('token')}
+        }).then(function (data, status, header) {
+            $scope.switch = data.data;
+            console.log($scope.switch);
+        });
+    }
+    sch.addTask = function () {
+        $http({
+            method: 'post',
+            url: '/api/task',
+            data: {'taskname':$scope.taskname},
+            headers: {'Content-Type': 'application/json', 'x-access-token': localStorage.getItem('token')}
+        }).then(function (data, status, header) {
+            alert(myplace + " added");
+            pc.getPlaceDetails();
+            pc.newplace = "";
+        }, function (data, status, header) {
+            alert(data.status + " Error: " + data.data.message);
+        });
+    }
+        sch.setPlace = function (x) {
+            $scope.place = x;
+        }
+        sch.setRoom = function (x) {
+            $scope.room = x;
+        }
+        sch.setSwitch = function (x) {
+            $scope.switch = x;
         }
     }]);

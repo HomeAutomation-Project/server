@@ -4,8 +4,70 @@
         <li class="breadcrumb-item active">Schedules</li>
     </ol>
 </div>
-
-
+<div class="row">
+    <form ng-submit="">
+        <div class="col-lg-2 col-md-3 col-sm-6 col-xs-6">
+            <div class="form-group">
+                <input type="text" ng-model="taskname" placeholder="New Task Name" class="form-control">
+            </div>
+        </div>
+        <div class="col-lg-2 col-md-3 col-sm-6 col-xs-6" ng-init="sch.getPlaceList();">
+            <div class="form-group">
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                        <input type="text" ng-model="place" placeholder="Place" class="form-control">
+                    </a>
+                    <ul class="dropdown-menu pre-scrollable">
+                        <li ng-repeat="place in places" ng-click="sch.setPlace(place.name); sch.getRoomList(place.name);"><a>{{place.name}}</a></li>
+                    </ul>
+                </li>
+            </div>
+        </div>
+        <div class="col-lg-2 col-md-3 col-sm-6 col-xs-6">
+            <div class="form-group">
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                        <input type="text" ng-model="room" placeholder="Room" class="form-control">
+                    </a>
+                    <ul class="dropdown-menu pre-scrollable">
+                        <li ng-repeat="room in rooms" ng-click="sch.setRoom(room.name);sch.getSwitchList(room.name);"><a>{{room.name}}</a></li>
+                    </ul>
+                </li>
+            </div>
+        </div>
+        <div class="col-lg-2 col-md-3 col-sm-6 col-xs-6">
+            <div class="form-group">
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                        <input type="text" ng-model="switch" placeholder="Switch" class="form-control">
+                    </a>
+                    <ul class="dropdown-menu pre-scrollable">
+                        <li ng-repeat="swit in switch" ng-click="sch.setSwitch(swit.SwitchName);"><a>{{swit.SwitchName}}</a></li>
+                    </ul>
+                </li>
+            </div>
+        </div>
+        <div class="col-lg-2 col-md-3 col-sm-6 col-xs-6">
+            <div class="form-group">
+                <input type="datetime-local" ng-model="timedate" placeholder="Time and Date" class="form-control">
+            </div>
+        </div>
+        <div class="col-lg-2 col-md-3 col-sm-6 col-xs-6">
+            <div class="form-group">
+                <select ng-model="status" placeholder="Status">
+                    <option value="ON">ON</option>
+                    <option value="OFF">OFF</option>
+                </select>
+            </div>
+        </div>
+        <br />
+        <div class="col-lg-2 col-md-3 col-sm-6 col-xs-6">
+            <div class="form-group">
+                <button type="submit" class="btn btn-success btn-fill">Add New Task</button>
+            </div>
+        </div>
+    </form>
+</div>
 <div class="container">
     <div class="row">
         <div class="col-md-12">
