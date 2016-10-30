@@ -60,9 +60,9 @@
                         <input type="text" ng-model="status" placeholder="ON/OFF/PIR" class="form-control">
                     </a>
                     <ul class="dropdown-menu pre-scrollable">
-                        <li><a>ON</a></li>
-                        <li><a>OFF</a></li>
-                        <li><a>PIR</a></li>
+                        <li><a ng-click="sch.setStatus('ON');">ON</a></li>
+                        <li><a ng-click="sch.setStatus('OFF');">OFF</a></li>
+                        <li><a ng-click="sch.setStatus('PIR');">PIR</a></li>
                     </ul>
                 </li>
             </div>

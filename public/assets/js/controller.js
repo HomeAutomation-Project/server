@@ -510,4 +510,7 @@ app.controller('myController', function($scope, $routeParams,$http,$location) {
         sch.setSwitch = function (x) {
             $scope.switch = x;
         }
+        sch.setStatus = function (x) {
+            $scope.status = x;
+        }
     }]);
