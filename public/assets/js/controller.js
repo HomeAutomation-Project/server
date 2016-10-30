@@ -493,12 +493,10 @@ app.controller('myController', function($scope, $routeParams,$http,$location) {
         $http({
             method: 'post',
             url: '/api/task',
-            data: {'taskname':$scope.taskname},
+            data: {'name':$scope.taskname,'switch':$scope.switch,'status':$scope.status,'taskTimeDate':$scope.timedate},
             headers: {'Content-Type': 'application/json', 'x-access-token': localStorage.getItem('token')}
         }).then(function (data, status, header) {
-            alert(myplace + " added");
-            pc.getPlaceDetails();
-            pc.newplace = "";
+            alert($scope.taskname + " added");
         }, function (data, status, header) {
             alert(data.status + " Error: " + data.data.message);
         });
