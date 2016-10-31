@@ -96,11 +96,15 @@
                         </thead>
                         <tbody>
                             <tr ng-repeat="t in task">
-                              <td>1</td>
+                                <td>{{$index+1}}</td>
                               <td>{{t.name}}</td>
                               <td>{{t.taskTimeDate}}</td>
-                              <td>{{t.Switch}}</td>
+                                <td>{{t.SName}}</td>
                               <td>{{t.status}}</td>
+                                <td>
+                                    <button class="btn btn-fill btn-warning">Edit</button>
+                                    <button class="btn btn-fill btn-danger">Delete</button>
+                                </td>
                             </tr>
                         </tbody>
                     </table>
