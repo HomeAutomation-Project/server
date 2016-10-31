@@ -11,6 +11,9 @@ var TaskSchema = new Schema({
      type : Schema.Types.ObjectId,
      ref : 'Switch'
    },
+    SName: {
+        type: String
+    },
    status:{
        type: String,
        required: true

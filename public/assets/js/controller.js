@@ -112,6 +112,7 @@ app.controller('myController', function($scope, $routeParams,$http,$location) {
                    $scope.getUserDetails();
                    $location.path('/dashboard');
                      window.location.reload();
+                     localStorage.setItem("active", 1);
                    flag=true;
                 } else {
                     alert("Your Browser is not Supported!");

@@ -60,6 +60,7 @@ myRouter.post('/',function(req,res,next){
                         var newTask = Task({
                             name:req.body.name,
                             Switch: req.body.switch,
+                            SName: mySwitch.SwitchName,
                             status: req.body.status,
                             belongsTo: req.decoded._doc.username,
                             taskTimeDate: req.body.taskTimeDate
