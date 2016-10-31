@@ -501,6 +501,16 @@ app.controller('myController', function($scope, $routeParams,$http,$location) {
             alert(data.status + " Error: " + data.data.message);
         });
     }
+    sch.getTask = function () {
+            $http({
+                method: 'GET',
+                url: '/api/task',
+                headers: {'Content-Type': 'application/json', 'x-access-token': localStorage.getItem('token')}
+            }).then(function (data, status, header) {
+                $scope.task = data.data;
+                console.log($scope.task);
+            });
+        }
         sch.setPlace = function (x) {
             $scope.place = x;
         }
@@ -513,4 +523,5 @@ app.controller('myController', function($scope, $routeParams,$http,$location) {
         sch.setStatus = function (x) {
             $scope.status = x;
         }
+        sch.getTask();
     }]);

@@ -90,17 +90,17 @@
                         <thead>
                             <th>ID</th>
                           <th>Task</th>
-                          <th>Start Time</th>
-                          <th>End Time</th>
-                          <th>Status ON/OFF</th>
+                          <th>Time</th>
+                          <th>Switch</th>
+                          <th>Status</th>
                         </thead>
                         <tbody>
-                            <tr ng-repeate="schedule in schedules">
+                            <tr ng-repeat="t in task">
                               <td>1</td>
-                              <td>Task1</td>
-                              <td>12.00pm</td>
-                              <td>13.00pm</td>
-                              <td>ON</td>
+                              <td>{{t.name}}</td>
+                              <td>{{t.taskTimeDate}}</td>
+                              <td>{{t.Switch}}</td>
+                              <td>{{t.status}}</td>
                             </tr>
                         </tbody>
                     </table>
