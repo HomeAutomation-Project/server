@@ -498,6 +498,7 @@ app.controller('myController', function($scope, $routeParams,$http,$location) {
             headers: {'Content-Type': 'application/json', 'x-access-token': localStorage.getItem('token')}
         }).then(function (data, status, header) {
             alert($scope.taskname + " added");
+            sch.getTask();
         }, function (data, status, header) {
             alert(data.status + " Error: " + data.data.message);
         });
