@@ -458,6 +458,16 @@ app.controller('myController', function($scope, $routeParams,$http,$location) {
     .controller('ScheduleCtrl', ['$scope', '$routeParams', '$http', function RoomCtrl($scope, $routeParams, $http) {
     var sch = this;
     var cplace;
+        sch.selectSch = function (x) {
+            console.log();
+            sch.schToBeEdited = $scope.task[x].name;
+            sch.newName = sch.schToBeEdited;
+            sch.newTimeDate = $scope.task[x].taskTimeDate;
+            sch.newStatus = $scope.task[x].status;
+        }
+        sch.editSch = function () {
+            console.log(sch.schToBeEdited + " : " + sch.newName + " : " + sch.newTimeDate + " : " + sch.newStatus);
+        }
     sch.name = 'ScheduleCtrl';
     sch.params = $routeParams;
     sch.getPlaceList = function () {
@@ -510,6 +520,9 @@ app.controller('myController', function($scope, $routeParams,$http,$location) {
                 headers: {'Content-Type': 'application/json', 'x-access-token': localStorage.getItem('token')}
             }).then(function (data, status, header) {
                 $scope.task = data.data;
+                for (let i = 0; i < $scope.task.length; i++) {
+                    $scope.task[i].taskTimeDate = new Date($scope.task[i].taskTimeDate);
+                }
                 console.log($scope.task);
             });
         }
@@ -524,6 +537,9 @@ app.controller('myController', function($scope, $routeParams,$http,$location) {
         }
         sch.setStatus = function (x) {
             $scope.status = x;
+        };
+        sch.setStatus1 = function (x) {
+            sch.newStatus = x;
         }
         sch.delTask = function (x) {
             if (x) {
