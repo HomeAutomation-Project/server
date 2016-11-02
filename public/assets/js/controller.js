@@ -524,5 +524,17 @@ app.controller('myController', function($scope, $routeParams,$http,$location) {
         sch.setStatus = function (x) {
             $scope.status = x;
         }
+        sch.delTask = function (x) {
+            if (x) {
+                $http({
+                    method: 'DELETE',
+                    url: '/api/task/' + x,
+                    headers: {'Content-Type': 'application/json', 'x-access-token': localStorage.getItem('token')}
+                }).then(function (data, status, header) {
+                    console.log(data);
+                    sch.getTask();
+                });
+            }
+        }
         sch.getTask();
     }]);
