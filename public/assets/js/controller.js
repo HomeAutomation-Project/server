@@ -94,6 +94,20 @@ app.controller('myController', function($scope, $routeParams,$http,$location) {
     {
       $scope.reg=x;
     }
+    $scope.register = function () {
+        console.log("uname"+$scope.username+"password"+$scope.password);
+        $http({
+            method: 'post',
+            url: '/api/register/',
+            data: {'username': $scope.username,'password':$scope.password,'first':$scope.first,'last':$scope.last,'email':$scope.email},
+            headers: {'Content-Type': 'application/json', 'x-access-token': localStorage.getItem('token')}
+        }).then(function (data, status, header) {
+            alert($scope.username + " added");
+            $location.path('/');
+        }, function (data, status, header) {
+            alert(data.status + " Error: " + data.data.message);
+        });
+    }
     $scope.SendData = function () {
 
         $http({
@@ -467,6 +481,17 @@ app.controller('myController', function($scope, $routeParams,$http,$location) {
         }
         sch.editSch = function () {
             console.log(sch.schToBeEdited + " : " + sch.newName + " : " + sch.newTimeDate + " : " + sch.newStatus);
+            $http({
+                method: 'PUT',
+                url: '/api/task/'+sch.schToBeEdited,
+                data: {'name':sch.newName,'status':sch.newStatus,'taskTimeDate':sch.newTimeDate},
+                headers: {'Content-Type': 'application/json', 'x-access-token': localStorage.getItem('token')}
+            }).then(function (data, status, header) {
+                alert(sch.newName + " Changed");
+                sch.getTask();
+            }, function (data, status, header) {
+                alert(data.status + " Error: " + data.data.message);
+            });
         }
     sch.name = 'ScheduleCtrl';
     sch.params = $routeParams;
