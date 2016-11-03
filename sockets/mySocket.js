@@ -17,6 +17,14 @@ module.exports = function(io){
     })
   });
   
-  socket.on('Request',function(data){});
+  socket.on('Request',function(data){
+    Room.findById(data)
+    .populate('switches isOf')
+    .exec(function(err,room){
+      if(err) throw err;
+      console.log(room);
+      socket.emit('Update',{"data":room});
+    })
+  });
 });
 }
