@@ -8,7 +8,10 @@ myRouter.get('/',function(req,res,next){
     Task.find({'belongsTo':req.decoded._doc.username},
     function(err,tasks)
     {
-        if (err) next(err);
+        if (err) {
+            next(err);
+            return;
+        }
         if(!tasks)
         {
             err = {};
@@ -24,7 +27,10 @@ myRouter.get('/',function(req,res,next){
 myRouter.post('/',function(req,res,next){
     Task.findOne({'belongsTo':req.decoded._doc.username, 'name':req.body.name},
     function(err,existingTask){
-        if (err) next(err);
+        if (err) {
+            next(err);
+            return;
+        }
         if(existingTask)
         {
             err = {};
@@ -36,7 +42,10 @@ myRouter.post('/',function(req,res,next){
         {
             Switch.findById(req.body.switch,
             function(err,mySwitch){
-                if (err) next(err);
+                if (err) {
+                    next(err);
+                    return;
+                }
                 if(!mySwitch)
                 {
                     var err1 = {};
@@ -51,6 +60,7 @@ myRouter.post('/',function(req,res,next){
                         var newTask = Task({
                             name:req.body.name,
                             Switch: req.body.switch,
+                            SName: mySwitch.SwitchName,
                             status: req.body.status,
                             belongsTo: req.decoded._doc.username,
                             taskTimeDate: req.body.taskTimeDate
@@ -58,7 +68,10 @@ myRouter.post('/',function(req,res,next){
                         
                         newTask.save(function(err,tsk)
                         {
-                            if (err) next(err);
+                            if (err) {
+                                next(err);
+                                return;
+                            }
                             res.send(tsk);
                         });
                     }
@@ -77,7 +90,10 @@ myRouter.post('/',function(req,res,next){
 myRouter.put('/:name',function(req,res,next){
     Task.findOne({'name':req.params.name, 'belongsTo':req.decoded._doc.username},
     function(err,tsk){
-        if (err) next(err);
+        if (err) {
+            next(err);
+            return;
+        }
         if(tsk)
         {
             if(req.body.name) tsk.name = req.body.name;
@@ -85,7 +101,10 @@ myRouter.put('/:name',function(req,res,next){
             if(req.body.taskTimeDate) tsk.taskTimeDate = req.body.taskTimeDate;
             tsk.save(function(err,updatedTask)
             {
-                if (err) next(err);
+                if (err) {
+                    next(err);
+                    return;
+                }
                 res.send(updatedTask);
             });
         }
@@ -101,7 +120,10 @@ myRouter.put('/:name',function(req,res,next){
 myRouter.delete('/:name',function(req,res,next){
     Task.findOneAndRemove({name:req.params.name,belongsTo:req.decoded._doc.username}
     ,function(err,delTsk){
-            if (err) next(err);
+            if (err) {
+                next(err);
+                return;
+            }
         else
         {
             if(!delTsk)

@@ -34,8 +34,11 @@ app.config(function ($routeProvider) {
             controller: 'SwitchCtrl',
             controllerAs: 'sw'
         })
-
-
+        .when("/schedule", {
+            templateUrl: "schedule.html",
+            controller: 'ScheduleCtrl',
+            controllerAs: 'sch'
+        })
         .otherwise({
             templateUrl: "login.html",
             controller: 'myController'
@@ -91,6 +94,20 @@ app.controller('myController', function($scope, $routeParams,$http,$location) {
     {
       $scope.reg=x;
     }
+    $scope.register = function () {
+        console.log("uname"+$scope.username+"password"+$scope.password);
+        $http({
+            method: 'post',
+            url: '/api/register/',
+            data: {'username': $scope.username,'password':$scope.password,'first':$scope.first,'last':$scope.last,'email':$scope.email},
+            headers: {'Content-Type': 'application/json', 'x-access-token': localStorage.getItem('token')}
+        }).then(function (data, status, header) {
+            alert($scope.username + " added");
+            $location.path('/');
+        }, function (data, status, header) {
+            alert(data.status + " Error: " + data.data.message);
+        });
+    }
     $scope.SendData = function () {
 
         $http({
@@ -109,6 +126,7 @@ app.controller('myController', function($scope, $routeParams,$http,$location) {
                    $scope.getUserDetails();
                    $location.path('/dashboard');
                      window.location.reload();
+                     localStorage.setItem("active", 1);
                    flag=true;
                 } else {
                     alert("Your Browser is not Supported!");
@@ -450,4 +468,115 @@ app.controller('myController', function($scope, $routeParams,$http,$location) {
                 alert(data.status + " Error: " + data.data.message);
             });
         }
+    }])
+    .controller('ScheduleCtrl', ['$scope', '$routeParams', '$http', function RoomCtrl($scope, $routeParams, $http) {
+    var sch = this;
+    var cplace;
+        sch.selectSch = function (x) {
+            console.log();
+            sch.schToBeEdited = $scope.task[x].name;
+            sch.newName = sch.schToBeEdited;
+            sch.newTimeDate = $scope.task[x].taskTimeDate;
+            sch.newStatus = $scope.task[x].status;
+        }
+        sch.editSch = function () {
+            console.log(sch.schToBeEdited + " : " + sch.newName + " : " + sch.newTimeDate + " : " + sch.newStatus);
+            $http({
+                method: 'PUT',
+                url: '/api/task/'+sch.schToBeEdited,
+                data: {'name':sch.newName,'status':sch.newStatus,'taskTimeDate':sch.newTimeDate},
+                headers: {'Content-Type': 'application/json', 'x-access-token': localStorage.getItem('token')}
+            }).then(function (data, status, header) {
+                alert(sch.newName + " Changed");
+                sch.getTask();
+            }, function (data, status, header) {
+                alert(data.status + " Error: " + data.data.message);
+            });
+        }
+    sch.name = 'ScheduleCtrl';
+    sch.params = $routeParams;
+    sch.getPlaceList = function () {
+        $http({
+            method: 'GET',
+            url: '/api/place',
+            headers: {'Content-Type': 'application/json', 'x-access-token': localStorage.getItem('token')}
+        }).then(function (data, status, header) {
+            $scope.places = data.data;
+        });
+    }
+    sch.getRoomList = function (myplace) {
+        $http({
+            method: 'GET',
+            url: '/api/room/' + myplace,
+            headers: {'Content-Type': 'application/json', 'x-access-token': localStorage.getItem('token')}
+        }).then(function (data, status, header) {
+            $scope.rooms = data.data;
+            cplace=myplace;
+            console.log($scope.rooms);
+        });
+    }
+    sch.getSwitchList = function (myroom) {
+        $http({
+            method: 'GET',
+            url: '/api/switch/' + cplace + '/' + (myroom || sw.params.roomName),
+            headers: {'Content-Type': 'application/json', 'x-access-token': localStorage.getItem('token')}
+        }).then(function (data, status, header) {
+            $scope.switch = data.data;
+            console.log($scope.switch);
+        });
+    }
+    sch.addTask = function () {
+        $http({
+            method: 'post',
+            url: '/api/task',
+            data: {'name':$scope.taskname,'switch':$scope.switch,'status':$scope.status,'taskTimeDate':$scope.timedate},
+            headers: {'Content-Type': 'application/json', 'x-access-token': localStorage.getItem('token')}
+        }).then(function (data, status, header) {
+            alert($scope.taskname + " added");
+            sch.getTask();
+        }, function (data, status, header) {
+            alert(data.status + " Error: " + data.data.message);
+        });
+    }
+    sch.getTask = function () {
+            $http({
+                method: 'GET',
+                url: '/api/task',
+                headers: {'Content-Type': 'application/json', 'x-access-token': localStorage.getItem('token')}
+            }).then(function (data, status, header) {
+                $scope.task = data.data;
+                for (let i = 0; i < $scope.task.length; i++) {
+                    $scope.task[i].taskTimeDate = new Date($scope.task[i].taskTimeDate);
+                }
+                console.log($scope.task);
+            });
+        }
+        sch.setPlace = function (x) {
+            $scope.place = x;
+        }
+        sch.setRoom = function (x) {
+            $scope.room = x;
+        }
+        sch.setSwitch = function (x) {
+            $scope.switch = x;
+        }
+        sch.setStatus = function (x) {
+            $scope.status = x;
+        };
+        sch.setStatus1 = function (x) {
+            sch.newStatus = x;
+        }
+        sch.delTask = function (x) {
+            if (x) {
+                $http({
+                    method: 'DELETE',
+                    url: '/api/task/' + x,
+                    headers: {'Content-Type': 'application/json', 'x-access-token': localStorage.getItem('token')}
+                }).then(function (data, status, header) {
+                    console.log(data);
+                    sch.getTask();
+                });
+            }
+        }
+        sch.getTask();
     }]);
