@@ -280,8 +280,7 @@ app.controller('myController', function($scope, $routeParams,$http,$location) {
     }])
 
 
-
-    .controller('SwitchCtrl', ['$scope', '$routeParams', '$http', function SwitchCtrl($scope, $routeParams, $http) {
+    .controller('SwitchCtrl', ['$scope', '$routeParams', '$http', '$location', function SwitchCtrl($scope, $routeParams, $http, $location) {
         var sw =  this;
         sw.name = 'SwitchCtrl';
         sw.params = $routeParams;
@@ -308,14 +307,23 @@ app.controller('myController', function($scope, $routeParams,$http,$location) {
             }
         }
         sw.getSwitchDetails = function (myroom) {
-            $http({
-                method: 'GET',
-                url: '/api/switch/' + this.params.placeName + '/' + (myroom || sw.params.roomName),
-                headers: {'Content-Type': 'application/json', 'x-access-token': localStorage.getItem('token')}
-            }).then(function (data, status, header) {
-                $scope.switch = data.data;
-                console.log($scope.switch);
-            });
+            var currLocation = $location.path();
+            var t = setInterval(function () {
+                if (currLocation != $location.path()) {
+                    console.log("Path Changed");
+                    clearTimeout(t);
+                }
+                else {
+                    $http({
+                        method: 'GET',
+                        url: '/api/switch/' + sw.params.placeName + '/' + (myroom || sw.params.roomName),
+                        headers: {'Content-Type': 'application/json', 'x-access-token': localStorage.getItem('token')}
+                    }).then(function (data, status, header) {
+                        $scope.switch = data.data;
+                        console.log($scope.switch);
+                    });
+                }
+            }, 1500)
         }
         sw.deleteSwitch = function (myswitch) {
             if (confirm("Are you sure you want to delete " + myswitch)) {
@@ -469,7 +477,7 @@ app.controller('myController', function($scope, $routeParams,$http,$location) {
             });
         }
     }])
-    .controller('ScheduleCtrl', ['$scope', '$routeParams', '$http', function RoomCtrl($scope, $routeParams, $http) {
+    .controller('ScheduleCtrl', ['$scope', '$routeParams', '$http', '$location', function RoomCtrl($scope, $routeParams, $http, $location) {
     var sch = this;
     var cplace;
         sch.selectSch = function (x) {
@@ -539,17 +547,26 @@ app.controller('myController', function($scope, $routeParams,$http,$location) {
         });
     }
     sch.getTask = function () {
-            $http({
-                method: 'GET',
-                url: '/api/task',
-                headers: {'Content-Type': 'application/json', 'x-access-token': localStorage.getItem('token')}
-            }).then(function (data, status, header) {
-                $scope.task = data.data;
-                for (let i = 0; i < $scope.task.length; i++) {
-                    $scope.task[i].taskTimeDate = new Date($scope.task[i].taskTimeDate);
-                }
-                console.log($scope.task);
-            });
+        var currLocation = $location.path();
+        var t = setInterval(function () {
+            if (currLocation != $location.path()) {
+                console.log("Path Changed");
+                clearInterval(t);
+            }
+            else {
+                $http({
+                    method: 'GET',
+                    url: '/api/task',
+                    headers: {'Content-Type': 'application/json', 'x-access-token': localStorage.getItem('token')}
+                }).then(function (data, status, header) {
+                    $scope.task = data.data;
+                    for (let i = 0; i < $scope.task.length; i++) {
+                        $scope.task[i].taskTimeDate = new Date($scope.task[i].taskTimeDate);
+                    }
+                    console.log($scope.task);
+                });
+            }
+        }, 1500);
         }
         sch.setPlace = function (x) {
             $scope.place = x;
