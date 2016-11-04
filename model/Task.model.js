@@ -30,7 +30,11 @@ var TaskSchema = new Schema({
     Repeat: {
         type: String,
         default: 'hourly'
-  }
+    },
+    Completed: {
+        type: Boolean,
+        default: false
+    }
 },{timestamps:true});
 
 module.exports = mongoose.model('Task',TaskSchema);

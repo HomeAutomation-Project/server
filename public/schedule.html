@@ -81,7 +81,7 @@
                 <ul class="dropdown-menu pre-scrollable">
                     <li><a ng-click="sch.setRepeat('hourly');">Hourly</a></li>
                     <li><a ng-click="sch.setRepeat('daily');">Daily</a></li>
-                    <li><a ng-click="sch.setRepeat('weekly');">Monthly</a></li>
+                    <li><a ng-click="sch.setRepeat('weekly');">weekly</a></li>
                 </ul>
             </li>
         </div>
@@ -111,6 +111,7 @@
                           <th>Switch</th>
                           <th>Status</th>
                             <th>Repeat</th>
+                            <th>Completed</th>
                         </thead>
                         <tbody>
                             <tr ng-repeat="t in task">
@@ -120,7 +121,9 @@
                                 <td>{{t.SName}}</td>
                               <td>{{t.status}}</td>
                                 <td ng-show="t.repeat">{{t.Repeat}}</td>
-                                <td ng-show="!t.repeat">No</td>
+                                <td ng-show="!t.repeat">-</td>
+                                <td ng-show="!t.repeat">{{t.Completed}}</td>
+                                <td ng-show="t.repeat">-</td>
                                 <td>
                                     <button data-toggle="modal" data-target="#myModal" ng-click="sch.selectSch($index);"
                                             class="btn btn-fill btn-warning">Edit
