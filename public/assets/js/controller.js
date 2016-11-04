@@ -308,6 +308,7 @@ app.controller('myController', function($scope, $routeParams,$http,$location) {
         }
         sw.getSwitchDetails = function (myroom) {
             var currLocation = $location.path();
+            var oldData;
             var t = setInterval(function () {
                 if (currLocation != $location.path()) {
                     console.log("Path Changed");
@@ -319,8 +320,14 @@ app.controller('myController', function($scope, $routeParams,$http,$location) {
                         url: '/api/switch/' + sw.params.placeName + '/' + (myroom || sw.params.roomName),
                         headers: {'Content-Type': 'application/json', 'x-access-token': localStorage.getItem('token')}
                     }).then(function (data, status, header) {
-                        $scope.switch = data.data;
-                        console.log($scope.switch);
+                        if (_.isEqual(data.data, oldData)) {
+                            console.log("Same Data");
+                        }
+                        else {
+                            oldData = JSON.parse(JSON.stringify(data.data));
+                            $scope.switch = data.data;
+                            console.log($scope.switch);
+                        }
                     });
                 }
             }, 1500)
