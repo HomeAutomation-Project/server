@@ -40,10 +40,11 @@
             <div class="form-group">
                 <li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                        <input type="text" ng-model="switch" placeholder="Switch" class="form-control">
+                        <input type="text" ng-model="switch1" placeholder="Switch" class="form-control">
                     </a>
                     <ul class="dropdown-menu pre-scrollable">
-                        <li ng-repeat="swit in switch" ng-click="sch.setSwitch(swit._id);"><a>{{swit.SwitchName}}</a></li>
+                        <li ng-repeat="swit in switch" ng-click="sch.setSwitch(swit._id,swit.SwitchName);"><a>{{swit.SwitchName}}</a>
+                        </li>
                     </ul>
                 </li>
             </div>

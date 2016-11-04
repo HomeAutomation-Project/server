@@ -574,8 +574,9 @@ app.controller('myController', function($scope, $routeParams,$http,$location) {
         sch.setRoom = function (x) {
             $scope.room = x;
         }
-        sch.setSwitch = function (x) {
+        sch.setSwitch = function (x, y) {
             $scope.switch = x;
+            $scope.switch1 = y;
         }
         sch.setStatus = function (x) {
             $scope.status = x;
