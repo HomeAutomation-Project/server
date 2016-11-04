@@ -548,7 +548,14 @@ app.controller('myController', function($scope, $routeParams,$http,$location) {
         $http({
             method: 'post',
             url: '/api/task',
-            data: {'name':$scope.taskname,'switch':$scope.switch,'status':$scope.status,'taskTimeDate':$scope.timedate},
+            data: {
+                'name': $scope.taskname,
+                'switch': $scope.switch,
+                'status': $scope.status,
+                'taskTimeDate': $scope.timedate,
+                'Repeat': $scope.Repeat,
+                'repeat': $scope.repeat
+            },
             headers: {'Content-Type': 'application/json', 'x-access-token': localStorage.getItem('token')}
         }).then(function (data, status, header) {
             alert($scope.taskname + " added");
@@ -602,6 +609,9 @@ app.controller('myController', function($scope, $routeParams,$http,$location) {
         sch.setStatus1 = function (x) {
             sch.newStatus = x;
         }
+        sch.setRepeat = function (x) {
+            $scope.Repeat = x;
+        };
         sch.delTask = function (x) {
             if (x) {
                 $http({

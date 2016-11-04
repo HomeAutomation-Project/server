@@ -69,7 +69,23 @@
             </div>
         </div>
         <br />
+    </div>
 <div class="row">
+    <div class="col-lg-2 col-md-3 col-sm-6 col-xs-6">
+        <div class="form-group">
+            <label>Repeat:<input type="checkbox" ng-model="repeat"></label>
+            <li ng-show="repeat" class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                    <input type="text" ng-model="Repeat" placeholder="Hourly/Daily" class="form-control">
+                </a>
+                <ul class="dropdown-menu pre-scrollable">
+                    <li><a ng-click="sch.setRepeat('hourly');">Hourly</a></li>
+                    <li><a ng-click="sch.setRepeat('daily');">Daily</a></li>
+                    <li><a ng-click="sch.setRepeat('weekly');">Monthly</a></li>
+                </ul>
+            </li>
+        </div>
+    </div>
     <div class="col-lg-2 col-md-3 col-sm-6 col-xs-6">
         <div class="form-group">
             <button type="submit" class="btn btn-success btn-fill">Add New Task</button>
