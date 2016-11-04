@@ -63,7 +63,9 @@ myRouter.post('/',function(req,res,next){
                             SName: mySwitch.SwitchName,
                             status: req.body.status,
                             belongsTo: req.decoded._doc.username,
-                            taskTimeDate: req.body.taskTimeDate
+                            taskTimeDate: req.body.taskTimeDate,
+                            Repeat: req.body.Repeat,
+                            repeat: req.body.repeat
                         });
                         
                         newTask.save(function(err,tsk)

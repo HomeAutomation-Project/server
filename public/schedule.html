@@ -110,6 +110,7 @@
                           <th>Time</th>
                           <th>Switch</th>
                           <th>Status</th>
+                            <th>Repeat</th>
                         </thead>
                         <tbody>
                             <tr ng-repeat="t in task">
@@ -118,6 +119,8 @@
                               <td>{{t.taskTimeDate}}</td>
                                 <td>{{t.SName}}</td>
                               <td>{{t.status}}</td>
+                                <td ng-show="t.repeat">{{t.Repeat}}</td>
+                                <td ng-show="!t.repeat">No</td>
                                 <td>
                                     <button data-toggle="modal" data-target="#myModal" ng-click="sch.selectSch($index);"
                                             class="btn btn-fill btn-warning">Edit

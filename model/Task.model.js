@@ -22,6 +22,14 @@ var TaskSchema = new Schema({
   taskTimeDate:{
       type: String,
       required: true
+  },
+    repeat: {
+        type: Boolean,
+        default: false
+    },
+    Repeat: {
+        type: String,
+        default: 'hourly'
   }
 },{timestamps:true});
 
