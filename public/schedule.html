@@ -16,7 +16,7 @@
             <div class="form-group">
                 <li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                        <input type="text" ng-model="place" placeholder="Place" class="form-control">
+                        <input type="text" ng-model="place" placeholder="Location" class="form-control">
                     </a>
                     <ul class="dropdown-menu pre-scrollable">
                         <li ng-repeat="place in places" ng-click="sch.setPlace(place.name); sch.getRoomList(place.name);"><a>{{place.name}}</a></li>
