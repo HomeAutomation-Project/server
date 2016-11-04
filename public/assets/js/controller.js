@@ -551,6 +551,7 @@ app.controller('myController', function($scope, $routeParams,$http,$location) {
         });
     }
     sch.getTask = function () {
+        var oldData;
         var currLocation = $location.path();
         var t = setInterval(function () {
             if (currLocation != $location.path()) {
@@ -563,11 +564,17 @@ app.controller('myController', function($scope, $routeParams,$http,$location) {
                     url: '/api/task',
                     headers: {'Content-Type': 'application/json', 'x-access-token': localStorage.getItem('token')}
                 }).then(function (data, status, header) {
-                    $scope.task = data.data;
-                    for (let i = 0; i < $scope.task.length; i++) {
-                        $scope.task[i].taskTimeDate = new Date($scope.task[i].taskTimeDate);
+                    if (_.isEqual(oldData, data.data)) {
+                        console.log("Same Task");
                     }
-                    console.log($scope.task);
+                    else {
+                        oldData = JSON.parse(JSON.stringify(data.data));
+                        $scope.task = data.data;
+                        for (let i = 0; i < $scope.task.length; i++) {
+                            $scope.task[i].taskTimeDate = new Date($scope.task[i].taskTimeDate);
+                        }
+                        console.log($scope.task);
+                    }
                 });
             }
         }, 1500);
