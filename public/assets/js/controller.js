@@ -350,6 +350,7 @@ app.controller('myController', function($scope, $routeParams,$http,$location) {
                 alert($scope.switchname + " added");
                 sw.getSwitchDetails(sw.params.roomName);
                 sw.newplace = "";
+                sw.sform.setPristine();
                 sw.getRoomDetails(sw.params.roomName);
             }, function (data, status, header) {
                 alert(data.status + " Error: " + data.data.message);
@@ -410,6 +411,9 @@ app.controller('myController', function($scope, $routeParams,$http,$location) {
                 sw.room = data.data.GPIOs;
                 console.log($scope.room);
             });
+        };
+        sw.setStatus = function (x) {
+            $scope.status = x;
         };
         console.log(this.params);
         sw.getRoomDetails(this.params.roomName);

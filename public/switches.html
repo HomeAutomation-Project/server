@@ -13,18 +13,27 @@
         <div class="col-md-12 col-lg-12 col-xs-12 col-sm-12">
             <!--Form Start-->
             <div class="row">
-                <form>
+                <form name="sform">
                 <div class="col-lg-2 col-md-3 col-sm-6 col-xs-6">
                     <div class="form-group">
                         <input type="text" ng-model="switchname" placeholder="switch Name" class="form-control">
                     </div>
                 </div>
-                <div class="col-lg-2 col-md-3 col-sm-6 col-xs-6">
-                    <div class="form-group">
-                        <input type="text" ng-model="status" placeholder="status" class="form-control">
+                    <div class="col-lg-2 col-md-3 col-sm-6 col-xs-6">
+                        <div class="form-group">
+                            <li class="dropdown">
+                                <a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                    <input type="text" ng-model="status" placeholder="ON/OFF/PIR" class="form-control">
+                                </a>
+                                <ul class="dropdown-menu pre-scrollable">
+                                    <li><a ng-click="sw.setStatus('ON');">ON</a></li>
+                                    <li><a ng-click="sw.setStatus('OFF');">OFF</a></li>
+                                    <li><a ng-click="sw.setStatus('PIR');">PIR</a></li>
+                                </ul>
+                            </li>
+                        </div>
                     </div>
-                </div>
-                <div class="col-lg-2 col-md-3 col-sm-6 col-xs-6">
+                    <div class="col-lg-2 col-md-3 col-sm-6 col-xs-6">
                     <div class="form-group"
                          ng-init="totalPins=[2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27]">
                         <li class="dropdown">
