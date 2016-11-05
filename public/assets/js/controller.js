@@ -371,7 +371,7 @@ app.controller('myController', function($scope, $routeParams,$http,$location) {
                     url: '/api/switch/'+this.params.placeName+'/'+this.params.roomName+'/'+myswitch+'/ON',
                     headers: {'Content-Type': 'application/json', 'x-access-token': localStorage.getItem('token')}
                 }).then(function (data,status,header) {
-
+                    demo.showNotification('top','center','ON', myswitch);
                 })
             }
             else
@@ -381,7 +381,7 @@ app.controller('myController', function($scope, $routeParams,$http,$location) {
                     url: '/api/switch/'+this.params.placeName+'/'+this.params.roomName+'/'+myswitch+'/OFF',
                     headers: {'Content-Type': 'application/json', 'x-access-token': localStorage.getItem('token')}
                 }).then(function (data,status,header) {
-
+                    demo.showNotification('top','center','OFF', myswitch);
                 })
             }
         }
