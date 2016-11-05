@@ -234,7 +234,10 @@ app.controller('myController', function($scope, $routeParams,$http,$location) {
             });
         }
         rm.deleteRoom = function (myroom) {
-            $http({
+            var are_you_sure = confirm("Are you sure you want to delete "+ myroom+" ?");
+            if(are_you_sure)
+            {
+                $http({
                 method: 'DELETE',
                 url: '/api/room/'+this.params.placeName+'/'+myroom,
                 headers: {'Content-Type': 'application/json', 'x-access-token': localStorage.getItem('token')}
@@ -244,6 +247,7 @@ app.controller('myController', function($scope, $routeParams,$http,$location) {
             }, function (data, status, header) {
                 alert(data.status + " Error: " + data.data.message);
             });
+            }
         }
         rm.addRoom = function () {
             console.log($scope.pir);
@@ -443,8 +447,10 @@ app.controller('myController', function($scope, $routeParams,$http,$location) {
         };
         pc.getPlaceDetails();
         pc.deletePlace = function (myplace) {
-
-            $http({
+            var are_you_sure= confirm("Are you Sure you want to delete "+myplace+" ?");
+            if(are_you_sure)
+            {
+                $http({
                 method: 'DELETE',
                 url: '/api/place/' + myplace,
                 data: {'name': myplace},
@@ -455,6 +461,7 @@ app.controller('myController', function($scope, $routeParams,$http,$location) {
             }, function (data, status, header) {
                 alert(data.status + " Error: " + data.data.message);
             });
+            }
         }
 
         pc.addPlace = function (myplace) {
@@ -613,7 +620,8 @@ app.controller('myController', function($scope, $routeParams,$http,$location) {
             $scope.Repeat = x;
         };
         sch.delTask = function (x) {
-            if (x) {
+            var are_you_sure = confirm("Are you sure you want to delete "+ x+" ?");
+            if (x && are_you_sure) {
                 $http({
                     method: 'DELETE',
                     url: '/api/task/' + x,
