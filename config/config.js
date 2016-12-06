@@ -50,7 +50,7 @@ module.exports = function(){
     {
       config.PORT = process.env.PORT||8080;
       config.IP =process.env.IP||'127.0.0.1';
-      config.DB_URL = 'mongodb://root:root@ds031975.mlab.com:31975/amanv';
+        config.DB_URL = process.env.DB_URL || 'mongodb://root:root@ds031975.mlab.com:31975/amanv';
     }
     
     
