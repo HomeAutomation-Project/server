@@ -1,6 +1,6 @@
 var config ={};
 
-var myConfig = 'other';
+var myConfig = process.env.HA_ENV || 'other';
 
 module.exports = function(){
   
@@ -27,8 +27,8 @@ module.exports = function(){
     }
   else if(type==='openshift')
     {
-      config.PORT = process.env.PORT || process.env.OPENSHIFT_NODEJS_PORT;
-      config.IP =process.env.IP || process.env.OPENSHIFT_NODEJS_IP;
+      config.PORT = process.env.PORT || process.env.OPENSHIFT_INTERNAL_PORT || process.env.OPENSHIFT_NODEJS_PORT;
+      config.IP =process.env.IP || process.env.OPENSHIFT_NODEJS_IP || process.env.OPENSHIFT_INTERNAL_IP;
       config.DB_URL = process.env.OPENSHIFT_MONGODB_DB_URL + process.env.OPENSHIFT_APP_NAME;
       config.DB_USERNAME = process.env.OPENSHIFT_MONGODB_DB_USERNAME;
       config.DB_PASSWORD = process.env.OPENSHIFT_MONGODB_DB_PASSWORD;
