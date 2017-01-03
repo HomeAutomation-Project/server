@@ -27,9 +27,9 @@ module.exports = function(){
     }
   else if(type==='openshift')
     {
-      config.PORT = process.env.PORT;
-      config.IP =process.env.HOST || process.env.HOSTNAME;
-      config.DB_URL = process.env.MONGOHQ_URL;
+      config.PORT = process.env.PORT || process.env.OPENSHIFT_NODEJS_PORT;
+      config.IP =process.env.IP || process.env.OPENSHIFT_NODEJS_IP;
+      config.DB_URL = process.env.OPENSHIFT_MONGODB_DB_URL + process.env.OPENSHIFT_APP_NAME;
       config.DB_USERNAME = process.env.OPENSHIFT_MONGODB_DB_USERNAME;
       config.DB_PASSWORD = process.env.OPENSHIFT_MONGODB_DB_PASSWORD;
       config.DB_HOST = process.env.OPENSHIFT_MONGODB_DB_HOST;
@@ -48,8 +48,8 @@ module.exports = function(){
     }
   else
     {
-      config.PORT = process.env.PORT||8080;
-      config.IP =process.env.IP||'127.0.0.1';
+        config.PORT = process.env.PORT||process.env.OPENSHIFT_NODEJS_PORT||8080;
+        config.IP =process.env.IP||process.env.OPENSHIFT_NODEJS_IP||'127.0.0.1';
         config.DB_URL = process.env.DB_URL || 'mongodb://root:root@ds031975.mlab.com:31975/amanv';
     }
     
