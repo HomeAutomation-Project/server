@@ -632,5 +632,12 @@ app.controller('myController', function($scope, $routeParams,$http,$location) {
                 });
             }
         }
+        sch.getCompleted= function(comp)
+        {
+            if(comp)
+                return "<i class='fa fa-check' aria-hidden='true'></i>";
+            else
+                return "<i class='fa fa-times' aria-hidden='true'></i>";
+        }
         sch.getTask();
     }]);

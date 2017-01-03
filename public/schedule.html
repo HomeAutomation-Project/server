@@ -122,7 +122,8 @@
                               <td>{{t.status}}</td>
                                 <td ng-show="t.repeat">{{t.Repeat}}</td>
                                 <td ng-show="!t.repeat">-</td>
-                                <td ng-show="!t.repeat">{{t.Completed}}</td>
+                                <td ng-show="!t.repeat && t.Completed"><i class="fa fa-check fa-2x" aria-hidden="true"></i></td>
+                                <td ng-show="!t.repeat && !t.Completed"><i class="fa fa-times fa-2x" aria-hidden="true"></i></td>
                                 <td ng-show="t.repeat">-</td>
                                 <td>
                                     <button data-toggle="modal" data-target="#myModal" ng-click="sch.selectSch($index);"
