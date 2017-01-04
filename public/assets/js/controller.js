@@ -233,7 +233,8 @@ app.controller('myController', function($scope, $routeParams,$http,$location) {
                 url: '/api/room/' + myplace,
                 headers: {'Content-Type': 'application/json', 'x-access-token': localStorage.getItem('token')}
             }).then(function (data, status, header) {
-                $scope.rooms = data.data;
+                //$scope.rooms = data.data;
+                rm.rooms = data.data;
                 cplace = myplace;
                 console.log($scope.rooms);
             });
@@ -280,7 +281,7 @@ app.controller('myController', function($scope, $routeParams,$http,$location) {
                 headers: {'Content-Type': 'application/json', 'x-access-token': localStorage.getItem('token')}
             }).then(function (data, status, header) {
                 alert(newroom + "is updated");
-                rm.getRoomDetails(this.params.placeName);
+                rm.getRoomDetails(rm.params.placeName);
             }, function (data, status, header) {
                 alert(data.status + " Error: " + data.data.message);
             });
@@ -351,7 +352,7 @@ app.controller('myController', function($scope, $routeParams,$http,$location) {
                 }).then(function (data, status, header) {
                     alert(myswitch + " deleted");
                     sw.getSwitchDetails(sw.params.roomName);
-                    sw.getRoomDetails(this.params.roomName);
+                    sw.getRoomDetails(sw.params.roomName);
                 }, function (data, status, header) {
                     alert(data.status + " Error: " + data.data.message);
                 });
@@ -367,7 +368,7 @@ app.controller('myController', function($scope, $routeParams,$http,$location) {
                 alert($scope.switchname + " added");
                 sw.getSwitchDetails(sw.params.roomName);
                 sw.newplace = "";
-                sw.sform.setPristine();
+                //sw.sform.setPristine();
                 sw.getRoomDetails(sw.params.roomName);
             }, function (data, status, header) {
                 alert(data.status + " Error: " + data.data.message);
@@ -414,7 +415,7 @@ app.controller('myController', function($scope, $routeParams,$http,$location) {
                 headers: {'Content-Type': 'application/json', 'x-access-token': localStorage.getItem('token')}
             }).then(function (data, status, header) {
                 alert(newswitch + "is updated");
-                sw.getRoomDetails(this.params.roomName);
+                sw.getRoomDetails(sw.params.roomName);
             }, function (data, status, header) {
                 alert(data.status + " Error: " + data.data.message);
             });
@@ -426,7 +427,7 @@ app.controller('myController', function($scope, $routeParams,$http,$location) {
                 headers: {'Content-Type': 'application/json', 'x-access-token': localStorage.getItem('token')}
             }).then(function (data, status, header) {
                 sw.room = data.data.GPIOs;
-                console.log($scope.room);
+                console.log(sw.room);
             });
         };
         sw.setStatus = function (x) {

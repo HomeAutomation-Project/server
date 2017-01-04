@@ -38,18 +38,8 @@ module.exports =  myRouter.get('/:place/:room',function(req,res,next){
                            if(err)
                            {throw err;}
                            else
-                           {
-                               if(sw.length!==0)
-                               {
-                                   res.send(sw);
-                               }
-                               else
-                               {
-                                   var err = {};
-                                   err.status = 404;
-                                   err.message = 'No Switch Found!';
-                                   next(err);
-                               }
+                           {   
+                            res.send(sw);
                            }
                        });
                    }

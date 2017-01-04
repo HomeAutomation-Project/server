@@ -44,7 +44,7 @@
                     <br/>
                     <div style="text-align: center;">
                         <div class="row">
-                            <div class="font-icon-list col-lg-4 col-md-6 col-sm-12 col-xs-12" ng-repeat="room in rooms">
+                            <div class="font-icon-list col-lg-4 col-md-6 col-sm-12 col-xs-12" ng-repeat="room in rm.rooms">
                                 <div class="card content">
                                     <!--Room Element Start-->
                                     <div class="row">
@@ -106,7 +106,7 @@
                                                             </div>
                                                             <div class="modal-body">
                                                                 <input type="text" ng-model="rm.newname">
-                                                                <button class="btn btn-primary btn-fill" type="submit"
+                                                                <button class="btn btn-primary btn-fill" type="submit" data-dismiss="modal"
                                                                         value="Update" ng-click="rm.editRoom(rm.newname)">
                                                                     Update
                                                                 </button>
