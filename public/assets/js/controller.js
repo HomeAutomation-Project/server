@@ -217,10 +217,15 @@ app.controller('myController', function($scope, $routeParams,$http,$location) {
 })
     .controller('RoomCtrl', ['$scope', '$routeParams', '$http', function RoomCtrl($scope, $routeParams, $http) {
         var rm =  this;
+        var apikey="";
         rm.name = 'RoomCtrl';
         rm.params = $routeParams;
         rm.setPir = function (x) {
             $scope.pir = x;
+        }
+        rm.getRoomKey = function (id) {
+            rm.apikey=id;
+
         }
         rm.getRoomDetails = function (myplace) {
             $http({
