@@ -88,7 +88,7 @@
                                                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                                     <a>
                                                         <button type="button" data-toggle="modal"
-                                                                ng-click="rm.getRoomKey(room._id)"
+                                                                ng-click="rm.getRoomKey(room._id,room.name)"
                                                                 data-target="#apiModal"
                                                                 class="btn btn-success btn-fill btn-block">View Room Key
                                                         </button>
@@ -105,7 +105,7 @@
                                                                 <h4 class="modal-title">{{roomToBeEdited}}</h4>
                                                             </div>
                                                             <div class="modal-body">
-                                                                <input type="text" ng-model="rm.newname">
+                                                                <input type="text" class="form-control" ng-model="rm.newname">
                                                                 <button class="btn btn-primary btn-fill" type="submit" data-dismiss="modal"
                                                                         value="Update" ng-click="rm.editRoom(rm.newname)">
                                                                     Update
@@ -128,10 +128,10 @@
                                                             <div class="modal-header">
                                                                 <button type="button" class="close"
                                                                         data-dismiss="modal">&times;</button>
-                                                                <h4 class="modal-title">Room Key for {{roomToBeEdited}}</h4>
+                                                                <h4 class="modal-title">Room Key for {{rm.apikey.name}}</h4>
                                                             </div>
                                                             <div class="modal-body">
-                                                                <p>{{rm.apikey}}</p>
+                                                                <p>{{rm.apikey.id}}</p>
                                                                 <button class="btn btn-primary btn-fill"
                                                                         type="button" value="Ok"
                                                                         data-dismiss="modal">

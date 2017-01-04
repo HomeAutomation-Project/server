@@ -223,8 +223,11 @@ app.controller('myController', function($scope, $routeParams,$http,$location) {
         rm.setPir = function (x) {
             $scope.pir = x;
         }
-        rm.getRoomKey = function (id) {
-            rm.apikey=id;
+        rm.getRoomKey = function (id,name) {
+            rm.apikey={
+                'id': id,
+                'name':name
+            };
 
         }
         rm.getRoomDetails = function (myplace) {
@@ -236,7 +239,7 @@ app.controller('myController', function($scope, $routeParams,$http,$location) {
                 //$scope.rooms = data.data;
                 rm.rooms = data.data;
                 cplace = myplace;
-                console.log($scope.rooms);
+                console.log(rm.rooms);
             });
         }
         rm.deleteRoom = function (myroom) {
