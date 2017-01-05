@@ -41,7 +41,9 @@ module.exports = function(){
         // Provide UI label that excludes user id and pw
         mongoURLLabel += mongoHost + ':' + mongoPort + '/' + mongoDatabase;
         mongoURL += mongoHost + ':' +  mongoPort + '/' + mongoDatabase;
-    
+        config.DB_URL = mongoURL;
+        config.IP = ip;
+        config.PORT = port;
       }
       
     }
