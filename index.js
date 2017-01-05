@@ -7,7 +7,7 @@ var Switch = require('./model/Switch.model');
 app.use(require('express').static(__dirname+'/public'));
 
 
-server.listen(app.get('port'),function(){
+server.listen(app.get('port'),app.get('ip'),function(){
   console.log('Listening on '+app.get('ip')+" : "+app.get('port'))
 });
 

@@ -1,6 +1,5 @@
 module.exports = function(type){
   var config =  require('../config/config.js')(type);
-  var db = config.DB_URL;
   var passport = require('passport');
   var Strategy = require('passport-local').Strategy;
   var express  =require('express');
@@ -15,8 +14,9 @@ module.exports = function(type){
   app.set('port',config.PORT) ;
   app.set('ip',config.IP);
   app.set('secret',config.secret);
-
-  mongoose.connect(db);
+  app.set('db',config.DB_URL);
+  
+  mongoose.connect(app.get('db'));
   
   passport.use(new Strategy(User.authenticate()));
   passport.serializeUser(User.serializeUser());
@@ -31,7 +31,7 @@ module.exports = function(type){
   app.use(require('cookie-parser')());
   app.use(bodyParser.urlencoded({ extended: false }))
   app.use(bodyParser.json())
-  app.use(require('express-session')({ secret: 'TOP SECRET', resave: false, saveUninitialized: false }));
+  //app.use(require('express-session')({ secret: app.get('secret'), resave: false, saveUninitialized: false }));
   app.use(passport.initialize());
   app.use(passport.session());
   app.use('/api',require('../routes/api')(app));

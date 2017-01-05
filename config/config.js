@@ -1,4 +1,5 @@
-var config ={};
+ const util = require('util');
+ var config ={};
 
 var myConfig = process.env.HA_ENV || 'other';
 
@@ -6,45 +7,16 @@ module.exports = function(){
   
   var type =myConfig;
   
-  if(type==='C9')
+  if(type==='openshiftv2')
     {
-      config.PORT = process.env.PORT;
-      config.IP =process.env.IP;
-      config.DB_URL = 'mongodb://'+process.env.IP+'/';
-      config.DB_USERNAME = '';
-      config.DB_PASSWORD = '';
-      config.DB_HOST = process.env.IP;
-      config.DB_PORT = '';
-    }
-    else if(type==='heroku'){
-      config.PORT = process.env.PORT;
-      config.IP =process.env.IP;
-      config.DB_URL = '';
-      config.DB_USERNAME = '';
-      config.DB_PASSWORD = '';
-      config.DB_HOST = process.env.IP;
-      config.DB_PORT = '';
-    }
-  else if(type==='openshift')
-    {
-      config.PORT = process.env.PORT || process.env.OPENSHIFT_INTERNAL_PORT || process.env.OPENSHIFT_NODEJS_PORT;
-      config.IP =process.env.IP || process.env.OPENSHIFT_NODEJS_IP || process.env.OPENSHIFT_INTERNAL_IP;
-      config.DB_URL = process.env.OPENSHIFT_MONGODB_DB_URL + process.env.OPENSHIFT_APP_NAME;
-      config.DB_USERNAME = process.env.OPENSHIFT_MONGODB_DB_USERNAME;
-      config.DB_PASSWORD = process.env.OPENSHIFT_MONGODB_DB_PASSWORD;
-      config.DB_HOST = process.env.OPENSHIFT_MONGODB_DB_HOST;
-      config.DB_PORT = process.env.OPENSHIFT_MONGODB_DB_PORT;
-      config.APP_NAME = process.env.OPENSHIFT_APP_NAME;
-    }
-  else if(type==='codeanywhere' || type==='nitrous')
-    {
-      config.PORT = process.env.PORT||8080;
-      config.IP =process.env.HOST || process.env.HOSTNAME||'127.0.0.1';
-      config.DB_URL = process.env.MONGOHQ_URL;
-      config.DB_USERNAME = '';
-      config.DB_PASSWORD = '';
-      config.DB_HOST = process.env.HOST || process.env.HOSTNAME;
-      config.DB_PORT = '';
+      config.PORT = parseInt(process.env.OPENSHIFT_NODEJS_PORT) || parseInt(process.env.PORT)|| 8080;
+      config.IP   = process.env.OPENSHIFT_NODEJS_IP ||process.env.IP|| '127.0.0.1';
+      config.DB_USERNAME = process.env.OPENSHIFT_MONGODB_DB_USERNAME || 'root';
+      config.DB_PASSWORD = process.env.OPENSHIFT_MONGODB_DB_PASSWORD || 'root';
+      config.DB_HOST = process.env.OPENSHIFT_MONGODB_DB_HOST || 'ds031975.mlab.com';
+      config.DB_PORT = parseInt(process.env.OPENSHIFT_MONGODB_DB_PORT) || 31975;
+      config.APP_NAME = process.env.OPENSHIFT_APP_NAME || 'amanv';
+      config.DB_URL = util.format("mongodb://%s:%s@%s:%d/%s",config.DB_USERNAME,config.DB_PASSWORD,config.DB_HOST,config.DB_PORT,config.APP_NAME);
     }
   else
     {
