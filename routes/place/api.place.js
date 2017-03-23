@@ -74,14 +74,17 @@ module.exports = myRouter.put('/:place', function (req, res, next) {
                     Place.findOneAndUpdate({"belongsTo": req.decoded._doc.username, name: req.params.place},
                         {name: req.body.name},
                         function (err, place) {
-                            if (err) next(err);
+                            if (err) {next(err);return;}
                             for (var x = 0; x < place.roomsObjectId.length; x++) {
                                 Room.findByIdAndUpdate(place.roomsObjectId[x],
                                     {$set: {PlaceName: req.body.name}},
                                     function (err, r) {
                                         if (err)
-                                            next(err);
-                                        console.log(r.PlaceName);
+                                            {
+                                                next(err);
+                                                return;
+                                            }
+                                        //console.log(r.PlaceName);
                                     }
                                 );
                             }
