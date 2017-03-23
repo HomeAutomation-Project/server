@@ -4,7 +4,7 @@ var config = require('./config/config.js')();
 
 exports.getToken = function (user) {
     return jwt.sign(user, config.secret, {
-        expiresIn: 3600
+        expiresIn: config.expiresIn || 3600
     });
 };
 

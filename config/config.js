@@ -44,5 +44,6 @@ module.exports = function(){
     
     
   config.secret = 'TopSecret';
+  config.expiresIn = 3600;
   return config;
 }
