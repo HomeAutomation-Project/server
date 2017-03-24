@@ -20,7 +20,11 @@ module.exports = myRouter.get('/', function (req, res, next) {
 module.exports =  myRouter.post('/',function(req,res,next){
   
      Place.findOne({"belongsTo":req.decoded._doc.username, name: req.body.name}, function(err, place) {
-     if (err) throw err;
+     if (err)
+     {
+         next(err);
+         return;
+     }
      
      if(place)
      {
@@ -37,10 +41,16 @@ module.exports =  myRouter.post('/',function(req,res,next){
     
         // save the user
         newPlace.save(function(err,place) {
-          if (err) throw err;
+          if (err)
+          {
+            next(err);
+            return;
+          }
           else
-          res.send({'success':!err,place});
-          console.log('User created!');
+          {
+            res.send({'success':!err,place});
+            console.log('User created!');
+          }
         });
      }
      
