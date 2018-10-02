@@ -22,7 +22,7 @@ module.exports = function(type){
   passport.serializeUser(User.serializeUser());
   passport.deserializeUser(User.deserializeUser());
 
-
+ 
 
 // Use application-level middleware for common functionality, including
 // logging, parsing, and session handling
